@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "unittest.h"
 #include "calc.h"
 
