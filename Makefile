@@ -19,4 +19,5 @@ test: calc_test sllist_test
 
 clean:
 	rm ./*.o
-	rm ./calc_test
+	rm src/*.h.gch
+	rm ./calc_test ./sllist_test
