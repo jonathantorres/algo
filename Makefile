@@ -12,6 +12,11 @@ calc.o: calc.c calc.h
 print_numbers.o:
 	$(CFLAGS) -c src/print_numbers.c src/print_numbers.h
 
+.PHONY: test
+test: calc_test sllist_test
+	./sllist_test
+	./calc_test
+
 clean:
 	rm ./*.o
 	rm ./calc_test
