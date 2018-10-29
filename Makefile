@@ -1,7 +1,14 @@
 VPATH = src tests
 CFLAGS = gcc -Wall -Wextra
 
-all: calc_test
+all: calc_test sllist_test
+
+# Singly linked list
+sllist_test: sllist_test.c sllist.o
+	$(CFLAGS) -Isrc tests/sllist_test.c sllist.o -o sllist_test
+
+sllist.o: sllist.c sllist.h
+	$(CFLAGS) -c src/sllist.c src/sllist.h
 
 calc_test: calc_test.c calc.o
 	$(CFLAGS) -Isrc tests/calc_test.c calc.o -o calc_test
