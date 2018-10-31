@@ -1,6 +1,7 @@
 #include "unittest.h"
 #include "sllist.h"
 #include <stdio.h>
+#include <string.h>
 
 // utility method to print the contents of a list
 // the list used in this test, will be a list of strings
@@ -82,7 +83,67 @@ char *test_clear()
 
     sllist_destroy(list);
 
-    printf("%p\n", list);
+    return NULL;
+}
+
+char *test_shift()
+{
+    sllist *list = sllist_new();
+    sllist_push(list, "one");
+    sllist_push(list, "two");
+    sllist_push(list, "three");
+
+    assert(list->length == 3, "List length must be 3");
+    sllist_shift(list, "zero");
+    assert(list->length == 4, "List length must be 4");
+
+    sllist_destroy(list);
+
+    return NULL;
+}
+
+char *test_unshift()
+{
+    sllist *list = sllist_new();
+    char *zero = "zero";
+    char *one = "one";
+    char *two = "two";
+    char *three = "three";
+
+    sllist_push(list, zero);
+    sllist_push(list, one);
+    sllist_push(list, two);
+    sllist_push(list, three);
+
+    assert(list->length == 4, "List length must be 4");
+    char *value = (char*) sllist_unshift(list);
+    assert(list->length == 3, "List length must be 3");
+    assert(strcmp(zero, value) == 0, "List should be equal");
+
+    sllist_destroy(list);
+
+    return NULL;
+}
+
+char *test_pop()
+{
+    sllist *list = sllist_new();
+    char *zero = "zero";
+    char *one = "one";
+    char *two = "two";
+    char *three = "three";
+
+    sllist_push(list, zero);
+    sllist_push(list, one);
+    sllist_push(list, two);
+    sllist_push(list, three);
+
+    assert(list->length == 4, "List length must be 4");
+    char *value = (char*) sllist_pop(list);
+    assert(list->length == 3, "List length must be 3");
+    assert(strcmp(three, value) == 0, "List should be equal");
+
+    sllist_destroy(list);
 
     return NULL;
 }
@@ -94,6 +155,9 @@ int main()
     run_test(test_push);
     run_test(test_destroy);
     run_test(test_clear);
+    run_test(test_shift);
+    run_test(test_unshift);
+    run_test(test_pop);
     end_tests();
 
     return 0;
