@@ -206,3 +206,90 @@ void *sllist_pop(sllist *list)
 
     return value;
 }
+
+// remove node whose value is {value}
+void sllist_remove(sllist *list, void *value, sllist_cmp cmp)
+{
+    if (!list) {
+        fputs("Must provide a valid sllist.", stderr);
+        exit(EXIT_FAILURE);
+    }
+
+    // list is empty, return nothing
+    if (list->first == NULL) {
+        return;
+    }
+
+    // list has just 1 node
+    if (list->first->next == NULL) {
+        void *node_value = list->first->value;
+
+        if (cmp(node_value, value) == 0) {
+            sllist_pop(list);
+        }
+
+        return;
+    }
+
+    sllist_node *current_node = list->first;
+    sllist_node *prev_node = list->first;
+
+    // check the first one
+    if (cmp(current_node->value, value) == 0) {
+        sllist_node *next_node = current_node->next;
+        list->first = next_node;
+        destroy_node(current_node);
+        list->length--;
+        return;
+    }
+
+    while (current_node->next != NULL) {
+        prev_node = current_node;
+        current_node = current_node->next;
+
+        if (cmp(current_node->value, value) == 0) {
+            // remove the node
+            prev_node->next = current_node->next;
+            destroy_node(current_node);
+            list->length--;
+            break;
+        }
+    }
+}
+
+// check to see if value {value} exists in the list
+int sllist_exists(sllist *list, void *value, sllist_cmp cmp)
+{
+    if (!list) {
+        fputs("Must provide a valid sllist.", stderr);
+        exit(EXIT_FAILURE);
+    }
+
+    // list is empty, not found
+    if (list->first == NULL) {
+        return 0;
+    }
+
+    sllist_node *current_node = list->first;
+    sllist_node *prev_node = list->first;
+
+    // check the first one
+    if (cmp(current_node->value, value) == 0) {
+        return 1;
+    }
+
+    int found = 0;
+
+    // check the rest
+    while (current_node->next != NULL) {
+        prev_node = current_node;
+        current_node = current_node->next;
+
+        if (cmp(current_node->value, value) == 0) {
+            found = 1;
+            break;
+        }
+    }
+
+    return found;
+}
