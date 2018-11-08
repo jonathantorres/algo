@@ -19,7 +19,9 @@ dllist.o: dllist.c dllist.h
 
 .PHONY: test
 test: sllist_test
+	# TODO: write a php script to run these :)
 	./sllist_test
+	./dllist_test
 
 clean:
 	rm ./*.o
