@@ -1,7 +1,7 @@
 VPATH = src tests
 CFLAGS = gcc -Wall -Wextra
 
-all: sllist_test dllist_test cllist_test
+all: test
 
 # Singly linked list
 sllist_test: sllist_test.c sllist.o
@@ -26,10 +26,7 @@ cllist.o: cllist.c cllist.h
 
 .PHONY: test
 test: sllist_test dllist_test cllist_test
-	# TODO: write a php script to run these :)
-	./sllist_test
-	./dllist_test
-	./cllist_test
+	php tests/run_tests.php
 
 clean:
 	rm ./*.o
