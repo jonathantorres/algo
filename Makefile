@@ -12,8 +12,8 @@ dllist_test: dllist_test.c dllist.o
 	$(CFLAGS) -Isrc tests/dllist_test.c dllist.o -o dllist_test
 
 # Stack
-stack_test: stack_test.c stack.o
-	$(CFLAGS) -Isrc tests/stack_test.c stack.o -o stack_test
+stack_test: stack_test.c stack.o dllist.o
+	$(CFLAGS) -Isrc tests/stack_test.c stack.o dllist.o -o stack_test
 
 # Circular linked list
 cllist_test: cllist_test.c cllist.o
@@ -28,7 +28,7 @@ dllist.o: dllist.c dllist.h
 cllist.o: cllist.c cllist.h
 	$(CFLAGS) -c src/cllist.c src/cllist.h
 
-stack.o: stack.c stack.h dllist.o
+stack.o: stack.c stack.h
 	$(CFLAGS) -c src/stack.c src/stack.h
 
 .PHONY: test
