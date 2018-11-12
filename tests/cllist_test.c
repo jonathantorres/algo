@@ -18,7 +18,7 @@ void cllist_print(cllist *list)
         cllist_node *current_node = list->first;
         printf("%s,", (char*)current_node->value);
 
-        while (current_node->next != NULL) {
+        while (current_node != list->last) {
             current_node = current_node->next;
             printf("%s,", (char*)current_node->value);
         }
@@ -39,6 +39,7 @@ char *test_create()
     assert(list != NULL, "Failed creating the list");
     assert(list->length == 0, "List should have 0 nodes");
     assert(list->first == NULL, "First item in the list should be NULL");
+    assert(list->last == NULL, "Last item in the list should be NULL");
 
     cllist_destroy(list);
 
@@ -61,6 +62,7 @@ char *test_push()
 
     assert(list->first->value == john, "John must be the first node in the list");
     assert(list->length == 4, "Length of the list must be 4");
+    assert(list->last->value == mar, "Marjorie must be the last node in the list");
 
     cllist_destroy(list);
     return NULL;
@@ -203,14 +205,14 @@ int main()
 {
     start_tests("circular linked list tests");
     run_test(test_create);
-    // run_test(test_push);
-    // run_test(test_destroy);
-    // run_test(test_clear);
-    // run_test(test_shift);
-    // run_test(test_unshift);
-    // run_test(test_pop);
-    // run_test(test_remove);
-    // run_test(test_exists);
+    run_test(test_push);
+    run_test(test_destroy);
+    run_test(test_clear);
+    run_test(test_shift);
+    run_test(test_unshift);
+    run_test(test_pop);
+    run_test(test_remove);
+    run_test(test_exists);
     end_tests();
 
     return 0;

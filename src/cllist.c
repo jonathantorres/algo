@@ -46,6 +46,7 @@ cllist *cllist_new()
 
     new_list->length = 0;
     new_list->first = NULL;
+    new_list->last = NULL;
 
     return new_list;
 }
@@ -56,7 +57,7 @@ void cllist_clear(cllist *list)
     if (list->first != NULL) {
         cllist_node *current_node = list->first;
 
-        while (current_node->next != NULL) {
+        while (current_node != list->last) {
             current_node = current_node->next;
 
             if (current_node->prev) {
@@ -71,6 +72,7 @@ void cllist_clear(cllist *list)
         }
 
         list->first = NULL;
+        list->last = NULL;
     }
 }
 
@@ -103,17 +105,20 @@ void cllist_push(cllist *list, void *value)
     // list is empty, this is the first element
     if (list->first == NULL) {
         list->first = new_node;
+        list->last = new_node;
         return;
     }
 
     cllist_node *current_node = list->first;
 
-    while (current_node->next != NULL) {
+    while (current_node != list->last) {
         current_node = current_node->next;
     }
 
     new_node->prev = current_node;
+    new_node->next = list->first;
     current_node->next = new_node;
+    list->last = new_node;
 }
 
 // insert at the beginning
@@ -130,6 +135,7 @@ void cllist_shift(cllist *list, void *value)
     // list is empty, this is the first element
     if (list->first == NULL) {
         list->first = new_node;
+        list->last = new_node;
         return;
     }
 
@@ -153,9 +159,12 @@ void *cllist_unshift(cllist *list)
     list->length--;
 
     // list has just 1 node
-    if (list->first->next == NULL) {
+    if (list->first == list->last) {
         void *value = list->first->value;
         destroy_node(list->first);
+
+        list->first = NULL;
+        list->last = NULL;
 
         return value;
     }
@@ -164,7 +173,7 @@ void *cllist_unshift(cllist *list)
     void *value = list->first->value;
 
     destroy_node(list->first);
-    new_first->prev = NULL;
+    new_first->prev = list->last;
     list->first = new_first;
 
     return value;
@@ -186,22 +195,24 @@ void *cllist_pop(cllist *list)
     list->length--;
 
     // list has just 1 node
-    if (list->first->next == NULL) {
+    if (list->first == list->last) {
         void *value = list->first->value;
         destroy_node(list->first);
         list->first = NULL;
+        list->last = NULL;
 
         return value;
     }
 
     cllist_node *current_node = list->first;
 
-    while (current_node->next != NULL) {
+    while (current_node != list->last) {
         current_node = current_node->next;
     }
 
     void *value = current_node->value;
-    current_node->prev->next = NULL;
+    current_node->prev->next = list->first;
+    list->last = current_node->prev;
     destroy_node(current_node);
     current_node = NULL;
 
@@ -222,7 +233,7 @@ void cllist_remove(cllist *list, void *value, cllist_cmp cmp)
     }
 
     // list has just 1 node
-    if (list->first->next == NULL) {
+    if (list->first == list->last) {
         void *node_value = list->first->value;
 
         if (cmp(node_value, value) == 0) {
@@ -237,14 +248,14 @@ void cllist_remove(cllist *list, void *value, cllist_cmp cmp)
     // check the first one
     if (cmp(current_node->value, value) == 0) {
         cllist_node *next_node = current_node->next;
-        next_node->prev = NULL;
+        next_node->prev = list->last;
         list->first = next_node;
         destroy_node(current_node);
         list->length--;
         return;
     }
 
-    while (current_node->next != NULL) {
+    while (current_node != list->last) {
         current_node = current_node->next;
 
         if (cmp(current_node->value, value) == 0) {
@@ -281,7 +292,7 @@ int cllist_exists(cllist *list, void *value, cllist_cmp cmp)
     int found = 0;
 
     // check the rest
-    while (current_node->next != NULL) {
+    while (current_node != list->last) {
         current_node = current_node->next;
 
         if (cmp(current_node->value, value) == 0) {
