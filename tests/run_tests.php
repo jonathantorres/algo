@@ -4,6 +4,7 @@ $files = [
     'sllist_test',
     'dllist_test',
     'cllist_test',
+    'stack_test',
 ];
 
 foreach ($files as $file) {
