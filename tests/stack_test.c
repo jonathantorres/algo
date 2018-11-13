@@ -138,7 +138,7 @@ int main()
     start_tests("stack tests");
     run_test(test_new);
     run_test(test_destroy);
-    // run_test(test_clear);
+    run_test(test_clear);
     run_test(test_push);
     run_test(test_pop);
     run_test(test_peek);
