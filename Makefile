@@ -33,7 +33,11 @@ stack.o: stack.c stack.h
 
 .PHONY: test
 test: sllist_test dllist_test cllist_test stack_test
-	php tests/run_tests.php
+	#php tests/run_tests.php
+	./sllist_test
+	./dllist_test
+	./cllist_test
+	./stack_test
 
 clean:
 	rm ./*.o
