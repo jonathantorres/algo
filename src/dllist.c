@@ -133,6 +133,7 @@ void dllist_shift(dllist *list, void *value)
         return;
     }
 
+    list->first->prev = new_node;
     new_node->next = list->first;
     list->first = new_node;
 }
