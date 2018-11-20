@@ -15,6 +15,10 @@ dllist_test: dllist_test.c dllist.o
 stack_test: stack_test.c stack.o dllist.o
 	$(CFLAGS) -Isrc tests/stack_test.c stack.o dllist.o -o stack_test
 
+# Queue
+queue_test: queue_test.c queue.o dllist.o
+	$(CFLAGS) -Isrc tests/queue_test.c queue.o dllist.o -o queue_test
+
 # Circular linked list
 cllist_test: cllist_test.c cllist.o
 	$(CFLAGS) -Isrc tests/cllist_test.c cllist.o -o cllist_test
@@ -31,15 +35,20 @@ cllist.o: cllist.c cllist.h
 stack.o: stack.c stack.h
 	$(CFLAGS) -c src/stack.c src/stack.h
 
+queue.o: queue.c queue.h
+	$(CFLAGS) -c src/queue.c src/queue.h
+
 .PHONY: test
-test: sllist_test dllist_test cllist_test stack_test
+test: sllist_test dllist_test cllist_test stack_test queue_test
 	#php tests/run_tests.php
 	./sllist_test
 	./dllist_test
 	./cllist_test
 	./stack_test
+	./queue_test
 
 clean:
 	rm ./*.o
 	rm src/*.h.gch
-	rm ./sllist_test ./dllist_test ./cllist_test ./stack_test
+	rm ./sllist_test ./dllist_test ./cllist_test
+	rm ./stack_test ./queue_test
