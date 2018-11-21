@@ -23,6 +23,10 @@ queue_test: queue_test.c queue.o dllist.o
 cllist_test: cllist_test.c cllist.o
 	$(CFLAGS) -Isrc tests/cllist_test.c cllist.o -o cllist_test
 
+# Array
+array_test: array_test.c array.o
+	$(CFLAGS) -Isrc tests/array_test.c array.o -o array_test
+
 sllist.o: sllist.c sllist.h
 	$(CFLAGS) -c src/sllist.c src/sllist.h
 
@@ -38,17 +42,21 @@ stack.o: stack.c stack.h
 queue.o: queue.c queue.h
 	$(CFLAGS) -c src/queue.c src/queue.h
 
+array.o: array.c array.h
+	$(CFLAGS) -c src/array.c src/array.h
+
 .PHONY: test
-test: sllist_test dllist_test cllist_test stack_test queue_test
+test: sllist_test dllist_test cllist_test stack_test queue_test array_test
 	#php tests/run_tests.php
 	./sllist_test
 	./dllist_test
 	./cllist_test
 	./stack_test
 	./queue_test
+	./array_test
 
 clean:
 	rm ./*.o
 	rm src/*.h.gch
 	rm ./sllist_test ./dllist_test ./cllist_test
-	rm ./stack_test ./queue_test
+	rm ./stack_test ./queue_test ./array_test
