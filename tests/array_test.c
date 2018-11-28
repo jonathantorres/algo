@@ -18,15 +18,23 @@ void array_print(array *_array)
     printf("]\n");
 }
 
-char *test_run()
+char *test_create()
 {
+    array *_array = array_create(10, sizeof(int));
+
+    assert(_array->length == 0, "Array length should be 0");
+    assert(_array->capacity == 10, "Array capacity should be 100");
+    assert(_array->expand_rate == 300, "Array expand_rate should be 300");
+    assert(_array->item_size == sizeof(int), "Array item_size is not correct, it should be sizeof(int)");
+    assert(_array->contents != NULL, "Array contents should not be NULL");
+
     return NULL;
 }
 
 int main()
 {
     start_tests("array tests");
-    run_test(test_run);
+    run_test(test_create);
     end_tests();
 
     return 0;
