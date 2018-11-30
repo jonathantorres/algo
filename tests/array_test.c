@@ -37,12 +37,14 @@ char *test_push()
 {
     array *_array = array_create(10, sizeof(int));
 
-    for (unsigned int i = 0; i < 20; i++) {
-        int value = i * 5;
-        array_push(_array, &value);
+    for (unsigned int i = 0; i < 100; i++) {
+        int *value = malloc(sizeof(int));
+        *value = i * 5;
+        array_push(_array, value);
     }
 
-    assert(_array->length == 20, "Array length should be 300");
+    assert(_array->capacity == 110, "Array capacity should be 110");
+    assert(_array->length == 100, "Array length should be 100");
     assert(_array->contents != NULL, "Array contents should not be NULL");
 
     array_destroy(_array);

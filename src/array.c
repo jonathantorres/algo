@@ -71,15 +71,12 @@ void array_push(array *_array, void *value)
     // expand if necessary
     if (_array->length >= _array->capacity) {
         int new_capacity = _array->capacity + EXPAND_RATE;
-        void *contents = malloc(new_capacity * _array->item_size);
+        void *contents = realloc(_array->contents, new_capacity * _array->item_size);
 
         if (!contents) {
             fputs("Not enough memory.", stderr);
             exit(EXIT_FAILURE);
         }
-
-        memcpy(contents, _array->contents, _array->length * _array->item_size);
-        free(_array->contents); // FIX!
 
         _array->contents = contents;
         _array->capacity = new_capacity;
