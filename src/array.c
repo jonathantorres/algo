@@ -51,8 +51,12 @@ void array_clear(array *_array)
         exit(EXIT_FAILURE);
     }
 
-    for (unsigned int i = 0; i < _array->length; i++) {
-        _array->contents[i] = NULL;
+    unsigned int array_length = _array->length;
+
+    for (unsigned int i = 0; i < array_length; i++) {
+        if (_array->contents[i] != NULL) {
+            free(_array->contents[i]);
+        }
         _array->length--;
     }
 }

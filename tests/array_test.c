@@ -35,12 +35,14 @@ char *test_create()
 
 char *test_push()
 {
-    array *_array = array_create(10, sizeof(int));
+    array *_array = array_create(10, sizeof(int*));
 
     for (unsigned int i = 0; i < 100; i++) {
         int *value = malloc(sizeof(int));
-        *value = i * 5;
-        array_push(_array, value);
+        if (value != NULL) {
+            *value = i * 5;
+            array_push(_array, value);
+        }
     }
 
     assert(_array->capacity == 110, "Array capacity should be 110");
