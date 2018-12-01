@@ -33,6 +33,44 @@ char *test_create()
     return NULL;
 }
 
+char *test_destroy()
+{
+    array *_array = array_create(100, sizeof(int*));
+
+    for (unsigned int i = 0; i < 100; i++) {
+        int *value = malloc(sizeof(int));
+        if (value != NULL) {
+            *value = i * 5;
+            array_push(_array, value);
+        }
+    }
+
+    array_destroy(_array);
+
+    return NULL;
+}
+
+char *test_clear()
+{
+    array *_array = array_create(100, sizeof(int*));
+
+    for (unsigned int i = 0; i < 100; i++) {
+        int *value = malloc(sizeof(int));
+        if (value != NULL) {
+            *value = i * 5;
+            array_push(_array, value);
+        }
+    }
+
+    array_clear(_array);
+    assert(_array->capacity == 200, "Array capacity should be 200");
+    assert(_array->length == 0, "Array length must be 0");
+    assert(_array->contents != NULL, "Array contents should not be NULL");
+    array_destroy(_array);
+
+    return NULL;
+}
+
 char *test_push()
 {
     array *_array = array_create(10, sizeof(int*));
@@ -58,6 +96,8 @@ int main()
 {
     start_tests("array tests");
     run_test(test_create);
+    run_test(test_destroy);
+    run_test(test_clear);
     run_test(test_push);
     end_tests();
 
