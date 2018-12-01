@@ -25,7 +25,7 @@ char *test_create()
     assert(_array->length == 0, "Array length should be 0");
     assert(_array->capacity == 10, "Array capacity should be 10");
     assert(_array->expand_rate == 100, "Array expand_rate should be 100");
-    assert(_array->item_size == sizeof(int), "Array item_size is not correct, it should be sizeof(int)");
+    assert(_array->item_size == sizeof(int*), "Array item_size is not correct, it should be sizeof(int*)");
     assert(_array->contents != NULL, "Array contents should not be NULL");
 
     array_destroy(_array);
