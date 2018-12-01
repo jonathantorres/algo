@@ -20,7 +20,7 @@ void array_print(array *_array)
 
 char *test_create()
 {
-    array *_array = array_create(10, sizeof(int));
+    array *_array = array_create(10, sizeof(int*));
 
     assert(_array->length == 0, "Array length should be 0");
     assert(_array->capacity == 10, "Array capacity should be 10");
