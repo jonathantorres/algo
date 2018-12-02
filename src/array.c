@@ -129,3 +129,19 @@ void array_set(array *_array, void *elem, unsigned int index)
 
     _array->contents[index] = elem;
 }
+
+// get element at index
+void *array_get(array *_array, unsigned int index)
+{
+    if (!_array) {
+        fputs("Must provide an array.", stderr);
+        exit(EXIT_FAILURE);
+    }
+
+    // index is too large
+    if (index >= _array->length) {
+        return NULL;
+    }
+
+    return _array->contents[index];
+}

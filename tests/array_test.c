@@ -134,6 +134,27 @@ char *test_set()
     return NULL;
 }
 
+char *test_get()
+{
+    array *_array = array_create(10, sizeof(int*));
+
+    for (unsigned int i = 0; i < 5; i++) {
+        int *value = malloc(sizeof(int));
+        if (value != NULL) {
+            *value = i * 5;
+            array_push(_array, value);
+        }
+    }
+
+    int *number = array_get(_array, 4);
+    void *off_number = array_get(_array, 100);
+    assert(*number == 20, "Element's value should be 20");
+    assert(off_number == NULL, "The off number should be NULL");
+    array_destroy(_array);
+
+    return NULL;
+}
+
 int main()
 {
     start_tests("array tests");
@@ -143,6 +164,7 @@ int main()
     run_test(test_push);
     run_test(test_pop);
     run_test(test_set);
+    run_test(test_get);
     end_tests();
 
     return 0;
