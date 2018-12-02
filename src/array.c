@@ -87,6 +87,19 @@ void array_push(array *_array, void *value)
     }
 }
 
+void *remove_element_at(array *_array, unsigned int index)
+{
+    if (_array->contents[index] != NULL) {
+        void *element = _array->contents[index];
+        _array->contents[index] = NULL;
+        _array->length--;
+
+        return element;
+    }
+
+    return NULL;
+}
+
 // remove last element and return it
 void *array_pop(array *_array)
 {
@@ -95,19 +108,13 @@ void *array_pop(array *_array)
         exit(EXIT_FAILURE);
     }
 
+    void *element = NULL;
+
     if (_array->length > 0) {
-        unsigned int index = _array->length - 1;
-
-        if (_array->contents[index] != NULL) {
-            void *element = _array->contents[index];
-            _array->contents[index] = NULL;
-            _array->length--;
-
-            return element;
-        }
+        element = remove_element_at(_array, _array->length - 1);
     }
 
-    return NULL;
+    return element;
 }
 
 // add/set element at index
