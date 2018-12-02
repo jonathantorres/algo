@@ -27,7 +27,7 @@ void array_push(array *_array, void *value);
 void *array_pop(array *_array);
 
 // add/set element at index
-void *array_set(array *_array, int index);
+void array_set(array *_array, void *elem, unsigned int index);
 
 // remove element at index and return it
 void *array_remove(array *_array, int index);

@@ -92,6 +92,48 @@ char *test_push()
     return NULL;
 }
 
+char *test_pop()
+{
+    array *_array = array_create(10, sizeof(int*));
+
+    for (unsigned int i = 0; i < 5; i++) {
+        int *value = malloc(sizeof(int));
+        if (value != NULL) {
+            *value = i * 5;
+            array_push(_array, value);
+        }
+    }
+
+    assert(_array->length == 5, "Array length should be 5");
+    int *last_num = array_pop(_array);
+    assert(*last_num == 20, "Last element's value should be 20");
+    assert(_array->length == 4, "Array length should be 4");
+    assert(_array->contents != NULL, "Array contents should not be NULL");
+    array_destroy(_array);
+
+    return NULL;
+}
+
+char *test_set()
+{
+    array *_array = array_create(10, sizeof(int*));
+
+    for (unsigned int i = 0; i < 5; i++) {
+        int *value = malloc(sizeof(int));
+        if (value != NULL) {
+            *value = i * 5;
+            array_set(_array, value, i);
+        }
+    }
+
+    assert(_array->capacity == 10, "Array capacity should be 10");
+    assert(_array->length == 5, "Array length should be 5");
+    assert(_array->contents != NULL, "Array contents should not be NULL");
+    array_destroy(_array);
+
+    return NULL;
+}
+
 int main()
 {
     start_tests("array tests");
@@ -99,6 +141,8 @@ int main()
     run_test(test_destroy);
     run_test(test_clear);
     run_test(test_push);
+    run_test(test_pop);
+    run_test(test_set);
     end_tests();
 
     return 0;

@@ -86,3 +86,46 @@ void array_push(array *_array, void *value)
         _array->capacity = new_capacity;
     }
 }
+
+// remove last element and return it
+void *array_pop(array *_array)
+{
+    if (!_array) {
+        fputs("Must provide an array.", stderr);
+        exit(EXIT_FAILURE);
+    }
+
+    if (_array->length > 0) {
+        unsigned int index = _array->length - 1;
+
+        if (_array->contents[index] != NULL) {
+            void *element = _array->contents[index];
+            _array->contents[index] = NULL;
+            _array->length--;
+
+            return element;
+        }
+    }
+
+    return NULL;
+}
+
+// add/set element at index
+void array_set(array *_array, void *elem, unsigned int index)
+{
+    if (!_array) {
+        fputs("Must provide an array.", stderr);
+        exit(EXIT_FAILURE);
+    }
+
+    // index is too large
+    if (index >= _array->capacity) {
+        return;
+    }
+
+    if (_array->contents[index] == NULL) {
+        _array->length++;
+    }
+
+    _array->contents[index] = elem;
+}
