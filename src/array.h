@@ -36,6 +36,7 @@ void *array_get(array *_array, unsigned int index);
 void *array_remove(array *_array, int index);
 
 // TODO: function to print contents
+// TODO: function to sort contents
 
 // add element to the beginning
 void array_shift(array *_array, void *value);
