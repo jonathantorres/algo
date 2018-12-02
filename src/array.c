@@ -119,7 +119,7 @@ void array_set(array *_array, void *elem, unsigned int index)
     }
 
     // index is too large
-    if (index >= _array->capacity) {
+    if (index >= _array->length + 1) {
         return;
     }
 
