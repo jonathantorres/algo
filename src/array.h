@@ -33,7 +33,7 @@ void array_set(array *_array, void *elem, unsigned int index);
 void *array_get(array *_array, unsigned int index);
 
 // remove element at index and return it
-void *array_remove(array *_array, int index);
+void *array_remove(array *_array, unsigned int index);
 
 // TODO: function to print contents
 // TODO: function to sort contents
