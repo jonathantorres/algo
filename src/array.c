@@ -61,6 +61,20 @@ void array_clear(array *_array)
     }
 }
 
+void array_expand(array *_array)
+{
+    int new_capacity = _array->capacity + EXPAND_RATE;
+    void *contents = realloc(_array->contents, new_capacity * _array->item_size);
+
+    if (!contents) {
+        fputs("Not enough memory.", stderr);
+        exit(EXIT_FAILURE);
+    }
+
+    _array->contents = contents;
+    _array->capacity = new_capacity;
+}
+
 // add element to the end
 void array_push(array *_array, void *value)
 {
@@ -74,16 +88,7 @@ void array_push(array *_array, void *value)
 
     // expand if necessary
     if (_array->length >= _array->capacity) {
-        int new_capacity = _array->capacity + EXPAND_RATE;
-        void *contents = realloc(_array->contents, new_capacity * _array->item_size);
-
-        if (!contents) {
-            fputs("Not enough memory.", stderr);
-            exit(EXIT_FAILURE);
-        }
-
-        _array->contents = contents;
-        _array->capacity = new_capacity;
+        array_expand(_array);
     }
 }
 
