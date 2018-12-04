@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 // utility method to print the contents of an array
-// in this test we'll be using an array of strings
+// in this test we'll be using an array of numbers
 void array_print(array *_array)
 {
     if (!_array) {
@@ -12,9 +12,10 @@ void array_print(array *_array)
     }
 
     printf("[");
-
-    // TODO
-
+    for (unsigned int i = 0; i < _array->length; i++) {
+        int *val = array_get(_array, i);
+        printf("%d,", *val);
+    }
     printf("]\n");
 }
 
