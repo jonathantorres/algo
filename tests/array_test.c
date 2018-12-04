@@ -177,6 +177,32 @@ char *test_remove()
     return NULL;
 }
 
+char *test_shift()
+{
+    array *_array = array_create(10, sizeof(int*));
+
+    for (unsigned int i = 0; i < 5; i++) {
+        int *value = malloc(sizeof(int));
+        if (value != NULL) {
+            *value = i * 5;
+            array_push(_array, value);
+        }
+    }
+
+    assert(_array->length == 5, "Array length should be 5");
+    int *new_value = malloc(sizeof(int));
+    if (new_value != NULL) {
+        *new_value = 200;
+        array_shift(_array, new_value);
+    }
+    int *val = array_get(_array, 0);
+    assert(*val == 200, "Value of new element should be 200");
+    assert(_array->length == 6, "Array length should be 6");
+    array_destroy(_array);
+
+    return NULL;
+}
+
 int main()
 {
     start_tests("array tests");
@@ -188,6 +214,7 @@ int main()
     run_test(test_set);
     run_test(test_get);
     run_test(test_remove);
+    run_test(test_shift);
     end_tests();
 
     return 0;

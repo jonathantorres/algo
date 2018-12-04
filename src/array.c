@@ -183,3 +183,28 @@ void *array_remove(array *_array, unsigned int index)
 
     return element;
 }
+
+// add element to the beginning
+void array_shift(array *_array, void *value)
+{
+    if (!_array) {
+        fputs("Must provide an array.", stderr);
+        exit(EXIT_FAILURE);
+    }
+
+    if (_array->length > 0) {
+        memmove(
+            &_array->contents[1],
+            _array->contents,
+            sizeof(_array->item_size) * _array->length
+        );
+    }
+
+    _array->contents[0] = value;
+    _array->length++;
+
+    // expand if necessary
+    if (_array->length >= _array->capacity) {
+        array_expand(_array);
+    }
+}
