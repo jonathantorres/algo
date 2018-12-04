@@ -170,8 +170,8 @@ void *array_remove(array *_array, unsigned int index)
 
     if (element != NULL && _array->contents[index + 1] != NULL) {
         memmove(
-            _array->contents[index],
-            _array->contents[index + 1],
+            &_array->contents[index],
+            &_array->contents[index + 1],
             sizeof(_array->item_size) * (_array->length - index)
         );
     }
