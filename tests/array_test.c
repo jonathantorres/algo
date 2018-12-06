@@ -4,7 +4,7 @@
 
 // utility method to print the contents of an array
 // in this test we'll be using an array of numbers
-void array_print(array *_array)
+void array_print(array *_array, char type)
 {
     if (!_array) {
         fputs("Must provide an array.", stderr);
@@ -13,8 +13,18 @@ void array_print(array *_array)
 
     printf("[");
     for (unsigned int i = 0; i < _array->length; i++) {
-        int *val = array_get(_array, i);
-        printf("%d,", *val);
+        void *val = NULL;
+        switch (type) {
+            case 'i':
+                val = (int*)array_get(_array, i);
+                printf("%d,", *(int*)val);
+            break;
+
+            case 's':
+                val = (char*)array_get(_array, i);
+                printf("%s,", val);
+            break;
+        }
     }
     printf("]\n");
 }
