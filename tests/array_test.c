@@ -1,6 +1,7 @@
 #include "unittest.h"
 #include "array.h"
 #include <stdio.h>
+#include <string.h>
 
 // utility method to print the contents of an array
 // in this test we'll be using an array of numbers
@@ -234,6 +235,39 @@ char *test_unshift()
     return NULL;
 }
 
+char *test_array_of_strings()
+{
+    array *_array = array_create(10, sizeof(char**));
+    char *strings[5] = {
+        "foo",
+        "bar",
+        "baz",
+        "hello",
+        "again",
+    };
+
+    for (unsigned int i = 0; i < 5; i++) {
+        char *string = malloc(10);
+        if (string != NULL) {
+            strcpy(string, strings[i]);
+            array_push(_array, string);
+        }
+    }
+
+    assert(_array->contents != NULL, "Array contents should not be NULL");
+    assert(_array->length == 5, "Array length should be 5");
+    char *last = array_pop(_array);
+    assert(strcmp(last, strings[4]) == 0, "Strings 'again' should be equal");
+    assert(_array->length == 4, "Array length should be 4");
+    char *first = array_unshift(_array);
+    assert(strcmp(first, strings[0]) == 0, "Strings 'foo' should be equal");
+    assert(_array->length == 3, "Array length should be 3");
+
+    array_destroy(_array);
+
+    return NULL;
+}
+
 int main()
 {
     start_tests("array tests");
@@ -247,6 +281,7 @@ int main()
     run_test(test_remove);
     run_test(test_shift);
     run_test(test_unshift);
+    run_test(test_array_of_strings);
     end_tests();
 
     return 0;
