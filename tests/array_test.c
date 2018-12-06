@@ -203,6 +203,27 @@ char *test_shift()
     return NULL;
 }
 
+char *test_unshift()
+{
+    array *_array = array_create(10, sizeof(int*));
+
+    for (unsigned int i = 0; i < 5; i++) {
+        int *value = malloc(sizeof(int));
+        if (value != NULL) {
+            *value = i * 5;
+            array_push(_array, value);
+        }
+    }
+
+    assert(_array->length == 5, "Array length should be 5");
+    int *first_num = array_unshift(_array);
+    assert(*first_num == 0, "Value of removed element should be 0");
+    assert(_array->length == 4, "Array length should be 4");
+    array_destroy(_array);
+
+    return NULL;
+}
+
 int main()
 {
     start_tests("array tests");
@@ -215,6 +236,7 @@ int main()
     run_test(test_get);
     run_test(test_remove);
     run_test(test_shift);
+    run_test(test_unshift);
     end_tests();
 
     return 0;

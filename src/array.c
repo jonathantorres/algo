@@ -208,3 +208,26 @@ void array_shift(array *_array, void *value)
         array_expand(_array);
     }
 }
+
+// remove first element and return it
+void *array_unshift(array *_array)
+{
+    if (!_array) {
+        fputs("Must provide an array.", stderr);
+        exit(EXIT_FAILURE);
+    }
+
+    void *element = NULL;
+
+    if (_array->length > 0) {
+        element = remove_element_at(_array, 0);
+
+        memmove(
+            _array->contents,
+            &_array->contents[1],
+            sizeof(_array->item_size) * _array->length
+        );
+    }
+
+    return element;
+}
