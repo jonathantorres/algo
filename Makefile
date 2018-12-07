@@ -28,8 +28,8 @@ array_test: array_test.c array.o
 	$(CFLAGS) -Isrc tests/array_test.c array.o -o array_test
 
 # Bubble Sort
-bubble_sort_test: bubble_sort.c bubble_sort.o
-	$(CFLAGS) -Isrc tests/bubble_sort_test.c bubble_sort.o -o bubble_sort_test
+bubble_sort_test: bubble_sort_test.c bubble_sort.o array.o
+	$(CFLAGS) -Isrc tests/bubble_sort_test.c bubble_sort.o array.o -o bubble_sort_test
 
 # Temporary ptr test
 ptr_test: ptr_test.c
