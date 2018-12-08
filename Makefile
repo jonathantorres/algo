@@ -39,10 +39,6 @@ insertion_sort_test: insertion_sort_test.c insertion_sort.o array.o
 selection_sort_test: selection_sort_test.c selection_sort.o array.o
 	$(CFLAGS) -Isrc tests/selection_sort_test.c selection_sort.o array.o -o selection_sort_test
 
-# Temporary ptr test
-ptr_test: ptr_test.c
-	$(CFLAGS) -Isrc tests/ptr_test.c -o ptr_test
-
 sllist.o: sllist.c sllist.h
 	$(CFLAGS) -c src/sllist.c src/sllist.h
 
@@ -71,7 +67,7 @@ selection_sort.o: selection_sort.c selection_sort.h
 	$(CFLAGS) -c src/selection_sort.c src/selection_sort.h
 
 .PHONY: test
-test: sllist_test dllist_test cllist_test stack_test queue_test array_test ptr_test bubble_sort_test insertion_sort_test selection_sort_test
+test: sllist_test dllist_test cllist_test stack_test queue_test array_test bubble_sort_test insertion_sort_test selection_sort_test
 	#php tests/run_tests.php
 	./sllist_test
 	./dllist_test
@@ -79,7 +75,6 @@ test: sllist_test dllist_test cllist_test stack_test queue_test array_test ptr_t
 	./stack_test
 	./queue_test
 	./array_test
-	./ptr_test
 	./bubble_sort_test
 	./insertion_sort_test
 	./selection_sort_test
@@ -88,5 +83,5 @@ clean:
 	rm ./*.o
 	rm src/*.h.gch
 	rm ./sllist_test ./dllist_test ./cllist_test
-	rm ./stack_test ./queue_test ./array_test ./ptr_test
+	rm ./stack_test ./queue_test ./array_test
 	rm ./bubble_sort_test ./insertion_sort_test ./selection_sort_test
