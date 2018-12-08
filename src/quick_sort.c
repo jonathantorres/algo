@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdbool.h>
-#include "print_numbers.h"
 
 void quicksort(int low, int hi);
 int partition(int low, int hi);
@@ -10,9 +9,17 @@ int items[LENGTH] = { 4, 9, 3, 11, 55, 4, 12, 78, 16, 22 };
 
 int main(void)
 {
-    print_numbers(items, LENGTH, false);
+    for (int i = 0; i < LENGTH; i++)
+    {
+        printf("%d,", items[i]);
+    }
+    puts("");
     quicksort(0, LENGTH - 1);
-    print_numbers(items, LENGTH, true);
+    for (int i = 0; i < LENGTH; i++)
+    {
+        printf("%d,", items[i]);
+    }
+    puts("");
     return 0;
 }
 

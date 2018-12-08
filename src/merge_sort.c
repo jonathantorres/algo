@@ -1,5 +1,5 @@
-#include "print_numbers.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 void merge_sort(int array[], int length, int left, int right);
 void merge(int array[], int left, int right, int length);
@@ -9,9 +9,17 @@ int items[LENGTH] = { 4, 9, 3, 11, 55, 4, 12, 78, 16, 22 };
 
 int main(void)
 {
-    print_numbers(items, LENGTH, false);
+    for (int i = 0; i < LENGTH; i++)
+    {
+        printf("%d,", items[i]);
+    }
+    puts("");
     merge_sort(items, LENGTH, 0, LENGTH - 1);
-    print_numbers(items, LENGTH, true);
+    for (int i = 0; i < LENGTH; i++)
+    {
+        printf("%d,", items[i]);
+    }
+    puts("");
     return 0;
 }
 
