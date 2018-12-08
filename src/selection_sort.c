@@ -1,32 +1,25 @@
 #include <stdio.h>
-#include <stdbool.h>
-#include "print_numbers.h"
+#include "selection_sort.h"
 
-#define LENGTH 10
-
-int items[LENGTH] = { 4, 9, 3, 11, 55, 4, 12, 78, 16, 22 };
-
-int main(void)
+void selection_sort(array *_array, cmp_f cmp)
 {
-    print_numbers(items, LENGTH, false);
+    if (!_array) {
+        fputs("Must provide an array.", stderr);
+        exit(EXIT_FAILURE);
+    }
 
-    for (int j = 0; j < LENGTH - 1; j++) {
-        int min = j;
-
-        for (int i = j + 1; i < LENGTH; i++) {
-            if (items[i] < items[min]) {
+    for (unsigned int j = 0; j < _array->length - 1; j++) {
+        unsigned int min = j;
+        for (unsigned int i = j + 1; i < _array->length; i++) {
+            if (cmp(array_get(_array, i), array_get(_array, min)) < 0) {
                 min = i;
             }
         }
 
         if (min != j) {
-            int tmp = items[min];
-            items[min] = items[j];
-            items[j] = tmp;
+            void *tmp = array_get(_array, min);
+            array_set(_array, array_get(_array, j), min);
+            array_set(_array, tmp, j);
         }
     }
-
-    print_numbers(items, LENGTH, true);
-
-    return 0;
 }
