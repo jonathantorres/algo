@@ -1,27 +1,22 @@
 #include <stdio.h>
-#include <stdbool.h>
-#include "print_numbers.h"
+#include "insertion_sort.h"
 
-#define LENGTH 10
-
-int items[LENGTH] = { 4, 9, 3, 11, 55, 4, 12, 78, 16, 22 };
-
-int main(int argc, char const *argv[])
+void insertion_sort(array *_array, cmp_f cmp)
 {
-    print_numbers(items, LENGTH, false);
+    if (!_array) {
+        fputs("Must provide an array.", stderr);
+        exit(EXIT_FAILURE);
+    }
 
-    int i = 1;
-    while (i < LENGTH) {
-        int j = i;
-        while (j > 0 && items[j - 1] > items[j]) {
-            int tmp = items[j];
-            items[j] = items[j - 1];
-            items[j - 1] = tmp;
+    unsigned int i = 1;
+    while (i < _array->length) {
+        unsigned int j = i;
+        while (j > 0 && cmp(array_get(_array, j - 1), array_get(_array, j)) > 0) {
+            void *tmp = array_get(_array, j);
+            array_set(_array, array_get(_array, j - 1), j);
+            array_set(_array, tmp, j - 1);
             j--;
         }
         i++;
     }
-
-    print_numbers(items, LENGTH, true);
-    return 0;
 }
