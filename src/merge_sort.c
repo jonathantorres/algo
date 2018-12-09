@@ -1,77 +1,48 @@
-#include <stdlib.h>
-#include <stdio.h>
+#include "merge_sort.h"
 
-void merge_sort(int array[], int length, int left, int right);
-void merge(int array[], int left, int right, int length);
+void split_merge(array *copy, unsigned int begin, unsigned int end, array *_array, cmp_f cmp);
 
-#define LENGTH 10
-int items[LENGTH] = { 4, 9, 3, 11, 55, 4, 12, 78, 16, 22 };
-
-int main(void)
+void *copy_array(array *_array)
 {
-    for (int i = 0; i < LENGTH; i++)
-    {
-        printf("%d,", items[i]);
+    array *copy = array_create(_array->length, _array->item_size);
+
+    for (unsigned int i = 0; i < _array->length; i++) {
+        array_push(copy, array_get(_array, i));
     }
-    puts("");
-    merge_sort(items, LENGTH, 0, LENGTH - 1);
-    for (int i = 0; i < LENGTH; i++)
-    {
-        printf("%d,", items[i]);
-    }
-    puts("");
-    return 0;
+
+    return copy;
 }
 
-void merge_sort(int array[], int length, int left, int right)
+void merge(array *copy, unsigned int begin, unsigned int middle, unsigned int end, array *_array, cmp_f cmp)
 {
-    if (right - left == 1) {
-        if (array[left] > array[right]) {
-            int tmp = array[left];
-            items[left] = items[right];
-            items[right] = tmp;
-        }
-    } else if (left == right) {
-        //
-    } else {
-        merge_sort(array, length, left, (left + right) / 2);
-        merge_sort(array, length, ((left + right) / 2) + 1, right);
-        merge(array, left, right, length);
-    }
-}
+    unsigned int i = begin;
+    unsigned int j = middle;
 
-void merge(int array[], int left, int right, int length)
-{
-    int *cpy = (int*) malloc(length * sizeof(int));
-    int counter = left;
-    int p1, p2;
-
-    p1 = left;
-    p2 = ((left + right) / 2) + 1;
-
-    while ((p1 < ((left + right) / 2) + 1) && (p2 < right + 1)) {
-        if (array[p1] <= array[p2]) {
-            cpy[counter++] = array[p1];
-            p1++;
+    for (unsigned int k = begin; k < end; k++) {
+        if (i < middle && (j >= end || cmp(array_get(copy, i), array_get(copy, j)) <= 0)) {
+            array_set(_array, array_get(copy, i), k);
+            i = i + 1;
         } else {
-            cpy[counter++] = array[p2];
-            p2++;
+            array_set(_array, array_get(copy, j), k);
+            j = j + 1;
         }
+    }
+}
+
+void split_merge(array *copy, unsigned int begin, unsigned int end, array *_array, cmp_f cmp)
+{
+    if (end - begin < 2) {
+        return;
     }
 
-    if (p2 == right + 1) {
-        while ((p1 < ((left + right) / 2) + 1)) {
-            cpy[counter++] = array[p1];
-            p1++;
-        }
-    } else {
-        while ((p2 < right + 1)) {
-            cpy[counter++] = array[p2];
-            p2++;
-        }
-    }
+    unsigned int middle = (end + begin) / 2;
+    split_merge(_array, begin, middle, copy, cmp);
+    split_merge(_array, middle, end, copy, cmp);
+    merge(copy, begin, middle, end, _array, cmp);
+}
 
-    for (int counter = left; counter < right - left + 1; counter++) {
-        array[counter] = cpy[counter];
-    }
+void merge_sort(array *_array, cmp_f cmp)
+{
+    array *copy = copy_array(_array);
+    split_merge(copy, 0, _array->length, _array, cmp);
 }
