@@ -1,54 +1,38 @@
-#include <stdio.h>
-#include <stdbool.h>
+#include "quick_sort.h"
 
-void quicksort(int low, int hi);
-int partition(int low, int hi);
+void sort(array *_array, cmp_f cmp, unsigned int low, unsigned int hi);
 
-#define LENGTH 10
-int items[LENGTH] = { 4, 9, 3, 11, 55, 4, 12, 78, 16, 22 };
-
-int main(void)
+unsigned int partition(array *_array, cmp_f cmp, unsigned int low, unsigned int hi)
 {
-    for (int i = 0; i < LENGTH; i++)
-    {
-        printf("%d,", items[i]);
-    }
-    puts("");
-    quicksort(0, LENGTH - 1);
-    for (int i = 0; i < LENGTH; i++)
-    {
-        printf("%d,", items[i]);
-    }
-    puts("");
-    return 0;
-}
+    void *pivot = array_get(_array, hi);
+    unsigned int i = low - 1;
 
-void quicksort(int low, int hi)
-{
-    if (low < hi) {
-        int pivot = partition(low, hi);
-        quicksort(low, pivot - 1);
-        quicksort(pivot + 1, hi);
-    }
-}
-
-int partition(int low, int hi)
-{
-    int pivot = items[hi];
-    int i = low - 1;
-
-    for (int j = low; j <= hi - 1; j++) {
-        if (items[j] < pivot) {
+    for (unsigned int j = low; j <= hi - 1; j++) {
+        if (cmp(array_get(_array, j), pivot) < 0) {
             i++;
-            int tmp = items[i];
-            items[i] = items[j];
-            items[j] = tmp;
+            void *tmp = array_get(_array, i);
+            array_set(_array, array_get(_array, j), i);
+            array_set(_array, tmp, j);
         }
     }
 
-    int tmp = items[i + 1];
-    items[i + 1] = items[hi];
-    items[hi] = tmp;
+    void *tmp = array_get(_array, i + 1);
+    array_set(_array, array_get(_array, hi), i + 1);
+    array_set(_array, tmp, hi);
 
     return (i + 1);
+}
+
+void sort(array *_array, cmp_f cmp, unsigned int low, unsigned int hi)
+{
+    if (low < hi) {
+        unsigned int pivot = partition(_array, cmp, low, hi);
+        sort(_array, cmp, low, pivot - 1);
+        sort(_array, cmp, pivot + 1, hi);
+    }
+}
+
+void quick_sort(array *_array, cmp_f cmp)
+{
+    sort(_array, cmp, 0, _array->length - 1);
 }
