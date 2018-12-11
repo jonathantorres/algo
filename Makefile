@@ -27,6 +27,10 @@ cllist_test: cllist_test.c cllist.o
 array_test: array_test.c array.o
 	$(CFLAGS) -Isrc tests/array_test.c array.o -o array_test
 
+# Circular Buffer
+cbuffer_test: cbuffer_test.c cbuffer.o
+	$(CFLAGS) -Isrc tests/cbuffer_test.c cbuffer.o -o cbuffer_test
+
 # Bubble Sort
 bubble_sort_test: bubble_sort_test.c bubble_sort.o array.o
 	$(CFLAGS) -Isrc tests/bubble_sort_test.c bubble_sort.o array.o -o bubble_sort_test
@@ -65,6 +69,9 @@ queue.o: queue.c queue.h
 array.o: array.c array.h
 	$(CFLAGS) -c src/array.c src/array.h
 
+cbuffer.o: cbuffer.c cbuffer.h
+	$(CFLAGS) -c src/cbuffer.c src/cbuffer.h
+
 bubble_sort.o: bubble_sort.c bubble_sort.h
 	$(CFLAGS) -c src/bubble_sort.c src/bubble_sort.h
 
@@ -81,7 +88,7 @@ quick_sort.o: quick_sort.c quick_sort.h
 	$(CFLAGS) -c src/quick_sort.c src/quick_sort.h
 
 .PHONY: test
-test: sllist_test dllist_test cllist_test stack_test queue_test array_test bubble_sort_test insertion_sort_test selection_sort_test merge_sort_test quick_sort_test
+test: sllist_test dllist_test cllist_test stack_test queue_test array_test bubble_sort_test insertion_sort_test selection_sort_test merge_sort_test quick_sort_test cbuffer_test
 	#php tests/run_tests.php
 	./sllist_test
 	./dllist_test
@@ -94,6 +101,7 @@ test: sllist_test dllist_test cllist_test stack_test queue_test array_test bubbl
 	./selection_sort_test
 	./merge_sort_test
 	./quick_sort_test
+	./cbuffer_test
 
 clean:
 	rm ./*.o
@@ -101,4 +109,4 @@ clean:
 	rm ./sllist_test ./dllist_test ./cllist_test
 	rm ./stack_test ./queue_test ./array_test
 	rm ./bubble_sort_test ./insertion_sort_test ./selection_sort_test
-	rm ./merge_sort_test ./quick_sort_test
+	rm ./merge_sort_test ./quick_sort_test ./cbuffer_test
