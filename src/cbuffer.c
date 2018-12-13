@@ -1,6 +1,7 @@
 #include "cbuffer.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 void *cbuffer_create(unsigned int length)
 {
@@ -55,4 +56,62 @@ void cbuffer_destroy(cbuffer *buffer)
         free(buffer->buffer);
     }
     free(buffer);
+}
+
+unsigned int available_data(cbuffer *buffer)
+{
+    return buffer->end % buffer->length - buffer->start;
+}
+
+int cbuffer_write(cbuffer *buffer, char *data, unsigned int amount)
+{
+    if (!buffer) {
+        fputs("Must provide a valid cbuffer.", stderr);
+        exit(EXIT_FAILURE);
+    }
+
+    if (available_data(buffer) == 0) {
+        buffer->start = 0;
+        buffer->end = 0;
+    }
+
+    // not enough space
+    if (buffer->length - buffer->end < amount) {
+        return -1;
+    }
+
+    void *result = memcpy(buffer->buffer + buffer->end, data, amount);
+    if (!result) {
+        return -1;
+    }
+
+    buffer->end = buffer->end + amount % buffer->length;
+
+    return amount;
+}
+
+int cbuffer_read(cbuffer *buffer, char *target, unsigned int amount)
+{
+    if (!buffer) {
+        fputs("Must provide a valid cbuffer.", stderr);
+        exit(EXIT_FAILURE);
+    }
+
+    if (amount > available_data(buffer)) {
+        return -1;
+    }
+
+    void *result = memcpy(target, buffer->buffer + buffer->start, amount);
+    if (!result) {
+        return -1;
+    }
+
+    buffer->start = buffer->start + amount % buffer->length;
+
+    if (buffer->start == buffer->end) {
+        buffer->start = 0;
+        buffer->end = 0;
+    }
+
+    return amount;
 }
