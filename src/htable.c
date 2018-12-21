@@ -24,6 +24,7 @@ htable *htable_create(htable_compare cmp)
 
     _htable->cmp = cmp;
     _htable->buckets = array_create(NUM_OF_BUCKETS, sizeof(array*));
+    _htable->buckets->length = _htable->buckets->capacity;
 
     return _htable;
 }
@@ -37,9 +38,16 @@ void htable_destroy(htable *_htable)
 
     if (_htable->buckets) {
         for (unsigned int i = 0; i < _htable->buckets->length; i++) {
-            void *bucket = array_get(_htable->buckets, i);
+            array *bucket = array_get(_htable->buckets, i);
             if (bucket) {
-                array_destroy(bucket);
+                // TODO: maybe use array_destroy(bucket);
+                // instead of looping and freeing manually
+                for (unsigned int j = 0; j < bucket->length; j++) {
+                    void *elem = array_get(bucket, j);
+                    if (elem) {
+                        free(elem);
+                    }
+                }
             }
         }
         array_destroy(_htable->buckets);
@@ -54,18 +62,54 @@ unsigned int htable_set(htable *_htable, void *key, void *value)
         exit(EXIT_FAILURE);
     }
 
-    unsigned int bucket_index = fnv1a_hash(key) % NUM_OF_BUCKETS;
-    if (bucket_index >= NUM_OF_BUCKETS || bucket_index <= 0) {
+    size_t bucket_hash = fnv1a_hash(key);
+    unsigned int bucket_index = bucket_hash % NUM_OF_BUCKETS;
+    if (bucket_index >= NUM_OF_BUCKETS || bucket_index < 0) {
         return 1;
     }
 
-    void *bucket = array_get(_htable->buckets, bucket_index);
+    array *bucket = array_get(_htable->buckets, bucket_index);
     if (!bucket) {
         bucket = array_create(NUM_OF_BUCKETS, sizeof(htable_node*));
         array_set(_htable->buckets, bucket, bucket_index);
     }
+
     // create the node
-    // push the node into the bucket
+    htable_node *node = malloc(sizeof(htable_node));
+    if (!node) {
+        return 1;
+    }
+
+    node->key = key;
+    node->value = value;
+    node->hash = bucket_hash;
+    array_push(bucket, node);
+
+    return 0;
+}
+
+void *htable_get(htable *_htable, void *key)
+{
+    if (!_htable) {
+        fputs("Must provide a hashtable.", stderr);
+        exit(EXIT_FAILURE);
+    }
+
+    size_t bucket_hash = fnv1a_hash(key);
+    unsigned int bucket_index = bucket_hash % NUM_OF_BUCKETS;
+    array *bucket = array_get(_htable->buckets, bucket_index);
+    if (!bucket) {
+        return NULL;
+    }
+
+    for (unsigned int i = 0; i < bucket->length; i++) {
+        htable_node *node = array_get(bucket, i);
+        if (node && node->hash == bucket_hash && _htable->cmp(node->key, key) == 0) {
+            return node->value;
+        }
+    }
+
+    return NULL;
 }
 
 

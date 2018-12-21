@@ -15,7 +15,7 @@ typedef struct htable {
 typedef struct htable_node {
     void *key;
     void *value;
-    unsigned int hash;
+    size_t hash;
 } htable_node;
 
 typedef int (*htable_node_cb)(htable_node *node);
