@@ -131,12 +131,12 @@ void array_set(array *_array, void *elem, unsigned int index)
     }
 
     // index is too large
-    if (index >= _array->length + 1) {
+    if (index >= _array->capacity) {
         return;
     }
 
-    if (_array->contents[index] == NULL) {
-        _array->length++;
+    if (index >= _array->length) {
+        _array->length = index + 1;
     }
 
     _array->contents[index] = elem;
