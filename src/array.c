@@ -54,7 +54,7 @@ void array_clear(array *_array)
     unsigned int array_length = _array->length;
 
     for (unsigned int i = 0; i < array_length; i++) {
-        if (_array->contents[i] != NULL) {
+        if (_array->contents[i]) {
             free(_array->contents[i]);
         }
         _array->length--;
