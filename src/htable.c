@@ -18,7 +18,7 @@ htable *htable_create(htable_compare cmp)
     htable *_htable = malloc(sizeof(htable));
 
     if (!_htable) {
-        fputs("Not enough memory.", stderr);
+        fputs("[htable_create] Not enough memory.", stderr);
         exit(EXIT_FAILURE);
     }
 
@@ -32,7 +32,7 @@ htable *htable_create(htable_compare cmp)
 void htable_destroy(htable *_htable)
 {
     if (!_htable) {
-        fputs("Must provide a hashtable.", stderr);
+        fputs("[htable_destroy] Must provide a hashtable.", stderr);
         exit(EXIT_FAILURE);
     }
 
@@ -81,7 +81,7 @@ array *find_bucket(htable *_htable, void *key, size_t *bucket_hash, unsigned int
 unsigned int htable_set(htable *_htable, void *key, void *value)
 {
     if (!_htable) {
-        fputs("Must provide a hashtable.", stderr);
+        fputs("[htable_set] Must provide a hashtable.", stderr);
         exit(EXIT_FAILURE);
     }
 
@@ -106,7 +106,7 @@ unsigned int htable_set(htable *_htable, void *key, void *value)
 void *htable_get(htable *_htable, void *key)
 {
     if (!_htable) {
-        fputs("Must provide a hashtable.", stderr);
+        fputs("[htable_get] Must provide a hashtable.", stderr);
         exit(EXIT_FAILURE);
     }
 
@@ -129,7 +129,7 @@ void *htable_get(htable *_htable, void *key)
 void *htable_remove(htable *_htable, void *key)
 {
     if (!_htable) {
-        fputs("Must provide a hashtable.", stderr);
+        fputs("[htable_remove] Must provide a hashtable.", stderr);
         exit(EXIT_FAILURE);
     }
 
