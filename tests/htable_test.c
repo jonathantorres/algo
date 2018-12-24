@@ -80,9 +80,9 @@ char *test_remove()
     htable_set(_htable, second_key, second_value);
     char *value = htable_remove(_htable, first_key);
     assert(value != NULL, "Value for key 'john' could not be removed");
-    assert(strcmp(value, first_value) == 0, "Value for key 'john' should be 'Jonathan Torres'");
+    assert(strcmp(value, first_value) == 0, "Value for the removed key 'john' should be 'Jonathan Torres'");
     value = htable_get(_htable, first_key);
-    assert(value == NULL, "Value for key 'john' should be NULL");
+    assert(value == NULL, "Value for the removed key 'john' should be NULL");
     htable_destroy(_htable);
 
     return NULL;
