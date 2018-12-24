@@ -33,7 +33,7 @@ array *array_create(unsigned int capacity, size_t item_size)
 void array_destroy(array *_array)
 {
     if (!_array) {
-        fputs("Must provide an array.", stderr);
+        fputs("[array_destroy] Must provide an array.", stderr);
         exit(EXIT_FAILURE);
     }
 
@@ -47,7 +47,7 @@ void array_destroy(array *_array)
 void array_clear(array *_array)
 {
     if (!_array) {
-        fputs("Must provide an array.", stderr);
+        fputs("[array_clear] Must provide an array.", stderr);
         exit(EXIT_FAILURE);
     }
 
@@ -79,7 +79,7 @@ void array_expand(array *_array)
 void array_push(array *_array, void *value)
 {
     if (!_array) {
-        fputs("Must provide an array.", stderr);
+        fputs("[array_push] Must provide an array.", stderr);
         exit(EXIT_FAILURE);
     }
 
@@ -109,7 +109,7 @@ void *remove_element_at(array *_array, unsigned int index)
 void *array_pop(array *_array)
 {
     if (!_array) {
-        fputs("Must provide an array.", stderr);
+        fputs("[array_pop] Must provide an array.", stderr);
         exit(EXIT_FAILURE);
     }
 
@@ -126,7 +126,7 @@ void *array_pop(array *_array)
 void array_set(array *_array, void *elem, unsigned int index)
 {
     if (!_array) {
-        fputs("Must provide an array.", stderr);
+        fputs("[array_set] Must provide an array.", stderr);
         exit(EXIT_FAILURE);
     }
 
@@ -146,7 +146,7 @@ void array_set(array *_array, void *elem, unsigned int index)
 void *array_get(array *_array, unsigned int index)
 {
     if (!_array) {
-        fputs("Must provide an array.", stderr);
+        fputs("[array_get] Must provide an array.", stderr);
         exit(EXIT_FAILURE);
     }
 
@@ -162,7 +162,7 @@ void *array_get(array *_array, unsigned int index)
 void *array_remove(array *_array, unsigned int index)
 {
     if (!_array) {
-        fputs("Must provide an array.", stderr);
+        fputs("[array_remove] Must provide an array.", stderr);
         exit(EXIT_FAILURE);
     }
 
@@ -188,7 +188,7 @@ void *array_remove(array *_array, unsigned int index)
 void array_shift(array *_array, void *value)
 {
     if (!_array) {
-        fputs("Must provide an array.", stderr);
+        fputs("[array_shift] Must provide an array.", stderr);
         exit(EXIT_FAILURE);
     }
 
@@ -213,7 +213,7 @@ void array_shift(array *_array, void *value)
 void *array_unshift(array *_array)
 {
     if (!_array) {
-        fputs("Must provide an array.", stderr);
+        fputs("[array_unshift] Must provide an array.", stderr);
         exit(EXIT_FAILURE);
     }
 
