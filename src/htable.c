@@ -112,7 +112,36 @@ void *htable_get(htable *_htable, void *key)
     return NULL;
 }
 
+void *htable_remove(htable *_htable, void *key)
+{
+    if (!_htable) {
+        fputs("Must provide a hashtable.", stderr);
+        exit(EXIT_FAILURE);
+    }
 
+    void *value = NULL;
+    size_t bucket_hash = fnv1a_hash(key);
+    unsigned int bucket_index = bucket_hash % NUM_OF_BUCKETS;
+    array *bucket = array_get(_htable->buckets, bucket_index);
+    if (!bucket) {
+        return value;
+    }
+
+    for (unsigned int i = 0; i < bucket->length; i++) {
+        htable_node *node = array_get(bucket, i);
+        if (node && node->hash == bucket_hash && _htable->cmp(node->key, key) == 0) {
+            value = node->value;
+            void *last = array_pop(bucket);
+            if (last != node) {
+                array_set(bucket, last, i);
+            }
+            free(node);
+            break;
+        }
+    }
+
+    return value;
+}
 
 
 

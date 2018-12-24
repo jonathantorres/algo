@@ -68,6 +68,11 @@ char *test_get()
     return NULL;
 }
 
+char *test_remove()
+{
+    return NULL;
+}
+
 int main()
 {
     start_tests("hash table tests");
@@ -75,6 +80,7 @@ int main()
     run_test(test_destroy);
     run_test(test_set);
     run_test(test_get);
+    run_test(test_remove);
     end_tests();
 
     return 0;
