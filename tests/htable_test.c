@@ -70,6 +70,21 @@ char *test_get()
 
 char *test_remove()
 {
+    char *first_key = "john";
+    char *second_key = "luis";
+    char *first_value = "Jonathan Torres";
+    char *second_value = "Jorge L Torres";
+
+    htable *_htable = htable_create(htable_compare_fn);
+    htable_set(_htable, first_key, first_value);
+    htable_set(_htable, second_key, second_value);
+    char *value = htable_remove(_htable, first_key);
+    assert(value != NULL, "Value for key 'john' could not be removed");
+    assert(strcmp(value, first_value) == 0, "Value for key 'john' should be 'Jonathan Torres'");
+    value = htable_get(_htable, first_key);
+    assert(value == NULL, "Value for key 'john' should be NULL");
+    htable_destroy(_htable);
+
     return NULL;
 }
 
