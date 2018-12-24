@@ -55,6 +55,29 @@ void htable_destroy(htable *_htable)
     free(_htable);
 }
 
+unsigned int validate_bucket_index(unsigned int bucket_index)
+{
+    if (bucket_index >= NUM_OF_BUCKETS || bucket_index < 0) {
+        return 1;
+    }
+
+    return 0;
+}
+
+array *find_bucket(htable *_htable, void *key, size_t *bucket_hash, unsigned int create_new)
+{
+    *bucket_hash = fnv1a_hash(key);
+    unsigned int bucket_index = *bucket_hash % NUM_OF_BUCKETS;
+    // TODO: add bucket_index validation here
+    array *bucket = array_get(_htable->buckets, bucket_index);
+    if (!bucket && create_new) {
+        bucket = array_create(NUM_OF_BUCKETS, sizeof(htable_node*));
+        array_set(_htable->buckets, bucket, bucket_index);
+    }
+
+    return bucket;
+}
+
 unsigned int htable_set(htable *_htable, void *key, void *value)
 {
     if (!_htable) {
@@ -62,17 +85,9 @@ unsigned int htable_set(htable *_htable, void *key, void *value)
         exit(EXIT_FAILURE);
     }
 
-    size_t bucket_hash = fnv1a_hash(key);
-    unsigned int bucket_index = bucket_hash % NUM_OF_BUCKETS;
-    if (bucket_index >= NUM_OF_BUCKETS || bucket_index < 0) {
-        return 1;
-    }
-
-    array *bucket = array_get(_htable->buckets, bucket_index);
-    if (!bucket) {
-        bucket = array_create(NUM_OF_BUCKETS, sizeof(htable_node*));
-        array_set(_htable->buckets, bucket, bucket_index);
-    }
+    size_t bucket_hash = 0;
+    array *bucket = find_bucket(_htable, key, &bucket_hash, 1);
+    // TODO: validate bucket index, see validate_bucket_index();
 
     // create the node
     htable_node *node = malloc(sizeof(htable_node));
@@ -95,9 +110,8 @@ void *htable_get(htable *_htable, void *key)
         exit(EXIT_FAILURE);
     }
 
-    size_t bucket_hash = fnv1a_hash(key);
-    unsigned int bucket_index = bucket_hash % NUM_OF_BUCKETS;
-    array *bucket = array_get(_htable->buckets, bucket_index);
+    size_t bucket_hash = 0;
+    array *bucket = find_bucket(_htable, key, &bucket_hash, 0);
     if (!bucket) {
         return NULL;
     }
@@ -120,9 +134,8 @@ void *htable_remove(htable *_htable, void *key)
     }
 
     void *value = NULL;
-    size_t bucket_hash = fnv1a_hash(key);
-    unsigned int bucket_index = bucket_hash % NUM_OF_BUCKETS;
-    array *bucket = array_get(_htable->buckets, bucket_index);
+    size_t bucket_hash = 0;
+    array *bucket = find_bucket(_htable, key, &bucket_hash, 0);
     if (!bucket) {
         return value;
     }
@@ -142,6 +155,3 @@ void *htable_remove(htable *_htable, void *key)
 
     return value;
 }
-
-
-
