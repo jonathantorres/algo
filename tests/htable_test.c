@@ -88,6 +88,31 @@ char *test_remove()
     return NULL;
 }
 
+int node_traverse_fn(htable_node *node)
+{
+    if (node && node->key && node->value) {
+        printf("%s:%s,", (char*)node->key, (char*)node->value);
+    }
+
+    return 0;
+}
+
+char *test_traverse()
+{
+    char *first_key = "john";
+    char *second_key = "luis";
+    char *first_value = "Jonathan Torres";
+    char *second_value = "Jorge L Torres";
+
+    htable *_htable = htable_create(htable_compare_fn);
+    htable_set(_htable, first_key, first_value);
+    htable_set(_htable, second_key, second_value);
+    unsigned int rc = htable_traverse(_htable, node_traverse_fn);
+    assert(rc == 0, "There was a problem traversing the htable");
+
+    return NULL;
+}
+
 int main()
 {
     start_tests("hash table tests");
@@ -96,6 +121,7 @@ int main()
     run_test(test_set);
     run_test(test_get);
     run_test(test_remove);
+    run_test(test_traverse);
     end_tests();
 
     return 0;

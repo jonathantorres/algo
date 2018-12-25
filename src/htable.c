@@ -155,3 +155,29 @@ void *htable_remove(htable *_htable, void *key)
 
     return value;
 }
+
+unsigned int htable_traverse(htable *_htable, htable_node_cb cb)
+{
+    if (!_htable) {
+        fputs("[htable_traverse] Must provide a hashtable.", stderr);
+        exit(EXIT_FAILURE);
+    }
+    unsigned int traverse_ok = 1;
+
+    for (unsigned int i = 0; i < _htable->buckets->length; i++) {
+        array *bucket = array_get(_htable->buckets, i);
+        if (bucket) {
+            for (unsigned int j = 0; j < bucket->length; j++) {
+                htable_node *node = array_get(bucket, j);
+                if (node) {
+                    if (!cb(node)) {
+                        traverse_ok = 0;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    return traverse_ok;
+}
