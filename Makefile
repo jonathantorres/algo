@@ -35,6 +35,10 @@ cbuffer_test: cbuffer_test.c cbuffer.o
 htable_test: htable_test.c htable.o array.o
 	$(CFLAGS) -Isrc tests/htable_test.c htable.o array.o -o htable_test
 
+# Trie
+trie_test: trie_test.c trie.o array.o
+	$(CFLAGS) -Isrc tests/trie_test.c trie.o array.o -o trie_test
+
 # Bubble Sort
 bubble_sort_test: bubble_sort_test.c bubble_sort.o array.o
 	$(CFLAGS) -Isrc tests/bubble_sort_test.c bubble_sort.o array.o -o bubble_sort_test
@@ -79,6 +83,9 @@ cbuffer.o: cbuffer.c cbuffer.h
 htable.o: htable.c htable.h
 	$(CFLAGS) -c src/htable.c src/htable.h
 
+trie.o: trie.c trie.h
+	$(CFLAGS) -c src/trie.c src/trie.h
+
 bubble_sort.o: bubble_sort.c bubble_sort.h
 	$(CFLAGS) -c src/bubble_sort.c src/bubble_sort.h
 
@@ -95,7 +102,7 @@ quick_sort.o: quick_sort.c quick_sort.h
 	$(CFLAGS) -c src/quick_sort.c src/quick_sort.h
 
 .PHONY: test
-test: sllist_test dllist_test cllist_test stack_test queue_test array_test bubble_sort_test insertion_sort_test selection_sort_test merge_sort_test quick_sort_test cbuffer_test htable_test
+test: sllist_test dllist_test cllist_test stack_test queue_test array_test bubble_sort_test insertion_sort_test selection_sort_test merge_sort_test quick_sort_test cbuffer_test htable_test trie_test
 	#php tests/run_tests.php
 	./sllist_test
 	./dllist_test
@@ -110,6 +117,7 @@ test: sllist_test dllist_test cllist_test stack_test queue_test array_test bubbl
 	./quick_sort_test
 	./cbuffer_test
 	./htable_test
+	./trie_test
 
 clean:
 	rm ./*.o
@@ -118,4 +126,4 @@ clean:
 	rm ./stack_test ./queue_test ./array_test
 	rm ./bubble_sort_test ./insertion_sort_test ./selection_sort_test
 	rm ./merge_sort_test ./quick_sort_test ./cbuffer_test
-	rm ./htable_test
+	rm ./htable_test ./trie_test
