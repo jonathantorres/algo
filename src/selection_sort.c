@@ -4,7 +4,7 @@
 void selection_sort(array *_array, cmp_f cmp)
 {
     if (!_array) {
-        fputs("Must provide an array.", stderr);
+        fputs("[selection_sort] Must provide an array.", stderr);
         exit(EXIT_FAILURE);
     }
 

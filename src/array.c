@@ -11,7 +11,7 @@ array *array_create(unsigned int capacity, size_t item_size)
     array *_array = malloc(sizeof(array));
 
     if (!_array) {
-        fputs("Not enough memory.", stderr);
+        fputs("[array_create] Not enough memory.", stderr);
         exit(EXIT_FAILURE);
     }
 
@@ -22,7 +22,7 @@ array *array_create(unsigned int capacity, size_t item_size)
     _array->contents = calloc(_array->capacity, _array->item_size);
 
     if (!_array->contents) {
-        fputs("Not enough memory.", stderr);
+        fputs("[array_create] Not enough memory.", stderr);
         exit(EXIT_FAILURE);
     }
 
@@ -67,7 +67,7 @@ void array_expand(array *_array)
     void *contents = realloc(_array->contents, new_capacity * _array->item_size);
 
     if (!contents) {
-        fputs("Not enough memory.", stderr);
+        fputs("[array_expand] Not enough memory.", stderr);
         exit(EXIT_FAILURE);
     }
 
