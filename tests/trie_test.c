@@ -13,7 +13,7 @@ char *test_create()
     assert(_trie != NULL, "The trie should not be NULL");
     assert(_trie->root != NULL, "The root of the trie should not be NULL");
     assert(_trie->cmp == trie_cmp_fn, "The comparison function for the trie cannot be set");
-    // trie_destroy(_trie);
+    trie_destroy(_trie);
 
     return NULL;
 }
@@ -25,7 +25,7 @@ char *test_destroy()
     trie_insert(_trie, "luis", "Jorge L Torres");
     trie_insert(_trie, "chris", "Christopher Torres");
     trie_insert(_trie, "mar", "Marjory Torres");
-    // trie_destroy(_trie);
+    trie_destroy(_trie);
 
     return NULL;
 }
@@ -41,7 +41,7 @@ char *test_insert()
     assert(rc == 0, "They key 'chris' was not inserted succesfully");
     rc = trie_insert(_trie, "mar", "Marjory Torres");
     assert(rc == 0, "They key 'mar' was not inserted succesfully");
-    // trie_destroy(_trie);
+    trie_destroy(_trie);
 
     return NULL;
 }

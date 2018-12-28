@@ -25,6 +25,19 @@ static void *create_node(void *value)
     return node;
 }
 
+static void free_node(trie_node *node)
+{
+    // for (unsigned int i = 0; i < node->paths->length; i++) {
+    //     void *item = array_get(node->paths, i);
+    //     if (item) {
+    //         free(item);
+    //     }
+    // }
+    // free(node->paths);
+    array_destroy(node->paths);
+    free(node);
+}
+
 static void free_nodes(trie_node *node)
 {
     trie_node *curr_node = NULL;
@@ -32,16 +45,9 @@ static void free_nodes(trie_node *node)
     for (unsigned int i = 0; i < node->paths->length; i++) {
         curr_node = array_get(node->paths, i);
         if (curr_node) {
+            // we reached the end
             if (strcmp(curr_node->value, "") != 0) {
-                // we reached the end
-                for (unsigned int j = 0; j < curr_node->paths->length; j++) {
-                    void *item = array_get(curr_node->paths, j);
-                    if (item) {
-                        free(item);
-                    }
-                }
-                free(curr_node->paths);
-                free(curr_node);
+                free_node(curr_node);
             } else {
                 free_nodes(curr_node);
             }
@@ -79,15 +85,7 @@ void trie_destroy(trie *_trie)
     }
 
     free_nodes(_trie->root);
-
-    // while (root) {
-    //     for (unsigned int i = 0; i < root->paths->length; i++) {
-    //         curr_node = array_get(root->paths, i);
-    //         if (curr_node) {
-    //             root = curr_node;
-    //         }
-    //     }
-    // }
+    free(_trie);
 }
 
 unsigned int trie_insert(trie *_trie, void *key, void *value)
