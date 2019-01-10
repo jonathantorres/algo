@@ -122,8 +122,4 @@ test: sllist_test dllist_test cllist_test stack_test queue_test array_test bubbl
 clean:
 	rm ./*.o
 	rm src/*.h.gch
-	rm ./sllist_test ./dllist_test ./cllist_test
-	rm ./stack_test ./queue_test ./array_test
-	rm ./bubble_sort_test ./insertion_sort_test ./selection_sort_test
-	rm ./merge_sort_test ./quick_sort_test ./cbuffer_test
-	rm ./htable_test ./trie_test
+	rm ./*_test
