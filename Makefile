@@ -1,7 +1,13 @@
 VPATH = src tests
 CFLAGS = gcc -Wall -Wextra -Isrc
+CPPFLAGS = g++ -Wall -Wextra -Isrc
 
-all: test
+all: test hangman
+
+# Hangman game
+hangman: hangman/hangman.cpp
+	$(CPPFLAGS) src/hangman/hangman.cpp -o hangman
+	cp src/hangman/words.txt words.txt
 
 # Singly linked list
 sllist_test: sllist_test.c sllist.o
@@ -123,3 +129,4 @@ clean:
 	rm ./*.o
 	rm src/*.h.gch
 	rm ./*_test
+	rm -f ./hangman
