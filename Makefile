@@ -1,6 +1,6 @@
 VPATH = src tests bin
 CFLAGS = gcc -Wall -Wextra -Isrc
-CPPFLAGS = g++ -Wall -Wextra -Isrc
+CPPFLAGS = g++ -std=c++11 -Wall -Wextra -Isrc
 
 all: test hangman
 
