@@ -33,8 +33,7 @@ char *test_new()
     queue *_queue = queue_new();
 
     assert(_queue != NULL, "Failed creating the queue");
-    assert(_queue->length == 0, "The queue should have 0 nodes");
-
+    assert(queue_length(_queue) == 0, "The queue should have 0 nodes");
     queue_destroy(_queue);
 
     return NULL;
@@ -55,8 +54,7 @@ char *test_enqueue()
     queue_enqueue(_queue, mar);
 
     assert(queue_peek(_queue) == john, "John must be the top item in the queue");
-    assert(_queue->length == 4, "Length of the queue must be 4");
-
+    assert(queue_length(_queue) == 4, "Length of the queue must be 4");
     queue_destroy(_queue);
 
     return NULL;
@@ -82,9 +80,7 @@ char *test_clear()
     queue_enqueue(_queue, "two");
     queue_enqueue(_queue, "three");
     queue_clear(_queue);
-
-    assert(_queue->length == 0, "queue length must be 0");
-
+    assert(queue_length(_queue) == 0, "queue length must be 0");
     queue_destroy(_queue);
 
     return NULL;
@@ -103,11 +99,10 @@ char *test_dequeue()
     queue_enqueue(_queue, two);
     queue_enqueue(_queue, three);
 
-    assert(_queue->length == 4, "queue length must be 4");
+    assert(queue_length(_queue) == 4, "queue length must be 4");
     char *value = (char*) queue_dequeue(_queue);
-    assert(_queue->length == 3, "queue length must be 3");
+    assert(queue_length(_queue) == 3, "queue length must be 3");
     assert(strcmp(zero, value) == 0, "queue value should be equal");
-
     queue_destroy(_queue);
 
     return NULL;
@@ -126,8 +121,26 @@ char *test_peek()
     queue_enqueue(_queue, luis);
     queue_enqueue(_queue, chris);
     queue_enqueue(_queue, mar);
-
     assert(queue_peek(_queue) == john, "John must be the top item in the queue");
+    queue_destroy(_queue);
+
+    return NULL;
+}
+
+char *test_length()
+{
+    queue *_queue = queue_new();
+
+    char *john = "John";
+    char *luis = "Luis";
+    char *chris = "Chris";
+    char *mar = "Marjorie";
+
+    queue_enqueue(_queue, john);
+    queue_enqueue(_queue, luis);
+    queue_enqueue(_queue, chris);
+    queue_enqueue(_queue, mar);
+    assert(queue_length(_queue) == 4, "Length of queue should be 4");
     queue_destroy(_queue);
 
     return NULL;
@@ -142,6 +155,7 @@ int main()
     run_test(test_enqueue);
     run_test(test_dequeue);
     run_test(test_peek);
+    run_test(test_length);
     end_tests();
 
     return 0;

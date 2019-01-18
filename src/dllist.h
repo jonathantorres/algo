@@ -9,7 +9,6 @@ typedef struct dllist_node {
 
 typedef struct dllist {
     dllist_node *first;
-    int length;
 } dllist;
 
 typedef int(*dllist_cmp)(void *a, void *b);
@@ -22,6 +21,9 @@ void dllist_clear(dllist *list);
 
 // destroy the list
 void dllist_destroy(dllist *list);
+
+// get the length of the list
+int dllist_length(dllist *list);
 
 // insert at the end
 void dllist_push(dllist *list, void *value);

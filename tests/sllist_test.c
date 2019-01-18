@@ -37,7 +37,7 @@ char *test_create()
     sllist *list = sllist_new();
 
     assert(list != NULL, "Failed creating the list");
-    assert(list->length == 0, "List should have 0 nodes");
+    assert(sllist_length(list) == 0, "List should have 0 nodes");
     assert(list->first == NULL, "First item in the list should be NULL");
 
     sllist_destroy(list);
@@ -60,7 +60,7 @@ char *test_push()
     sllist_push(list, mar);
 
     assert(list->first->value == john, "John must be the first node in the list");
-    assert(list->length == 4, "Length of the list must be 4");
+    assert(sllist_length(list) == 4, "Length of the list must be 4");
 
     sllist_destroy(list);
     return NULL;
@@ -84,7 +84,7 @@ char *test_clear()
     sllist_push(list, "three");
     sllist_clear(list);
 
-    assert(list->length == 0, "List length must be 0");
+    assert(sllist_length(list) == 0, "List length must be 0");
 
     sllist_destroy(list);
 
@@ -98,9 +98,9 @@ char *test_shift()
     sllist_push(list, "two");
     sllist_push(list, "three");
 
-    assert(list->length == 3, "List length must be 3");
+    assert(sllist_length(list) == 3, "List length must be 3");
     sllist_shift(list, "zero");
-    assert(list->length == 4, "List length must be 4");
+    assert(sllist_length(list) == 4, "List length must be 4");
 
     sllist_destroy(list);
 
@@ -120,9 +120,9 @@ char *test_unshift()
     sllist_push(list, two);
     sllist_push(list, three);
 
-    assert(list->length == 4, "List length must be 4");
+    assert(sllist_length(list) == 4, "List length must be 4");
     char *value = (char*) sllist_unshift(list);
-    assert(list->length == 3, "List length must be 3");
+    assert(sllist_length(list) == 3, "List length must be 3");
     assert(strcmp(zero, value) == 0, "List should be equal");
 
     sllist_destroy(list);
@@ -143,9 +143,9 @@ char *test_pop()
     sllist_push(list, two);
     sllist_push(list, three);
 
-    assert(list->length == 4, "List length must be 4");
+    assert(sllist_length(list) == 4, "List length must be 4");
     char *value = (char*) sllist_pop(list);
-    assert(list->length == 3, "List length must be 3");
+    assert(sllist_length(list) == 3, "List length must be 3");
     assert(strcmp(three, value) == 0, "List should be equal");
 
     sllist_destroy(list);
@@ -161,14 +161,13 @@ char *test_remove()
     sllist_push(list, "two");
     sllist_push(list, "three");
 
-    assert(list->length == 4, "List length must be 4");
+    assert(sllist_length(list) == 4, "List length must be 4");
     sllist_remove(list, "zero", cmp_func);
-    assert(list->length == 3, "List length must be 3");
+    assert(sllist_length(list) == 3, "List length must be 3");
     sllist_remove(list, "two", cmp_func);
-    assert(list->length == 2, "List length must be 2");
+    assert(sllist_length(list) == 2, "List length must be 2");
     sllist_remove(list, "one", cmp_func);
-    assert(list->length == 1, "List length must be 1");
-
+    assert(sllist_length(list) == 1, "List length must be 1");
     sllist_destroy(list);
 
     return NULL;
@@ -182,14 +181,26 @@ char *test_exists()
     sllist_push(list, "two");
     sllist_push(list, "three");
 
-    assert(list->length == 4, "List length must be 4");
+    assert(sllist_length(list) == 4, "List length must be 4");
     assert(sllist_exists(list, "zero", cmp_func) == 1, "zero should exist in the list");
     assert(sllist_exists(list, "one", cmp_func) == 1, "one should exist in the list");
     assert(sllist_exists(list, "two", cmp_func) == 1, "two should exist in the list");
     assert(sllist_exists(list, "three", cmp_func) == 1, "three should exist in the list");
     assert(sllist_exists(list, "foo", cmp_func) == 0, "foo shouldn't exist in the list");
-    assert(list->length == 4, "List length must be 4");
+    assert(sllist_length(list) == 4, "List length must be 4");
+    sllist_destroy(list);
 
+    return NULL;
+}
+
+char *test_length()
+{
+    sllist *list = sllist_new();
+    sllist_push(list, "zero");
+    sllist_push(list, "one");
+    sllist_push(list, "two");
+    sllist_push(list, "three");
+    assert(sllist_length(list) == 4, "List length must be 4");
     sllist_destroy(list);
 
     return NULL;
@@ -207,6 +218,7 @@ int main()
     run_test(test_pop);
     run_test(test_remove);
     run_test(test_exists);
+    run_test(test_length);
     end_tests();
 
     return 0;

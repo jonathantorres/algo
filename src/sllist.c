@@ -41,7 +41,6 @@ sllist *sllist_new()
         exit(EXIT_FAILURE);
     }
 
-    new_list->length = 0;
     new_list->first = NULL;
 
     return new_list;
@@ -59,13 +58,11 @@ void sllist_clear(sllist *list)
 
             if (prev_node) {
                 destroy_node(prev_node);
-                list->length--;
             }
         }
 
         if (current_node) {
             destroy_node(current_node);
-            list->length--;
         }
 
         list->first = NULL;
@@ -86,6 +83,31 @@ void sllist_destroy(sllist *list)
     list = NULL;
 }
 
+// get the length of the list
+int sllist_length(sllist *list)
+{
+    if (!list) {
+        fputs("Must provide a sllist.", stderr);
+        exit(EXIT_FAILURE);
+    }
+
+    int length = 0;
+
+    if (list->first != NULL) {
+        sllist_node *current_node = list->first;
+        sllist_node *prev_node = NULL;
+        length++;
+
+        while (current_node->next != NULL) {
+            prev_node = current_node;
+            current_node = current_node->next;
+            length++;
+        }
+    }
+
+    return length;
+}
+
 // insert at the end
 void sllist_push(sllist *list, void *value)
 {
@@ -95,7 +117,6 @@ void sllist_push(sllist *list, void *value)
     }
 
     sllist_node *new_node = create_node(value);
-    list->length++;
 
     // list is empty, this is the first element
     if (list->first == NULL) {
@@ -121,7 +142,6 @@ void sllist_shift(sllist *list, void *value)
     }
 
     sllist_node *new_node = create_node(value);
-    list->length++;
 
     // list is empty, this is the first element
     if (list->first == NULL) {
@@ -145,8 +165,6 @@ void *sllist_unshift(sllist *list)
     if (list->first == NULL) {
         return NULL;
     }
-
-    list->length--;
 
     // list has just 1 node
     if (list->first->next == NULL) {
@@ -178,8 +196,6 @@ void *sllist_pop(sllist *list)
     if (list->first == NULL) {
         return NULL;
     }
-
-    list->length--;
 
     // list has just 1 node
     if (list->first->next == NULL) {
@@ -239,7 +255,6 @@ void sllist_remove(sllist *list, void *value, sllist_cmp cmp)
         sllist_node *next_node = current_node->next;
         list->first = next_node;
         destroy_node(current_node);
-        list->length--;
         return;
     }
 
@@ -251,7 +266,6 @@ void sllist_remove(sllist *list, void *value, sllist_cmp cmp)
             // remove the node
             prev_node->next = current_node->next;
             destroy_node(current_node);
-            list->length--;
             break;
         }
     }

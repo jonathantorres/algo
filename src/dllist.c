@@ -44,7 +44,6 @@ dllist *dllist_new()
         exit(EXIT_FAILURE);
     }
 
-    new_list->length = 0;
     new_list->first = NULL;
 
     return new_list;
@@ -61,13 +60,11 @@ void dllist_clear(dllist *list)
 
             if (current_node->prev) {
                 destroy_node(current_node->prev);
-                list->length--;
             }
         }
 
         if (current_node) {
             destroy_node(current_node);
-            list->length--;
         }
 
         list->first = NULL;
@@ -89,6 +86,29 @@ void dllist_destroy(dllist *list)
     list = NULL;
 }
 
+// get the length of the list
+int dllist_length(dllist *list)
+{
+    if (!list) {
+        fputs("Must provide a dllist.", stderr);
+        exit(EXIT_FAILURE);
+    }
+
+    int length = 0;
+
+    if (list->first != NULL) {
+        dllist_node *current_node = list->first;
+        length++;
+
+        while (current_node->next != NULL) {
+            current_node = current_node->next;
+            length++;
+        }
+    }
+
+    return length;
+}
+
 // insert at the end
 void dllist_push(dllist *list, void *value)
 {
@@ -98,7 +118,6 @@ void dllist_push(dllist *list, void *value)
     }
 
     dllist_node *new_node = create_node(value);
-    list->length++;
 
     // list is empty, this is the first element
     if (list->first == NULL) {
@@ -125,7 +144,6 @@ void dllist_shift(dllist *list, void *value)
     }
 
     dllist_node *new_node = create_node(value);
-    list->length++;
 
     // list is empty, this is the first element
     if (list->first == NULL) {
@@ -150,8 +168,6 @@ void *dllist_unshift(dllist *list)
     if (list->first == NULL) {
         return NULL;
     }
-
-    list->length--;
 
     // list has just 1 node
     if (list->first->next == NULL) {
@@ -183,8 +199,6 @@ void *dllist_pop(dllist *list)
     if (list->first == NULL) {
         return NULL;
     }
-
-    list->length--;
 
     // list has just 1 node
     if (list->first->next == NULL) {
@@ -241,7 +255,6 @@ void dllist_remove(dllist *list, void *value, dllist_cmp cmp)
         next_node->prev = NULL;
         list->first = next_node;
         destroy_node(current_node);
-        list->length--;
         return;
     }
 
@@ -253,7 +266,6 @@ void dllist_remove(dllist *list, void *value, dllist_cmp cmp)
             current_node->prev->next = current_node->next;
             current_node->next->prev = current_node->prev;
             destroy_node(current_node);
-            list->length--;
             break;
         }
     }

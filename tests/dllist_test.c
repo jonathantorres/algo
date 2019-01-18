@@ -37,9 +37,8 @@ char *test_create()
     dllist *list = dllist_new();
 
     assert(list != NULL, "Failed creating the list");
-    assert(list->length == 0, "List should have 0 nodes");
+    assert(dllist_length(list) == 0, "List should have 0 nodes");
     assert(list->first == NULL, "First item in the list should be NULL");
-
     dllist_destroy(list);
 
     return NULL;
@@ -60,9 +59,9 @@ char *test_push()
     dllist_push(list, mar);
 
     assert(list->first->value == john, "John must be the first node in the list");
-    assert(list->length == 4, "Length of the list must be 4");
-
+    assert(dllist_length(list) == 4, "Length of the list must be 4");
     dllist_destroy(list);
+
     return NULL;
 }
 
@@ -86,9 +85,7 @@ char *test_clear()
     dllist_push(list, "two");
     dllist_push(list, "three");
     dllist_clear(list);
-
-    assert(list->length == 0, "List length must be 0");
-
+    assert(dllist_length(list) == 0, "List length must be 0");
     dllist_destroy(list);
 
     return NULL;
@@ -102,10 +99,9 @@ char *test_shift()
     dllist_push(list, "two");
     dllist_push(list, "three");
 
-    assert(list->length == 3, "List length must be 3");
+    assert(dllist_length(list) == 3, "List length must be 3");
     dllist_shift(list, "zero");
-    assert(list->length == 4, "List length must be 4");
-
+    assert(dllist_length(list) == 4, "List length must be 4");
     dllist_destroy(list);
 
     return NULL;
@@ -124,11 +120,10 @@ char *test_unshift()
     dllist_push(list, two);
     dllist_push(list, three);
 
-    assert(list->length == 4, "List length must be 4");
+    assert(dllist_length(list) == 4, "List length must be 4");
     char *value = (char*) dllist_unshift(list);
-    assert(list->length == 3, "List length must be 3");
+    assert(dllist_length(list) == 3, "List length must be 3");
     assert(strcmp(zero, value) == 0, "List should be equal");
-
     dllist_destroy(list);
 
     return NULL;
@@ -147,11 +142,10 @@ char *test_pop()
     dllist_push(list, two);
     dllist_push(list, three);
 
-    assert(list->length == 4, "List length must be 4");
+    assert(dllist_length(list) == 4, "List length must be 4");
     char *value = (char*) dllist_pop(list);
-    assert(list->length == 3, "List length must be 3");
+    assert(dllist_length(list) == 3, "List length must be 3");
     assert(strcmp(three, value) == 0, "List should be equal");
-
     dllist_destroy(list);
 
     return NULL;
@@ -165,14 +159,13 @@ char *test_remove()
     dllist_push(list, "two");
     dllist_push(list, "three");
 
-    assert(list->length == 4, "List length must be 4");
+    assert(dllist_length(list) == 4, "List length must be 4");
     dllist_remove(list, "zero", cmp_func);
-    assert(list->length == 3, "List length must be 3");
+    assert(dllist_length(list) == 3, "List length must be 3");
     dllist_remove(list, "two", cmp_func);
-    assert(list->length == 2, "List length must be 2");
+    assert(dllist_length(list) == 2, "List length must be 2");
     dllist_remove(list, "one", cmp_func);
-    assert(list->length == 1, "List length must be 1");
-
+    assert(dllist_length(list) == 1, "List length must be 1");
     dllist_destroy(list);
 
     return NULL;
@@ -186,14 +179,26 @@ char *test_exists()
     dllist_push(list, "two");
     dllist_push(list, "three");
 
-    assert(list->length == 4, "List length must be 4");
+    assert(dllist_length(list) == 4, "List length must be 4");
     assert(dllist_exists(list, "zero", cmp_func) == 1, "zero should exist in the list");
     assert(dllist_exists(list, "one", cmp_func) == 1, "one should exist in the list");
     assert(dllist_exists(list, "two", cmp_func) == 1, "two should exist in the list");
     assert(dllist_exists(list, "three", cmp_func) == 1, "three should exist in the list");
     assert(dllist_exists(list, "foo", cmp_func) == 0, "foo shouldn't exist in the list");
-    assert(list->length == 4, "List length must be 4");
+    assert(dllist_length(list) == 4, "List length must be 4");
+    dllist_destroy(list);
 
+    return NULL;
+}
+
+char *test_length()
+{
+    dllist *list = dllist_new();
+    dllist_push(list, "zero");
+    dllist_push(list, "one");
+    dllist_push(list, "two");
+    dllist_push(list, "three");
+    assert(dllist_length(list) == 4, "List length must be 4");
     dllist_destroy(list);
 
     return NULL;
@@ -211,6 +216,7 @@ int main()
     run_test(test_pop);
     run_test(test_remove);
     run_test(test_exists);
+    run_test(test_length);
     end_tests();
 
     return 0;

@@ -44,7 +44,6 @@ cllist *cllist_new()
         exit(EXIT_FAILURE);
     }
 
-    new_list->length = 0;
     new_list->first = NULL;
     new_list->last = NULL;
 
@@ -62,13 +61,11 @@ void cllist_clear(cllist *list)
 
             if (current_node->prev) {
                 destroy_node(current_node->prev);
-                list->length--;
             }
         }
 
         if (current_node) {
             destroy_node(current_node);
-            list->length--;
         }
 
         list->first = NULL;
@@ -91,6 +88,29 @@ void cllist_destroy(cllist *list)
     list = NULL;
 }
 
+// get the length of the list
+int cllist_length(cllist *list)
+{
+    if (!list) {
+        fputs("Must provide a cllist.", stderr);
+        exit(EXIT_FAILURE);
+    }
+
+    int length = 0;
+
+    if (list->first != NULL) {
+        cllist_node *current_node = list->first;
+        length++;
+
+        while (current_node != list->last) {
+            current_node = current_node->next;
+            length++;
+        }
+    }
+
+    return length;
+}
+
 // insert at the end
 void cllist_push(cllist *list, void *value)
 {
@@ -100,7 +120,6 @@ void cllist_push(cllist *list, void *value)
     }
 
     cllist_node *new_node = create_node(value);
-    list->length++;
 
     // list is empty, this is the first element
     if (list->first == NULL) {
@@ -130,7 +149,6 @@ void cllist_shift(cllist *list, void *value)
     }
 
     cllist_node *new_node = create_node(value);
-    list->length++;
 
     // list is empty, this is the first element
     if (list->first == NULL) {
@@ -155,8 +173,6 @@ void *cllist_unshift(cllist *list)
     if (list->first == NULL) {
         return NULL;
     }
-
-    list->length--;
 
     // list has just 1 node
     if (list->first == list->last) {
@@ -191,8 +207,6 @@ void *cllist_pop(cllist *list)
     if (list->first == NULL) {
         return NULL;
     }
-
-    list->length--;
 
     // list has just 1 node
     if (list->first == list->last) {
@@ -251,7 +265,6 @@ void cllist_remove(cllist *list, void *value, cllist_cmp cmp)
         next_node->prev = list->last;
         list->first = next_node;
         destroy_node(current_node);
-        list->length--;
         return;
     }
 
@@ -263,7 +276,6 @@ void cllist_remove(cllist *list, void *value, cllist_cmp cmp)
             current_node->prev->next = current_node->next;
             current_node->next->prev = current_node->prev;
             destroy_node(current_node);
-            list->length--;
             break;
         }
     }

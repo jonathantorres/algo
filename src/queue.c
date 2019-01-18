@@ -63,3 +63,13 @@ void queue_clear(queue *_queue)
 
     dllist_clear(_queue);
 }
+
+int queue_length(queue *_queue)
+{
+    if (!_queue) {
+        fputs("Must provide a valid queue.", stderr);
+        return 0;
+    }
+
+    return dllist_length(_queue);
+}

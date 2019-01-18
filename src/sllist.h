@@ -8,7 +8,6 @@ typedef struct sllist_node {
 
 typedef struct sllist {
     sllist_node *first;
-    int length;
 } sllist;
 
 typedef int(*sllist_cmp)(void *a, void *b);
@@ -21,6 +20,9 @@ void sllist_clear(sllist *list);
 
 // destroy the list
 void sllist_destroy(sllist *list);
+
+// get the length of the list
+int sllist_length(sllist *list);
 
 // insert at the end
 void sllist_push(sllist *list, void *value);

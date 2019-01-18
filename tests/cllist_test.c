@@ -37,10 +37,9 @@ char *test_create()
     cllist *list = cllist_new();
 
     assert(list != NULL, "Failed creating the list");
-    assert(list->length == 0, "List should have 0 nodes");
+    assert(cllist_length(list) == 0, "List should have 0 nodes");
     assert(list->first == NULL, "First item in the list should be NULL");
     assert(list->last == NULL, "Last item in the list should be NULL");
-
     cllist_destroy(list);
 
     return NULL;
@@ -61,10 +60,10 @@ char *test_push()
     cllist_push(list, mar);
 
     assert(list->first->value == john, "John must be the first node in the list");
-    assert(list->length == 4, "Length of the list must be 4");
+    assert(cllist_length(list) == 4, "Length of the list must be 4");
     assert(list->last->value == mar, "Marjorie must be the last node in the list");
-
     cllist_destroy(list);
+
     return NULL;
 }
 
@@ -88,9 +87,7 @@ char *test_clear()
     cllist_push(list, "two");
     cllist_push(list, "three");
     cllist_clear(list);
-
-    assert(list->length == 0, "List length must be 0");
-
+    assert(cllist_length(list) == 0, "List length must be 0");
     cllist_destroy(list);
 
     return NULL;
@@ -103,11 +100,9 @@ char *test_shift()
     cllist_push(list, "one");
     cllist_push(list, "two");
     cllist_push(list, "three");
-
-    assert(list->length == 3, "List length must be 3");
+    assert(cllist_length(list) == 3, "List length must be 3");
     cllist_shift(list, "zero");
-    assert(list->length == 4, "List length must be 4");
-
+    assert(cllist_length(list) == 4, "List length must be 4");
     cllist_destroy(list);
 
     return NULL;
@@ -126,11 +121,10 @@ char *test_unshift()
     cllist_push(list, two);
     cllist_push(list, three);
 
-    assert(list->length == 4, "List length must be 4");
+    assert(cllist_length(list) == 4, "List length must be 4");
     char *value = (char*) cllist_unshift(list);
-    assert(list->length == 3, "List length must be 3");
+    assert(cllist_length(list) == 3, "List length must be 3");
     assert(strcmp(zero, value) == 0, "List should be equal");
-
     cllist_destroy(list);
 
     return NULL;
@@ -149,11 +143,10 @@ char *test_pop()
     cllist_push(list, two);
     cllist_push(list, three);
 
-    assert(list->length == 4, "List length must be 4");
+    assert(cllist_length(list) == 4, "List length must be 4");
     char *value = (char*) cllist_pop(list);
-    assert(list->length == 3, "List length must be 3");
+    assert(cllist_length(list) == 3, "List length must be 3");
     assert(strcmp(three, value) == 0, "List should be equal");
-
     cllist_destroy(list);
 
     return NULL;
@@ -167,14 +160,13 @@ char *test_remove()
     cllist_push(list, "two");
     cllist_push(list, "three");
 
-    assert(list->length == 4, "List length must be 4");
+    assert(cllist_length(list) == 4, "List length must be 4");
     cllist_remove(list, "zero", cmp_func);
-    assert(list->length == 3, "List length must be 3");
+    assert(cllist_length(list) == 3, "List length must be 3");
     cllist_remove(list, "two", cmp_func);
-    assert(list->length == 2, "List length must be 2");
+    assert(cllist_length(list) == 2, "List length must be 2");
     cllist_remove(list, "one", cmp_func);
-    assert(list->length == 1, "List length must be 1");
-
+    assert(cllist_length(list) == 1, "List length must be 1");
     cllist_destroy(list);
 
     return NULL;
@@ -188,14 +180,26 @@ char *test_exists()
     cllist_push(list, "two");
     cllist_push(list, "three");
 
-    assert(list->length == 4, "List length must be 4");
+    assert(cllist_length(list) == 4, "List length must be 4");
     assert(cllist_exists(list, "zero", cmp_func) == 1, "zero should exist in the list");
     assert(cllist_exists(list, "one", cmp_func) == 1, "one should exist in the list");
     assert(cllist_exists(list, "two", cmp_func) == 1, "two should exist in the list");
     assert(cllist_exists(list, "three", cmp_func) == 1, "three should exist in the list");
     assert(cllist_exists(list, "foo", cmp_func) == 0, "foo shouldn't exist in the list");
-    assert(list->length == 4, "List length must be 4");
+    assert(cllist_length(list) == 4, "List length must be 4");
+    cllist_destroy(list);
 
+    return NULL;
+}
+
+char *test_length()
+{
+    cllist *list = cllist_new();
+    cllist_push(list, "zero");
+    cllist_push(list, "one");
+    cllist_push(list, "two");
+    cllist_push(list, "three");
+    assert(cllist_length(list) == 4, "List length must be 4");
     cllist_destroy(list);
 
     return NULL;
@@ -213,6 +217,7 @@ int main()
     run_test(test_pop);
     run_test(test_remove);
     run_test(test_exists);
+    run_test(test_length);
     end_tests();
 
     return 0;

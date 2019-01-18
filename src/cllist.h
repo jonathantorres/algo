@@ -10,7 +10,6 @@ typedef struct cllist_node {
 typedef struct cllist {
     cllist_node *first;
     cllist_node *last;
-    int length;
 } cllist;
 
 typedef int(*cllist_cmp)(void *a, void *b);
@@ -23,6 +22,9 @@ void cllist_clear(cllist *list);
 
 // destroy the list
 void cllist_destroy(cllist *list);
+
+// get the length of the list
+int cllist_length(cllist *list);
 
 // insert at the end
 void cllist_push(cllist *list, void *value);

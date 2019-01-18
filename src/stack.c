@@ -63,3 +63,13 @@ void stack_clear(stack *_stack)
 
     dllist_clear(_stack);
 }
+
+int stack_length(stack *_stack)
+{
+    if (!_stack) {
+        fputs("Must provide a valid stack.", stderr);
+        return 0;
+    }
+
+    return dllist_length(_stack);
+}
