@@ -61,14 +61,14 @@ void *trie_create(trie_compare cmp)
 
     if (!_trie) {
         fputs("[trie_create] Not enough memory.", stderr);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     trie_node *root = create_node("");
     if (!root) {
         free(_trie);
         fputs("[trie_create] Root node could not be created.", stderr);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     _trie->root = root;
@@ -81,7 +81,7 @@ void trie_destroy(trie *_trie)
 {
     if (!_trie) {
         fputs("[trie_destroy] Must provide a trie.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     free_nodes(_trie->root);
@@ -92,7 +92,7 @@ unsigned int trie_insert(trie *_trie, void *key, void *value)
 {
     if (!_trie) {
         fputs("[trie_insert] Must provide a trie.", stderr);
-        exit(EXIT_FAILURE);
+        return 1;
     }
 
     trie_node *root = _trie->root;

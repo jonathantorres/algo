@@ -8,7 +8,7 @@ sllist_node *create_node(void *value)
 
     if (!node) {
         fputs("Not enough memory.", stderr);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     node->next = NULL;
@@ -21,14 +21,13 @@ void destroy_node(sllist_node *node)
 {
     if (!node) {
         fputs("A valid node must be provided.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     node->next = NULL;
     node->value = NULL;
 
     free(node);
-
     node = NULL;
 }
 
@@ -38,7 +37,7 @@ sllist *sllist_new()
 
     if (!new_list) {
         fputs("Not enough memory.", stderr);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     new_list->first = NULL;
@@ -73,13 +72,11 @@ void sllist_destroy(sllist *list)
 {
     if (!list) {
         fputs("Must provide a sllist.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     sllist_clear(list);
-
     free(list);
-
     list = NULL;
 }
 
@@ -88,7 +85,7 @@ int sllist_length(sllist *list)
 {
     if (!list) {
         fputs("Must provide a sllist.", stderr);
-        exit(EXIT_FAILURE);
+        return -1;
     }
 
     int length = 0;
@@ -113,7 +110,7 @@ void sllist_push(sllist *list, void *value)
 {
     if (!list) {
         fputs("Must provide a sllist.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     sllist_node *new_node = create_node(value);
@@ -138,7 +135,7 @@ void sllist_shift(sllist *list, void *value)
 {
     if (!list) {
         fputs("Must provide a sllist.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     sllist_node *new_node = create_node(value);
@@ -158,7 +155,7 @@ void *sllist_unshift(sllist *list)
 {
     if (!list) {
         fputs("Must provide a sllist.", stderr);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     // list is empty, return nothing
@@ -189,7 +186,7 @@ void *sllist_pop(sllist *list)
 {
     if (!list) {
         fputs("Must provide a sllist.", stderr);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     // list is empty, return nothing
@@ -228,7 +225,7 @@ void sllist_remove(sllist *list, void *value, sllist_cmp cmp)
 {
     if (!list) {
         fputs("Must provide a valid sllist.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     // list is empty, return nothing
@@ -276,7 +273,7 @@ int sllist_exists(sllist *list, void *value, sllist_cmp cmp)
 {
     if (!list) {
         fputs("Must provide a valid sllist.", stderr);
-        exit(EXIT_FAILURE);
+        return -1;
     }
 
     // list is empty, not found

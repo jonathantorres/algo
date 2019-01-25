@@ -9,7 +9,7 @@ void *cbuffer_create(unsigned int length)
 
     if (!buffer) {
         fputs("Not enough memory.", stderr);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     buffer->length = length;
@@ -19,7 +19,7 @@ void *cbuffer_create(unsigned int length)
 
     if (!buffer->buffer) {
         fputs("Not enough memory.", stderr);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     return buffer;
@@ -29,7 +29,7 @@ void cbuffer_clear(cbuffer *buffer)
 {
     if (!buffer) {
         fputs("Must provide a valid cbuffer.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     if (buffer->buffer) {
@@ -38,7 +38,7 @@ void cbuffer_clear(cbuffer *buffer)
 
         if (!buffer->buffer) {
             fputs("Not enough memory.", stderr);
-            exit(EXIT_FAILURE);
+            return;
         }
         buffer->start = 0;
         buffer->end = 0;
@@ -49,7 +49,7 @@ void cbuffer_destroy(cbuffer *buffer)
 {
     if (!buffer) {
         fputs("Must provide a valid cbuffer.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     if (buffer->buffer) {
@@ -67,7 +67,7 @@ int cbuffer_write(cbuffer *buffer, char *data, unsigned int amount)
 {
     if (!buffer) {
         fputs("Must provide a valid cbuffer.", stderr);
-        exit(EXIT_FAILURE);
+        return -1;
     }
 
     if (available_data(buffer) == 0) {
@@ -94,7 +94,7 @@ int cbuffer_read(cbuffer *buffer, char *target, unsigned int amount)
 {
     if (!buffer) {
         fputs("Must provide a valid cbuffer.", stderr);
-        exit(EXIT_FAILURE);
+        return -1;
     }
 
     if (amount > available_data(buffer)) {

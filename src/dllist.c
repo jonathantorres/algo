@@ -8,7 +8,7 @@ dllist_node *create_node(void *value)
 
     if (!node) {
         fputs("Not enough memory.", stderr);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     node->prev = NULL;
@@ -22,7 +22,7 @@ void destroy_node(dllist_node *node)
 {
     if (!node) {
         fputs("A valid node must be provided.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     node->prev = NULL;
@@ -30,7 +30,6 @@ void destroy_node(dllist_node *node)
     node->value = NULL;
 
     free(node);
-
     node = NULL;
 }
 
@@ -41,7 +40,7 @@ dllist *dllist_new()
 
     if (!new_list) {
         fputs("Not enough memory.", stderr);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     new_list->first = NULL;
@@ -76,13 +75,11 @@ void dllist_destroy(dllist *list)
 {
     if (!list) {
         fputs("Must provide a dllist.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     dllist_clear(list);
-
     free(list);
-
     list = NULL;
 }
 
@@ -91,7 +88,7 @@ int dllist_length(dllist *list)
 {
     if (!list) {
         fputs("Must provide a dllist.", stderr);
-        exit(EXIT_FAILURE);
+        return -1;
     }
 
     int length = 0;
@@ -114,7 +111,7 @@ void dllist_push(dllist *list, void *value)
 {
     if (!list) {
         fputs("Must provide a dllist.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     dllist_node *new_node = create_node(value);
@@ -140,7 +137,7 @@ void dllist_shift(dllist *list, void *value)
 {
     if (!list) {
         fputs("Must provide a dllist.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     dllist_node *new_node = create_node(value);
@@ -161,7 +158,7 @@ void *dllist_unshift(dllist *list)
 {
     if (!list) {
         fputs("Must provide a dllist.", stderr);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     // list is empty, return nothing
@@ -192,7 +189,7 @@ void *dllist_pop(dllist *list)
 {
     if (!list) {
         fputs("Must provide a dllist.", stderr);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     // list is empty, return nothing
@@ -228,7 +225,7 @@ void dllist_remove(dllist *list, void *value, dllist_cmp cmp)
 {
     if (!list) {
         fputs("Must provide a valid dllist.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     // list is empty, return nothing
@@ -276,7 +273,7 @@ int dllist_exists(dllist *list, void *value, dllist_cmp cmp)
 {
     if (!list) {
         fputs("Must provide a valid dllist.", stderr);
-        exit(EXIT_FAILURE);
+        return -1;
     }
 
     // list is empty, not found

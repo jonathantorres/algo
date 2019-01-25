@@ -8,7 +8,7 @@ cllist_node *create_node(void *value)
 
     if (!node) {
         fputs("Not enough memory.", stderr);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     node->prev = NULL;
@@ -22,7 +22,7 @@ void destroy_node(cllist_node *node)
 {
     if (!node) {
         fputs("A valid node must be provided.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     node->prev = NULL;
@@ -30,7 +30,6 @@ void destroy_node(cllist_node *node)
     node->value = NULL;
 
     free(node);
-
     node = NULL;
 }
 
@@ -41,7 +40,7 @@ cllist *cllist_new()
 
     if (!new_list) {
         fputs("Not enough memory.", stderr);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     new_list->first = NULL;
@@ -78,13 +77,11 @@ void cllist_destroy(cllist *list)
 {
     if (!list) {
         fputs("Must provide a cllist.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     cllist_clear(list);
-
     free(list);
-
     list = NULL;
 }
 
@@ -93,7 +90,7 @@ int cllist_length(cllist *list)
 {
     if (!list) {
         fputs("Must provide a cllist.", stderr);
-        exit(EXIT_FAILURE);
+        return -1;
     }
 
     int length = 0;
@@ -116,7 +113,7 @@ void cllist_push(cllist *list, void *value)
 {
     if (!list) {
         fputs("Must provide a cllist.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     cllist_node *new_node = create_node(value);
@@ -145,7 +142,7 @@ void cllist_shift(cllist *list, void *value)
 {
     if (!list) {
         fputs("Must provide a cllist.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     cllist_node *new_node = create_node(value);
@@ -166,7 +163,7 @@ void *cllist_unshift(cllist *list)
 {
     if (!list) {
         fputs("Must provide a cllist.", stderr);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     // list is empty, return nothing
@@ -200,7 +197,7 @@ void *cllist_pop(cllist *list)
 {
     if (!list) {
         fputs("Must provide a cllist.", stderr);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     // list is empty, return nothing
@@ -238,7 +235,7 @@ void cllist_remove(cllist *list, void *value, cllist_cmp cmp)
 {
     if (!list) {
         fputs("Must provide a valid cllist.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     // list is empty, return nothing
@@ -286,7 +283,7 @@ int cllist_exists(cllist *list, void *value, cllist_cmp cmp)
 {
     if (!list) {
         fputs("Must provide a valid cllist.", stderr);
-        exit(EXIT_FAILURE);
+        return -1;
     }
 
     // list is empty, not found

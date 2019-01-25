@@ -6,7 +6,7 @@ void bubble_sort(array *_array, cmp_f cmp)
 {
     if (!_array) {
         fputs("[bubble_sort] Must provide an array.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     int swapped = 0;

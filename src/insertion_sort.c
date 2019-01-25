@@ -5,7 +5,7 @@ void insertion_sort(array *_array, cmp_f cmp)
 {
     if (!_array) {
         fputs("[insertion_sort] Must provide an array.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     unsigned int i = 1;

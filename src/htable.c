@@ -19,7 +19,7 @@ htable *htable_create(htable_compare cmp)
 
     if (!_htable) {
         fputs("[htable_create] Not enough memory.", stderr);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     _htable->cmp = cmp;
@@ -33,7 +33,7 @@ void htable_destroy(htable *_htable)
 {
     if (!_htable) {
         fputs("[htable_destroy] Must provide a hashtable.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     if (_htable->buckets) {
@@ -82,7 +82,7 @@ unsigned int htable_set(htable *_htable, void *key, void *value)
 {
     if (!_htable) {
         fputs("[htable_set] Must provide a hashtable.", stderr);
-        exit(EXIT_FAILURE);
+        return 1;
     }
 
     size_t bucket_hash = 0;
@@ -107,7 +107,7 @@ void *htable_get(htable *_htable, void *key)
 {
     if (!_htable) {
         fputs("[htable_get] Must provide a hashtable.", stderr);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     size_t bucket_hash = 0;
@@ -130,7 +130,7 @@ void *htable_remove(htable *_htable, void *key)
 {
     if (!_htable) {
         fputs("[htable_remove] Must provide a hashtable.", stderr);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     void *value = NULL;
@@ -160,7 +160,7 @@ unsigned int htable_traverse(htable *_htable, htable_node_cb cb)
 {
     if (!_htable) {
         fputs("[htable_traverse] Must provide a hashtable.", stderr);
-        exit(EXIT_FAILURE);
+        return 1;
     }
     unsigned int traverse_ok = 1;
 

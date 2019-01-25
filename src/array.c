@@ -12,7 +12,7 @@ array *array_create(unsigned int capacity, size_t item_size)
 
     if (!_array) {
         fputs("[array_create] Not enough memory.", stderr);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     _array->length = 0;
@@ -23,7 +23,7 @@ array *array_create(unsigned int capacity, size_t item_size)
 
     if (!_array->contents) {
         fputs("[array_create] Not enough memory.", stderr);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     return _array;
@@ -34,11 +34,10 @@ void array_destroy(array *_array)
 {
     if (!_array) {
         fputs("[array_destroy] Must provide an array.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     array_clear(_array);
-
     free(_array->contents);
     free(_array);
 }
@@ -48,7 +47,7 @@ void array_clear(array *_array)
 {
     if (!_array) {
         fputs("[array_clear] Must provide an array.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     unsigned int array_length = _array->length;
@@ -68,7 +67,7 @@ void array_expand(array *_array)
 
     if (!contents) {
         fputs("[array_expand] Not enough memory.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     _array->contents = contents;
@@ -80,7 +79,7 @@ void array_push(array *_array, void *value)
 {
     if (!_array) {
         fputs("[array_push] Must provide an array.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     _array->contents[_array->length] = value;
@@ -110,11 +109,10 @@ void *array_pop(array *_array)
 {
     if (!_array) {
         fputs("[array_pop] Must provide an array.", stderr);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     void *element = NULL;
-
     if (_array->length > 0) {
         element = remove_element_at(_array, _array->length - 1);
     }
@@ -127,7 +125,7 @@ void array_set(array *_array, void *elem, unsigned int index)
 {
     if (!_array) {
         fputs("[array_set] Must provide an array.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     // index is too large
@@ -147,7 +145,7 @@ void *array_get(array *_array, unsigned int index)
 {
     if (!_array) {
         fputs("[array_get] Must provide an array.", stderr);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     // index is too large
@@ -163,7 +161,7 @@ void *array_remove(array *_array, unsigned int index)
 {
     if (!_array) {
         fputs("[array_remove] Must provide an array.", stderr);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     // index is too large
@@ -189,7 +187,7 @@ void array_shift(array *_array, void *value)
 {
     if (!_array) {
         fputs("[array_shift] Must provide an array.", stderr);
-        exit(EXIT_FAILURE);
+        return;
     }
 
     if (_array->length > 0) {
@@ -214,7 +212,7 @@ void *array_unshift(array *_array)
 {
     if (!_array) {
         fputs("[array_unshift] Must provide an array.", stderr);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     void *element = NULL;
