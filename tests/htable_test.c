@@ -29,14 +29,14 @@ char *test_destroy()
 char *test_set()
 {
     htable *_htable = htable_create(htable_compare_fn);
-    unsigned int rc = htable_set(_htable, "john", "Jonathan Torres");
-    assert(rc == 0, "The 'john' key could not be set");
-    rc = htable_set(_htable, "luis", "Jorge L Torres");
-    assert(rc == 0, "The 'luis' key could not be set");
-    rc = htable_set(_htable, "mar", "Marjory Torres");
-    assert(rc == 0, "The 'mar' key could not be set");
-    rc = htable_set(_htable, "chris", "Christopher Torres");
-    assert(rc == 0, "The 'chris' key could not be set");
+    bool success = htable_set(_htable, "john", "Jonathan Torres");
+    assert(success == true, "The 'john' key could not be set");
+    success = htable_set(_htable, "luis", "Jorge L Torres");
+    assert(success == true, "The 'luis' key could not be set");
+    success = htable_set(_htable, "mar", "Marjory Torres");
+    assert(success == true, "The 'mar' key could not be set");
+    success = htable_set(_htable, "chris", "Christopher Torres");
+    assert(success == true, "The 'chris' key could not be set");
     htable_destroy(_htable);
 
     return NULL;
@@ -50,10 +50,10 @@ char *test_get()
     char *second_value = "Jorge L Torres";
 
     htable *_htable = htable_create(htable_compare_fn);
-    unsigned int rc = htable_set(_htable, first_key, first_value);
-    assert(rc == 0, "The 'john' key could not be set");
-    rc = htable_set(_htable, second_key, second_value);
-    assert(rc == 0, "The 'luis' key could not be set");
+    bool success = htable_set(_htable, first_key, first_value);
+    assert(success == true, "The 'john' key could not be set");
+    success = htable_set(_htable, second_key, second_value);
+    assert(success == true, "The 'luis' key could not be set");
 
     char *value = htable_get(_htable, first_key);
     assert(value != NULL, "Value for key 'john' shouldn't be NULL");
@@ -88,13 +88,13 @@ char *test_remove()
     return NULL;
 }
 
-int node_traverse_fn(htable_node *node)
+bool node_traverse_fn(htable_node *node)
 {
     if (node && node->key && node->value) {
         printf("%s:%s,", (char*)node->key, (char*)node->value);
     }
 
-    return 0;
+    return true;
 }
 
 char *test_traverse()
@@ -107,8 +107,8 @@ char *test_traverse()
     htable *_htable = htable_create(htable_compare_fn);
     htable_set(_htable, first_key, first_value);
     htable_set(_htable, second_key, second_value);
-    unsigned int rc = htable_traverse(_htable, node_traverse_fn);
-    assert(rc == 0, "There was a problem traversing the htable");
+    bool success = htable_traverse(_htable, node_traverse_fn);
+    assert(success == true, "There was a problem traversing the htable");
 
     return NULL;
 }

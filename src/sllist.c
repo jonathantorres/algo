@@ -1,6 +1,7 @@
 #include "sllist.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 sllist_node *create_node(void *value)
 {
@@ -269,7 +270,7 @@ void sllist_remove(sllist *list, void *value, sllist_cmp cmp)
 }
 
 // check to see if value {value} exists in the list
-int sllist_exists(sllist *list, void *value, sllist_cmp cmp)
+bool sllist_exists(sllist *list, void *value, sllist_cmp cmp)
 {
     if (!list) {
         fputs("Must provide a valid sllist.", stderr);
@@ -278,7 +279,7 @@ int sllist_exists(sllist *list, void *value, sllist_cmp cmp)
 
     // list is empty, not found
     if (list->first == NULL) {
-        return 0;
+        return false;
     }
 
     sllist_node *current_node = list->first;
@@ -286,10 +287,10 @@ int sllist_exists(sllist *list, void *value, sllist_cmp cmp)
 
     // check the first one
     if (cmp(current_node->value, value) == 0) {
-        return 1;
+        return true;
     }
 
-    int found = 0;
+    bool found = false;
 
     // check the rest
     while (current_node->next != NULL) {
@@ -297,7 +298,7 @@ int sllist_exists(sllist *list, void *value, sllist_cmp cmp)
         current_node = current_node->next;
 
         if (cmp(current_node->value, value) == 0) {
-            found = 1;
+            found = true;
             break;
         }
     }

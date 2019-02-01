@@ -1,6 +1,7 @@
 #include "cllist.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 cllist_node *create_node(void *value)
 {
@@ -279,7 +280,7 @@ void cllist_remove(cllist *list, void *value, cllist_cmp cmp)
 }
 
 // check to see if value {value} exists in the list
-int cllist_exists(cllist *list, void *value, cllist_cmp cmp)
+bool cllist_exists(cllist *list, void *value, cllist_cmp cmp)
 {
     if (!list) {
         fputs("Must provide a valid cllist.", stderr);
@@ -288,24 +289,24 @@ int cllist_exists(cllist *list, void *value, cllist_cmp cmp)
 
     // list is empty, not found
     if (list->first == NULL) {
-        return 0;
+        return false;
     }
 
     cllist_node *current_node = list->first;
 
     // check the first one
     if (cmp(current_node->value, value) == 0) {
-        return 1;
+        return true;
     }
 
-    int found = 0;
+    bool found = false;
 
     // check the rest
     while (current_node != list->last) {
         current_node = current_node->next;
 
         if (cmp(current_node->value, value) == 0) {
-            found = 1;
+            found = true;
             break;
         }
     }

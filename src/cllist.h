@@ -1,6 +1,8 @@
 #ifndef _cllist_h
 #define _cllist_h
 
+#include <stdbool.h>
+
 typedef struct cllist_node {
     void *value;
     struct cllist_node *next;
@@ -42,6 +44,6 @@ void *cllist_pop(cllist *list);
 void cllist_remove(cllist *list, void *value, cllist_cmp cmp);
 
 // check to see if value {value} exists in the list
-int cllist_exists(cllist *list, void *value, cllist_cmp cmp);
+bool cllist_exists(cllist *list, void *value, cllist_cmp cmp);
 
 #endif

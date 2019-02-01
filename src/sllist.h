@@ -1,6 +1,8 @@
 #ifndef _sllist_h
 #define _sllist_h
 
+#include <stdbool.h>
+
 typedef struct sllist_node {
     void *value;
     struct sllist_node *next;
@@ -40,6 +42,6 @@ void *sllist_pop(sllist *list);
 void sllist_remove(sllist *list, void *value, sllist_cmp cmp);
 
 // check to see if value {value} exists in the list
-int sllist_exists(sllist *list, void *value, sllist_cmp cmp);
+bool sllist_exists(sllist *list, void *value, sllist_cmp cmp);
 
 #endif

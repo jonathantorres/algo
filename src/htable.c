@@ -78,11 +78,11 @@ array *find_bucket(htable *_htable, void *key, size_t *bucket_hash, unsigned int
     return bucket;
 }
 
-unsigned int htable_set(htable *_htable, void *key, void *value)
+bool htable_set(htable *_htable, void *key, void *value)
 {
     if (!_htable) {
         fputs("[htable_set] Must provide a hashtable.", stderr);
-        return 1;
+        return false;
     }
 
     size_t bucket_hash = 0;
@@ -92,7 +92,7 @@ unsigned int htable_set(htable *_htable, void *key, void *value)
     // create the node
     htable_node *node = malloc(sizeof(htable_node));
     if (!node) {
-        return 1;
+        return false;
     }
 
     node->key = key;
@@ -100,7 +100,7 @@ unsigned int htable_set(htable *_htable, void *key, void *value)
     node->hash = bucket_hash;
     array_push(bucket, node);
 
-    return 0;
+    return true;
 }
 
 void *htable_get(htable *_htable, void *key)
@@ -156,13 +156,13 @@ void *htable_remove(htable *_htable, void *key)
     return value;
 }
 
-unsigned int htable_traverse(htable *_htable, htable_node_cb cb)
+bool htable_traverse(htable *_htable, htable_node_cb cb)
 {
     if (!_htable) {
         fputs("[htable_traverse] Must provide a hashtable.", stderr);
-        return 1;
+        return false;
     }
-    unsigned int traverse_ok = 1;
+    unsigned int traverse_ok = false;
 
     for (unsigned int i = 0; i < _htable->buckets->length; i++) {
         array *bucket = array_get(_htable->buckets, i);
@@ -170,8 +170,8 @@ unsigned int htable_traverse(htable *_htable, htable_node_cb cb)
             for (unsigned int j = 0; j < bucket->length; j++) {
                 htable_node *node = array_get(bucket, j);
                 if (node) {
-                    if (!cb(node)) {
-                        traverse_ok = 0;
+                    if (cb(node)) {
+                        traverse_ok = true;
                         break;
                     }
                 }

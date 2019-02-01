@@ -1,6 +1,8 @@
 #ifndef _dllist_h
 #define _dllist_h
 
+#include <stdbool.h>
+
 typedef struct dllist_node {
     void *value;
     struct dllist_node *next;
@@ -41,6 +43,6 @@ void *dllist_pop(dllist *list);
 void dllist_remove(dllist *list, void *value, dllist_cmp cmp);
 
 // check to see if value {value} exists in the list
-int dllist_exists(dllist *list, void *value, dllist_cmp cmp);
+bool dllist_exists(dllist *list, void *value, dllist_cmp cmp);
 
 #endif

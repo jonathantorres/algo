@@ -1,6 +1,7 @@
 #include "dllist.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 dllist_node *create_node(void *value)
 {
@@ -269,7 +270,7 @@ void dllist_remove(dllist *list, void *value, dllist_cmp cmp)
 }
 
 // check to see if value {value} exists in the list
-int dllist_exists(dllist *list, void *value, dllist_cmp cmp)
+bool dllist_exists(dllist *list, void *value, dllist_cmp cmp)
 {
     if (!list) {
         fputs("Must provide a valid dllist.", stderr);
@@ -278,24 +279,24 @@ int dllist_exists(dllist *list, void *value, dllist_cmp cmp)
 
     // list is empty, not found
     if (list->first == NULL) {
-        return 0;
+        return false;
     }
 
     dllist_node *current_node = list->first;
 
     // check the first one
     if (cmp(current_node->value, value) == 0) {
-        return 1;
+        return true;
     }
 
-    int found = 0;
+    bool found = false;
 
     // check the rest
     while (current_node->next != NULL) {
         current_node = current_node->next;
 
         if (cmp(current_node->value, value) == 0) {
-            found = 1;
+            found = true;
             break;
         }
     }

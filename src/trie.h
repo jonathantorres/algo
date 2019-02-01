@@ -2,6 +2,7 @@
 #define _trie_h
 
 #include "array.h"
+#include <stdbool.h>
 
 typedef int (*trie_compare)(void *a, void *b);
 
@@ -15,12 +16,12 @@ typedef struct trie {
     trie_compare cmp;
 } trie;
 
-typedef unsigned int (*trie_traverse_cb)(trie_node *node);
+typedef bool (*trie_traverse_cb)(trie_node *node);
 
 void *trie_create(trie_compare cmp);
 void trie_destroy(trie *_trie);
-unsigned int trie_insert(trie *_trie, void *key, void *value);
+bool trie_insert(trie *_trie, void *key, void *value);
 void *trie_get(trie *_trie, void *key);
-unsigned int trie_traverse(trie *_trie, trie_traverse_cb cb);
+bool trie_traverse(trie *_trie, trie_traverse_cb cb);
 
 #endif

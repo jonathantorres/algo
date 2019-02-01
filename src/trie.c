@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 #include "trie.h"
 
 #define PATHS_LENGTH 26
@@ -88,11 +89,11 @@ void trie_destroy(trie *_trie)
     free(_trie);
 }
 
-unsigned int trie_insert(trie *_trie, void *key, void *value)
+bool trie_insert(trie *_trie, void *key, void *value)
 {
     if (!_trie) {
         fputs("[trie_insert] Must provide a trie.", stderr);
-        return 1;
+        return false;
     }
 
     trie_node *root = _trie->root;
@@ -110,11 +111,11 @@ unsigned int trie_insert(trie *_trie, void *key, void *value)
                 array_set(root->paths, new_node, i);
                 root = new_node;
             } else {
-                return 1; // insert failed
+                return false; // insert failed
             }
         }
     }
     root->value = value;
 
-    return 0;
+    return true;
 }

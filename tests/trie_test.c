@@ -1,4 +1,5 @@
 #include <string.h>
+#include <stdbool.h>
 #include "unittest.h"
 #include "trie.h"
 
@@ -33,14 +34,14 @@ char *test_destroy()
 char *test_insert()
 {
     trie *_trie = trie_create(trie_cmp_fn);
-    unsigned int rc = trie_insert(_trie, "john", "Jonathan Torres");
-    assert(rc == 0, "They key 'john' was not inserted succesfully");
-    rc = trie_insert(_trie, "luis", "Jorge L Torres");
-    assert(rc == 0, "They key 'luis' was not inserted succesfully");
-    rc = trie_insert(_trie, "chris", "Christopher Torres");
-    assert(rc == 0, "They key 'chris' was not inserted succesfully");
-    rc = trie_insert(_trie, "mar", "Marjory Torres");
-    assert(rc == 0, "They key 'mar' was not inserted succesfully");
+    bool success = trie_insert(_trie, "john", "Jonathan Torres");
+    assert(success == true, "They key 'john' was not inserted succesfully");
+    success = trie_insert(_trie, "luis", "Jorge L Torres");
+    assert(success == true, "They key 'luis' was not inserted succesfully");
+    success = trie_insert(_trie, "chris", "Christopher Torres");
+    assert(success == true, "They key 'chris' was not inserted succesfully");
+    success = trie_insert(_trie, "mar", "Marjory Torres");
+    assert(success == true, "They key 'mar' was not inserted succesfully");
     trie_destroy(_trie);
 
     return NULL;

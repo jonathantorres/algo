@@ -2,6 +2,7 @@
 #include "dllist.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 // utility method to print the contents of a list
 // the list used in this test, will be a list of strings
@@ -180,11 +181,11 @@ char *test_exists()
     dllist_push(list, "three");
 
     assert(dllist_length(list) == 4, "List length must be 4");
-    assert(dllist_exists(list, "zero", cmp_func) == 1, "zero should exist in the list");
-    assert(dllist_exists(list, "one", cmp_func) == 1, "one should exist in the list");
-    assert(dllist_exists(list, "two", cmp_func) == 1, "two should exist in the list");
-    assert(dllist_exists(list, "three", cmp_func) == 1, "three should exist in the list");
-    assert(dllist_exists(list, "foo", cmp_func) == 0, "foo shouldn't exist in the list");
+    assert(dllist_exists(list, "zero", cmp_func) == true, "zero should exist in the list");
+    assert(dllist_exists(list, "one", cmp_func) == true, "one should exist in the list");
+    assert(dllist_exists(list, "two", cmp_func) == true, "two should exist in the list");
+    assert(dllist_exists(list, "three", cmp_func) == true, "three should exist in the list");
+    assert(dllist_exists(list, "foo", cmp_func) == false, "foo shouldn't exist in the list");
     assert(dllist_length(list) == 4, "List length must be 4");
     dllist_destroy(list);
 

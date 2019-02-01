@@ -2,6 +2,7 @@
 #define _htable_h
 
 #include "array.h"
+#include <stdbool.h>
 
 #define NUM_OF_BUCKETS 100
 
@@ -18,13 +19,13 @@ typedef struct htable_node {
     size_t hash;
 } htable_node;
 
-typedef int (*htable_node_cb)(htable_node *node);
+typedef bool (*htable_node_cb)(htable_node *node);
 
 htable *htable_create(htable_compare cmp);
 void htable_destroy(htable *_htable);
 void *htable_get(htable *_htable, void *key);
-unsigned int htable_set(htable *_htable, void *key, void *value);
+bool htable_set(htable *_htable, void *key, void *value);
 void *htable_remove(htable *_htable, void *key);
-unsigned int htable_traverse(htable *_htable, htable_node_cb cb);
+bool htable_traverse(htable *_htable, htable_node_cb cb);
 
 #endif
