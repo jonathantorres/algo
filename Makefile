@@ -119,7 +119,9 @@ quick_sort.o: quick_sort.c quick_sort.h
 	$(CFLAGS) -c src/quick_sort.c src/quick_sort.h
 
 .PHONY: test
-test: sllist_test dllist_test cllist_test stack_test queue_test array_test bubble_sort_test insertion_sort_test selection_sort_test merge_sort_test quick_sort_test cbuffer_test htable_test trie_test
+test: sllist_test dllist_test cllist_test stack_test queue_test array_test \
+bubble_sort_test insertion_sort_test selection_sort_test merge_sort_test \
+quick_sort_test cbuffer_test htable_test trie_test
 	#php tests/run_tests.php
 	./bin/sllist_test
 	./bin/dllist_test
