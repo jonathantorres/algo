@@ -3,4 +3,4 @@
 *.out
 *.o
 *.h.gch
-*_test
+bin/*
