@@ -2,12 +2,23 @@ VPATH = src tests bin
 CFLAGS = gcc -std=c11 -Wall -Wextra -Isrc
 CPPFLAGS = g++ -std=c++11 -Wall -Wextra -Isrc
 
-all: test hangman
+all: test hangman stream_server stream_client http_server
 
 # Hangman game
 hangman: hangman/hangman.cpp
 	$(CPPFLAGS) src/hangman/hangman.cpp -o bin/hangman
 	cp src/hangman/words.txt bin/words.txt
+
+# Stream server/client
+stream_server: net/stream_server.c
+	$(CFLAGS) src/net/stream_server.c -o bin/stream_server
+
+stream_client: net/stream_client.c
+	$(CFLAGS) src/net/stream_client.c -o bin/stream_client
+
+# Http server
+http_server: net/http_server.c
+	$(CFLAGS) src/net/http_server.c -o bin/http_server
 
 # Singly linked list
 sllist_test: sllist_test.c sllist.o
@@ -126,4 +137,4 @@ test: sllist_test dllist_test cllist_test stack_test queue_test array_test bubbl
 	./bin/trie_test
 
 clean:
-	rm -f ./*.o src/*.h.gch ./bin/*_test ./bin/hangman ./bin/words.txt
+	rm -f ./*.o src/*.h.gch ./bin/*
