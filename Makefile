@@ -16,10 +16,6 @@ all: test hangman stream_server stream_client http_server
 $(OBJECTS): $(SOURCES) $(HEADERS)
 	$(CFLAGS) -c $(SOURCES) $(HEADERS)
 
-# Compile tests
-# %_test: $(TESTS) $(OBJECTS)
-# 	$(CFLAGS) $@.c $(OBJECTS) -o bin/$@
-
 # Hangman game
 hangman: hangman/hangman.cpp
 	$(CPPFLAGS) src/hangman/hangman.cpp -o bin/hangman
