@@ -8,9 +8,7 @@ TESTS = $(wildcard tests/*_test.c)
 TESTFILES := $(subst .c, , $(TESTS))
 TESTFILES := $(subst tests/, , $(TESTFILES))
 
-all: test hangman stream_server stream_client http_server
-	@echo "Test files:"
-	@echo $(TESTFILES)
+all: hangman stream_server stream_client http_server test
 
 # Compile objects
 $(OBJECTS): $(SOURCES) $(HEADERS)
