@@ -93,11 +93,9 @@ int sllist_length(sllist *list)
 
     if (list->first != NULL) {
         sllist_node *current_node = list->first;
-        sllist_node *prev_node = NULL;
         length++;
 
         while (current_node->next != NULL) {
-            prev_node = current_node;
             current_node = current_node->next;
             length++;
         }
@@ -283,7 +281,6 @@ bool sllist_exists(sllist *list, void *value, sllist_cmp cmp)
     }
 
     sllist_node *current_node = list->first;
-    sllist_node *prev_node = list->first;
 
     // check the first one
     if (cmp(current_node->value, value) == 0) {
@@ -294,7 +291,6 @@ bool sllist_exists(sllist *list, void *value, sllist_cmp cmp)
 
     // check the rest
     while (current_node->next != NULL) {
-        prev_node = current_node;
         current_node = current_node->next;
 
         if (cmp(current_node->value, value) == 0) {

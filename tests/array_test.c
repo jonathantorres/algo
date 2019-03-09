@@ -22,8 +22,8 @@ void array_print(array *_array, char type)
             break;
 
             case 's':
-                val = (char*)array_get(_array, i);
-                printf("%s,", val);
+                val = array_get(_array, i);
+                printf("%s,", (char*)val);
             break;
         }
     }

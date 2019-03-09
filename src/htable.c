@@ -57,7 +57,7 @@ void htable_destroy(htable *_htable)
 
 unsigned int validate_bucket_index(unsigned int bucket_index)
 {
-    if (bucket_index >= NUM_OF_BUCKETS || bucket_index < 0) {
+    if (bucket_index >= NUM_OF_BUCKETS) {
         return 1;
     }
 
