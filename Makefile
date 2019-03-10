@@ -19,6 +19,13 @@ hangman: hangman/hangman.cpp
 	$(CPPFLAGS) src/hangman/hangman.cpp -o bin/hangman
 	cp src/hangman/words.txt bin/words.txt
 
+# Daytime server/client
+daytime_server: net/daytime_server.c
+	$(CFLAGS) src/net/daytime_server.c -o bin/daytime_server
+
+daytime_client: net/daytime_client.c
+	$(CFLAGS) src/net/daytime_client.c -o bin/daytime_client
+
 # Stream server/client
 stream_server: net/stream_server.c
 	$(CFLAGS) src/net/stream_server.c -o bin/stream_server
