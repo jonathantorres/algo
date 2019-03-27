@@ -43,8 +43,10 @@ void htable_destroy(htable *_htable)
                 // TODO: maybe use array_destroy(bucket);
                 // instead of looping and freeing manually
                 for (unsigned int j = 0; j < bucket->length; j++) {
-                    void *elem = array_get(bucket, j);
+                    htable_node *elem = array_get(bucket, j);
                     if (elem) {
+                        free(elem->key);
+                        free(elem->value);
                         free(elem);
                     }
                 }
@@ -95,8 +97,8 @@ bool htable_set(htable *_htable, void *key, void *value)
         return false;
     }
 
-    node->key = key;
-    node->value = value;
+    node->key = strdup(key);
+    node->value = strdup(value);
     node->hash = bucket_hash;
     array_push(bucket, node);
 

@@ -3,6 +3,7 @@
 
 #include "array.h"
 #include <stdbool.h>
+#include <string.h>
 
 #define NUM_OF_BUCKETS 100
 
