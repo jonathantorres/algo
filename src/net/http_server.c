@@ -1,6 +1,7 @@
 #include<netinet/in.h>
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 #include<sys/socket.h>
 #include<sys/stat.h>
 #include<sys/types.h>
@@ -11,8 +12,14 @@ int main() {
     socklen_t addrlen;
     int bufsize = 1024;
     int port = 3490;
+    int bytes_r;
     char *buffer = malloc(bufsize);
     struct sockaddr_in address;
+
+    if (!buffer) {
+        fprintf(stderr, "No memory\n");
+        exit(1);
+    }
 
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
         perror("server: socket()");
@@ -38,6 +45,7 @@ int main() {
     printf("Server running on port: %d\n", port);
 
     while (1) {
+        memset(buffer, '\0', bufsize);
         client_fd = accept(server_fd, (struct sockaddr *) &address, &addrlen);
 
         if (client_fd < 0) {
@@ -49,13 +57,20 @@ int main() {
             printf("The Client is connected...\n");
         }
 
-        recv(client_fd, buffer, bufsize, 0);
-        printf("%s\n", buffer);
-        // write(client_fd, "hello world\n", 12);
-        write(client_fd, "HTTP/1.1 200 OK\n", 16);
-        write(client_fd, "Content-length: 46\n", 19);
-        write(client_fd, "Content-Type: text/html\n\n", 25);
-        write(client_fd, "<html><body><h1>Hello world</h1></body></html>", 46);
+        if ((bytes_r = recv(client_fd, buffer, bufsize, 0)) < 0) {
+            perror("server: recv");
+            close(client_fd);
+            continue;
+        }
+
+        printf("recv %d bytes\n", bytes_r);
+        printf("%s", buffer);
+
+        //send(client_fd, "hello world\n", 12, 0);
+        send(client_fd, "HTTP/1.1 200 OK\n", 16, 0);
+        send(client_fd, "Content-length: 46\n", 19, 0);
+        send(client_fd, "Content-Type: text/html\n\n", 25, 0);
+        send(client_fd, "<html><body><h1>Hello world</h1></body></html>", 46, 0);
         close(client_fd);
     }
     close(server_fd);
