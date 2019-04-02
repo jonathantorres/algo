@@ -45,7 +45,7 @@ int main() {
     printf("Server running on port: %d\n", port);
 
     while (1) {
-        memset(buffer, '\0', bufsize);
+        memset(buffer, 0, bufsize);
         client_fd = accept(server_fd, (struct sockaddr *) &address, &addrlen);
 
         if (client_fd < 0) {
@@ -53,18 +53,16 @@ int main() {
             continue;
         }
 
-        if (client_fd > 0) {
-            printf("The Client is connected...\n");
-        }
-
-        if ((bytes_r = recv(client_fd, buffer, bufsize, 0)) < 0) {
+        if ((bytes_r = recv(client_fd, buffer, bufsize - 1, 0)) < 0) {
             perror("server: recv");
             close(client_fd);
             continue;
         }
+        buffer[bytes_r] = '\0';
 
         printf("recv %d bytes\n", bytes_r);
-        printf("%s", buffer);
+        printf("str len: %ld\n", strlen(buffer));
+        printf("%s\n", buffer);
 
         //send(client_fd, "hello world\n", 12, 0);
         send(client_fd, "HTTP/1.1 200 OK\n", 16, 0);
