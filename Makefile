@@ -93,6 +93,10 @@ merge_sort_test: merge_sort_test.c merge_sort.o array.o
 quick_sort_test: quick_sort_test.c quick_sort.o array.o
 	$(CFLAGS) tests/quick_sort_test.c quick_sort.o array.o -o bin/quick_sort_test
 
+# Binary Search
+binary_search_test: binary_search_test.c binary_search.o array.o
+	$(CFLAGS) tests/binary_search_test.c binary_search.o array.o -o bin/binary_search_test
+
 # Run tests
 .PHONY: test
 test: $(TESTFILES)
@@ -107,6 +111,7 @@ test: $(TESTFILES)
 	./bin/selection_sort_test
 	./bin/merge_sort_test
 	./bin/quick_sort_test
+	./bin/binary_search_test
 	./bin/cbuffer_test
 	./bin/htable_test
 	./bin/trie_test
