@@ -128,7 +128,6 @@ binary_search.o: binary_search.c binary_search.h
 test: sllist_test dllist_test cllist_test stack_test queue_test array_test \
 bubble_sort_test insertion_sort_test selection_sort_test merge_sort_test \
 quick_sort_test cbuffer_test htable_test trie_test binary_search_test
-	#php tests/run_tests.php
 	./bin/sllist_test
 	./bin/dllist_test
 	./bin/cllist_test
