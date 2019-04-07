@@ -17,6 +17,7 @@ Various algorithms and data structures implemented in C
 - Merge Sort
 - Quick Sort
 - Selection Sort
+- Binary Search
 
 ## Internet/Network
 - Daytime Client/Server
