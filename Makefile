@@ -1,6 +1,12 @@
 VPATH = src tests bin
 CFLAGS = gcc -std=c11 -Wall -Wextra -Isrc
 CPPFLAGS = g++ -std=c++11 -Wall -Wextra -Isrc
+SOURCES = $(wildcard src/*.c)
+OBJECTS = $(subst .c,.o, $(SOURCES))
+HEADERS = $(subst .c,.h, $(SOURCES))
+TESTS = $(wildcard tests/*_test.c)
+TESTFILES := $(subst .c, , $(TESTS))
+TESTFILES := $(subst tests/, , $(TESTFILES))
 
 all: test hangman stream_server stream_client http_server
 
@@ -12,14 +18,12 @@ hangman: hangman/hangman.cpp
 # Daytime server/client
 daytime_server: net/daytime_server.c
 	$(CFLAGS) src/net/daytime_server.c -o bin/daytime_server
-
 daytime_client: net/daytime_client.c
 	$(CFLAGS) src/net/daytime_client.c -o bin/daytime_client
 
 # Stream server/client
 stream_server: net/stream_server.c
 	$(CFLAGS) src/net/stream_server.c -o bin/stream_server
-
 stream_client: net/stream_client.c
 	$(CFLAGS) src/net/stream_client.c -o bin/stream_client
 
@@ -87,53 +91,43 @@ quick_sort_test: quick_sort_test.c quick_sort.o array.o
 binary_search_test: binary_search_test.c binary_search.o array.o
 	$(CFLAGS) tests/binary_search_test.c binary_search.o array.o -o bin/binary_search_test
 
+# Compiling objects
 sllist.o: sllist.c sllist.h
 	$(CFLAGS) -c src/sllist.c src/sllist.h
-
 dllist.o: dllist.c dllist.h
 	$(CFLAGS) -c src/dllist.c src/dllist.h
-
 cllist.o: cllist.c cllist.h
 	$(CFLAGS) -c src/cllist.c src/cllist.h
-
 stack.o: stack.c stack.h
 	$(CFLAGS) -c src/stack.c src/stack.h
-
 queue.o: queue.c queue.h
 	$(CFLAGS) -c src/queue.c src/queue.h
-
 array.o: array.c array.h
 	$(CFLAGS) -c src/array.c src/array.h
-
 cbuffer.o: cbuffer.c cbuffer.h
 	$(CFLAGS) -c src/cbuffer.c src/cbuffer.h
-
 htable.o: htable.c htable.h
 	$(CFLAGS) -c src/htable.c src/htable.h
-
 trie.o: trie.c trie.h
 	$(CFLAGS) -c src/trie.c src/trie.h
-
 bubble_sort.o: bubble_sort.c bubble_sort.h
 	$(CFLAGS) -c src/bubble_sort.c src/bubble_sort.h
-
 insertion_sort.o: insertion_sort.c insertion_sort.h
 	$(CFLAGS) -c src/insertion_sort.c src/insertion_sort.h
-
 selection_sort.o: selection_sort.c selection_sort.h
 	$(CFLAGS) -c src/selection_sort.c src/selection_sort.h
-
 merge_sort.o: merge_sort.c merge_sort.h
 	$(CFLAGS) -c src/merge_sort.c src/merge_sort.h
-
 quick_sort.o: quick_sort.c quick_sort.h
 	$(CFLAGS) -c src/quick_sort.c src/quick_sort.h
+binary_search.o: binary_search.c binary_search.h
+	$(CFLAGS) -c src/binary_search.c src/binary_search.h
 
 # Run tests
 .PHONY: test
 test: sllist_test dllist_test cllist_test stack_test queue_test array_test \
 bubble_sort_test insertion_sort_test selection_sort_test merge_sort_test \
-quick_sort_test cbuffer_test htable_test trie_test
+quick_sort_test cbuffer_test htable_test trie_test binary_search_test
 	#php tests/run_tests.php
 	./bin/sllist_test
 	./bin/dllist_test
