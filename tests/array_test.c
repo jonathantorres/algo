@@ -122,6 +122,7 @@ char *test_pop()
     assert(_array->length == 4, "Array length should be 4");
     assert(_array->contents != NULL, "Array contents should not be NULL");
     array_destroy(_array);
+    free(last_num);
 
     return NULL;
 }
@@ -184,6 +185,7 @@ char *test_remove()
     assert(*number == 5, "Element's value should be 5");
     assert(_array->length == 4, "Array length should be 4");
     array_destroy(_array);
+    free(number);
 
     return NULL;
 }
@@ -231,6 +233,7 @@ char *test_unshift()
     assert(*first_num == 0, "Value of removed element should be 0");
     assert(_array->length == 4, "Array length should be 4");
     array_destroy(_array);
+    free(first_num);
 
     return NULL;
 }
@@ -264,6 +267,8 @@ char *test_array_of_strings()
     assert(_array->length == 3, "Array length should be 3");
 
     array_destroy(_array);
+    free(last);
+    free(first);
 
     return NULL;
 }
