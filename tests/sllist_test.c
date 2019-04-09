@@ -85,7 +85,6 @@ char *test_clear()
     sllist_clear(list);
 
     assert(sllist_length(list) == 0, "List length must be 0");
-
     sllist_destroy(list);
 
     return NULL;
@@ -206,6 +205,24 @@ char *test_length()
     return NULL;
 }
 
+char *test_heap_alloc_items()
+{
+    sllist *list = sllist_new();
+    char *zero = strdup("zero");
+    char *one = strdup("one");
+    char *two = strdup("two");
+    sllist_push(list, zero);
+    sllist_push(list, one);
+    sllist_push(list, two);
+    sllist_destroy(list);
+
+    free(zero);
+    free(one);
+    free(two);
+
+    return NULL;
+}
+
 int main()
 {
     start_tests("singly linked list tests");
@@ -219,6 +236,7 @@ int main()
     run_test(test_remove);
     run_test(test_exists);
     run_test(test_length);
+    run_test(test_heap_alloc_items);
     end_tests();
 
     return 0;

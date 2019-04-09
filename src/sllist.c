@@ -29,7 +29,6 @@ void destroy_node(sllist_node *node)
     node->value = NULL;
 
     free(node);
-    node = NULL;
 }
 
 sllist *sllist_new()
@@ -78,7 +77,6 @@ void sllist_destroy(sllist *list)
 
     sllist_clear(list);
     free(list);
-    list = NULL;
 }
 
 // get the length of the list
@@ -166,7 +164,6 @@ void *sllist_unshift(sllist *list)
     if (list->first->next == NULL) {
         void *value = list->first->value;
         free(list->first);
-        list->first = NULL;
 
         return value;
     }
@@ -197,7 +194,6 @@ void *sllist_pop(sllist *list)
     if (list->first->next == NULL) {
         void *value = list->first->value;
         free(list->first);
-        list->first = NULL;
 
         return value;
     }
@@ -213,7 +209,6 @@ void *sllist_pop(sllist *list)
     void *value = current_node->value;
 
     free(current_node);
-    current_node = NULL;
     prev_node->next = NULL;
 
     return value;
