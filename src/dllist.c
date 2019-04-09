@@ -31,7 +31,6 @@ void destroy_node(dllist_node *node)
     node->value = NULL;
 
     free(node);
-    node = NULL;
 }
 
 // create a new list
@@ -81,7 +80,6 @@ void dllist_destroy(dllist *list)
 
     dllist_clear(list);
     free(list);
-    list = NULL;
 }
 
 // get the length of the list
@@ -216,7 +214,6 @@ void *dllist_pop(dllist *list)
     void *value = current_node->value;
     current_node->prev->next = NULL;
     destroy_node(current_node);
-    current_node = NULL;
 
     return value;
 }

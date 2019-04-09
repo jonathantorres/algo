@@ -31,7 +31,6 @@ void destroy_node(cllist_node *node)
     node->value = NULL;
 
     free(node);
-    node = NULL;
 }
 
 // create a new list
@@ -83,7 +82,6 @@ void cllist_destroy(cllist *list)
 
     cllist_clear(list);
     free(list);
-    list = NULL;
 }
 
 // get the length of the list
@@ -226,7 +224,6 @@ void *cllist_pop(cllist *list)
     current_node->prev->next = list->first;
     list->last = current_node->prev;
     destroy_node(current_node);
-    current_node = NULL;
 
     return value;
 }
