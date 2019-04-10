@@ -109,6 +109,7 @@ char *test_traverse()
     htable_set(_htable, second_key, second_value);
     bool success = htable_traverse(_htable, node_traverse_fn);
     assert(success == true, "There was a problem traversing the htable");
+    htable_destroy(_htable);
 
     return NULL;
 }

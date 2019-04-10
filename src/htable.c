@@ -40,37 +40,47 @@ void htable_destroy(htable *_htable)
         for (unsigned int i = 0; i < _htable->buckets->length; i++) {
             array *bucket = array_get(_htable->buckets, i);
             if (bucket) {
-                // TODO: maybe use array_destroy(bucket);
-                // instead of looping and freeing manually
                 for (unsigned int j = 0; j < bucket->length; j++) {
                     htable_node *elem = array_get(bucket, j);
                     if (elem) {
-                        free(elem->key);
-                        free(elem->value);
+                        if (elem->key) {
+                            free(elem->key);
+                        }
                         free(elem);
                     }
                 }
+                if (bucket->contents) {
+                    free(bucket->contents);
+                }
+                free(bucket);
             }
         }
-        array_destroy(_htable->buckets);
+        if (_htable->buckets->contents) {
+            free(_htable->buckets->contents);
+        }
+        free(_htable->buckets);
     }
     free(_htable);
 }
 
-unsigned int validate_bucket_index(unsigned int bucket_index)
+bool bucket_index_is_valid(unsigned int bucket_index)
 {
     if (bucket_index >= NUM_OF_BUCKETS) {
-        return 1;
+        return false;
     }
 
-    return 0;
+    return true;
 }
 
-array *find_bucket(htable *_htable, void *key, size_t *bucket_hash, unsigned int create_new)
+array *find_bucket(htable *_htable, void *key, size_t *bucket_hash, bool create_new)
 {
     *bucket_hash = fnv1a_hash(key);
     unsigned int bucket_index = *bucket_hash % NUM_OF_BUCKETS;
-    // TODO: add bucket_index validation here
+
+    if (!bucket_index_is_valid(bucket_index)) {
+        return NULL;
+    }
+
     array *bucket = array_get(_htable->buckets, bucket_index);
     if (!bucket && create_new) {
         bucket = array_create(NUM_OF_BUCKETS, sizeof(htable_node*));
@@ -88,8 +98,11 @@ bool htable_set(htable *_htable, void *key, void *value)
     }
 
     size_t bucket_hash = 0;
-    array *bucket = find_bucket(_htable, key, &bucket_hash, 1);
-    // TODO: validate bucket index, see validate_bucket_index();
+    array *bucket = find_bucket(_htable, key, &bucket_hash, true);
+
+    if (!bucket) {
+        return false;
+    }
 
     // create the node
     htable_node *node = malloc(sizeof(htable_node));
@@ -98,7 +111,7 @@ bool htable_set(htable *_htable, void *key, void *value)
     }
 
     node->key = strdup(key);
-    node->value = strdup(value);
+    node->value = value;
     node->hash = bucket_hash;
     array_push(bucket, node);
 
@@ -113,7 +126,7 @@ void *htable_get(htable *_htable, void *key)
     }
 
     size_t bucket_hash = 0;
-    array *bucket = find_bucket(_htable, key, &bucket_hash, 0);
+    array *bucket = find_bucket(_htable, key, &bucket_hash, false);
     if (!bucket) {
         return NULL;
     }
@@ -137,7 +150,7 @@ void *htable_remove(htable *_htable, void *key)
 
     void *value = NULL;
     size_t bucket_hash = 0;
-    array *bucket = find_bucket(_htable, key, &bucket_hash, 0);
+    array *bucket = find_bucket(_htable, key, &bucket_hash, false);
     if (!bucket) {
         return value;
     }
@@ -150,6 +163,7 @@ void *htable_remove(htable *_htable, void *key)
             if (last != node) {
                 array_set(bucket, last, i);
             }
+            free(node->key);
             free(node);
             break;
         }
