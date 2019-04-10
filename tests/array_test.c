@@ -57,6 +57,17 @@ char *test_destroy()
         }
     }
 
+    assert(_array->length == 100, "Array length must be 100");
+    assert(_array->capacity == 200, "Array capacity must be 200");
+    assert(_array->contents != NULL, "Array contents should not be NULL");
+
+    for (unsigned int i = 0; i < 100; i++) {
+        int *val = array_get(_array, i);
+        if (val) {
+            free(val);
+        }
+    }
+
     array_destroy(_array);
 
     return NULL;
@@ -74,10 +85,19 @@ char *test_clear()
         }
     }
 
-    array_clear(_array);
+    assert(_array->length == 100, "Array length must be 100");
     assert(_array->capacity == 200, "Array capacity should be 200");
-    assert(_array->length == 0, "Array length must be 0");
     assert(_array->contents != NULL, "Array contents should not be NULL");
+
+    for (unsigned int i = 0; i < 100; i++) {
+        int *val = array_get(_array, i);
+        if (val) {
+            free(val);
+        }
+    }
+
+    array_clear(_array);
+    assert(_array->length == 0, "Array length must be 0");
     array_destroy(_array);
 
     return NULL;
@@ -98,6 +118,13 @@ char *test_push()
     assert(_array->capacity == 110, "Array capacity should be 110");
     assert(_array->length == 100, "Array length should be 100");
     assert(_array->contents != NULL, "Array contents should not be NULL");
+
+    for (unsigned int i = 0; i < 100; i++) {
+        int *val = array_get(_array, i);
+        if (val) {
+            free(val);
+        }
+    }
 
     array_destroy(_array);
 
@@ -121,6 +148,13 @@ char *test_pop()
     assert(*last_num == 20, "Last element's value should be 20");
     assert(_array->length == 4, "Array length should be 4");
     assert(_array->contents != NULL, "Array contents should not be NULL");
+
+    for (unsigned int i = 0; i < 4; i++) {
+        int *val = array_get(_array, i);
+        if (val) {
+            free(val);
+        }
+    }
     array_destroy(_array);
     free(last_num);
 
@@ -142,6 +176,13 @@ char *test_set()
     assert(_array->capacity == 10, "Array capacity should be 10");
     assert(_array->length == 5, "Array length should be 5");
     assert(_array->contents != NULL, "Array contents should not be NULL");
+
+    for (unsigned int i = 0; i < 5; i++) {
+        int *val = array_get(_array, i);
+        if (val) {
+            free(val);
+        }
+    }
     array_destroy(_array);
 
     return NULL;
@@ -163,6 +204,13 @@ char *test_get()
     void *off_number = array_get(_array, 100);
     assert(*number == 20, "Element's value should be 20");
     assert(off_number == NULL, "The off number should be NULL");
+
+    for (unsigned int i = 0; i < 5; i++) {
+        int *val = array_get(_array, i);
+        if (val) {
+            free(val);
+        }
+    }
     array_destroy(_array);
 
     return NULL;
@@ -184,6 +232,13 @@ char *test_remove()
     int *number = array_remove(_array, 1);
     assert(*number == 5, "Element's value should be 5");
     assert(_array->length == 4, "Array length should be 4");
+
+    for (unsigned int i = 0; i < 4; i++) {
+        int *val = array_get(_array, i);
+        if (val) {
+            free(val);
+        }
+    }
     array_destroy(_array);
     free(number);
 
@@ -211,6 +266,13 @@ char *test_shift()
     int *val = array_get(_array, 0);
     assert(*val == 200, "Value of new element should be 200");
     assert(_array->length == 6, "Array length should be 6");
+
+    for (unsigned int i = 0; i < 6; i++) {
+        int *val = array_get(_array, i);
+        if (val) {
+            free(val);
+        }
+    }
     array_destroy(_array);
 
     return NULL;
@@ -232,6 +294,13 @@ char *test_unshift()
     int *first_num = array_unshift(_array);
     assert(*first_num == 0, "Value of removed element should be 0");
     assert(_array->length == 4, "Array length should be 4");
+
+    for (unsigned int i = 0; i < 4; i++) {
+        int *val = array_get(_array, i);
+        if (val) {
+            free(val);
+        }
+    }
     array_destroy(_array);
     free(first_num);
 
@@ -266,10 +335,44 @@ char *test_array_of_strings()
     assert(strcmp(first, strings[0]) == 0, "Strings 'foo' should be equal");
     assert(_array->length == 3, "Array length should be 3");
 
+    for (unsigned int i = 0; i < 3; i++) {
+        char *val = array_get(_array, i);
+        if (val) {
+            free(val);
+        }
+    }
+
     array_destroy(_array);
     free(last);
     free(first);
 
+    return NULL;
+}
+
+char *test_array_stack_items()
+{
+    array *_array = array_create(10, sizeof(char*));
+
+    array_push(_array, "John");
+    array_push(_array, "Jonathan");
+    array_push(_array, "George");
+
+    assert(_array->contents != NULL, "Array contents should not be NULL");
+    assert(_array->length == 3, "Array length should be 3");
+    char *last = array_pop(_array);
+    assert(strcmp(last, "George") == 0, "String 'George' should be equal");
+    assert(_array->length == 2, "Array length should be 2");
+    char *first = array_unshift(_array);
+    assert(strcmp(first, "John") == 0, "String 'John' should be equal");
+    assert(_array->length == 1, "Array length should be 1");
+    array_destroy(_array);
+
+    return NULL;
+}
+
+char *test_array_struct_pointers()
+{
+    // TODO
     return NULL;
 }
 
@@ -287,6 +390,8 @@ int main()
     run_test(test_shift);
     run_test(test_unshift);
     run_test(test_array_of_strings);
+    run_test(test_array_stack_items);
+    run_test(test_array_struct_pointers);
     end_tests();
 
     return 0;
