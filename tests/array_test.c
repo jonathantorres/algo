@@ -370,9 +370,29 @@ char *test_array_stack_items()
     return NULL;
 }
 
+typedef struct person_dum {
+    char *first_name;
+    char *last_name;
+    int age;
+} person_dum_t;
+
 char *test_array_struct_pointers()
 {
-    // TODO
+    array *_array = array_create(10, sizeof(person_dum_t*));
+    person_dum_t *p = malloc(sizeof(person_dum_t));
+    p->first_name = "Jonathan";
+    p->last_name = "Torres";
+    p->age = 33;
+
+    array_push(_array, p);
+    assert(_array->contents != NULL, "Array contents should not be NULL");
+    assert(_array->length == 1, "Array length should be 1");
+    person_dum_t *per = array_get(_array, 0);
+    assert(strcmp(per->first_name, "Jonathan") == 0, "String 'Jonathan' should be equal");
+
+    free(_array->contents[0]);
+    array_destroy(_array);
+
     return NULL;
 }
 
