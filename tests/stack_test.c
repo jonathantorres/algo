@@ -14,17 +14,9 @@ void stack_print(stack *_stack)
     }
 
     printf("{");
-
-    if (_stack->first != NULL) {
-        dllist_node *current_node = _stack->first;
-        printf("%s,", (char*)current_node->value);
-
-        while (current_node->next != NULL) {
-            current_node = current_node->next;
-            printf("%s,", (char*)current_node->value);
-        }
+    STACK_FOREACH(_stack) {
+        printf("%s,", (char*)cur->value);
     }
-
     printf("}\n");
 }
 

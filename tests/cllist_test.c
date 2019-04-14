@@ -14,17 +14,9 @@ void cllist_print(cllist *list)
     }
 
     printf("{");
-
-    if (list->first != NULL) {
-        cllist_node *current_node = list->first;
-        printf("%s,", (char*)current_node->value);
-
-        while (current_node != list->last) {
-            current_node = current_node->next;
-            printf("%s,", (char*)current_node->value);
-        }
+    CLLIST_FOREACH(list) {
+        printf("%s,", (char*)cur->value);
     }
-
     printf("}\n");
 }
 

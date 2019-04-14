@@ -14,17 +14,9 @@ void dllist_print(dllist *list)
     }
 
     printf("{");
-
-    if (list->first != NULL) {
-        dllist_node *current_node = list->first;
-        printf("%s,", (char*)current_node->value);
-
-        while (current_node->next != NULL) {
-            current_node = current_node->next;
-            printf("%s,", (char*)current_node->value);
-        }
+    DLLIST_FOREACH(list) {
+        printf("%s,", (char*)cur->value);
     }
-
     printf("}\n");
 }
 

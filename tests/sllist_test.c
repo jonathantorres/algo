@@ -13,17 +13,9 @@ void sllist_print(sllist *list)
     }
 
     printf("{");
-
-    if (list->first != NULL) {
-        sllist_node *current_node = list->first;
-        printf("%s,", (char*)current_node->value);
-
-        while (current_node->next != NULL) {
-            current_node = current_node->next;
-            printf("%s,", (char*)current_node->value);
-        }
+    SLLIST_FOREACH(list) {
+        printf("%s,", (char*)cur->value);
     }
-
     printf("}\n");
 }
 

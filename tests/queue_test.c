@@ -14,17 +14,9 @@ void queue_print(queue *_queue)
     }
 
     printf("{");
-
-    if (_queue->first != NULL) {
-        dllist_node *current_node = _queue->first;
-        printf("%s,", (char*)current_node->value);
-
-        while (current_node->next != NULL) {
-            current_node = current_node->next;
-            printf("%s,", (char*)current_node->value);
-        }
+    QUEUE_FOREACH(_queue) {
+        printf("%s,", (char*)cur->value);
     }
-
     printf("}\n");
 }
 
