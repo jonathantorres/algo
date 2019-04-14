@@ -29,4 +29,20 @@ bool htable_set(htable *_htable, void *key, void *value);
 void *htable_remove(htable *_htable, void *key);
 bool htable_traverse(htable *_htable, htable_node_cb cb);
 
+// Macro Usage:
+// HTABLE_FOREACH(htable) {
+    // use elem
+    // elem is the current htable_node
+// } HTABLE_FOREACH_END
+#define HTABLE_FOREACH(htable) \
+    if ((htable)->buckets) { \
+        for (unsigned int i = 0; i < (htable)->buckets->length; i++) { \
+            array *bucket = array_get((htable)->buckets, i); \
+            if (bucket) { \
+                for (unsigned int j = 0; j < bucket->length; j++) { \
+                    htable_node *elem = array_get(bucket, j); \
+                    if (elem)
+
+#define HTABLE_FOREACH_END } } } }
+
 #endif
