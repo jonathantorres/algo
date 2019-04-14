@@ -45,4 +45,13 @@ void dllist_remove(dllist *list, void *value, dllist_cmp cmp);
 // check to see if value {value} exists in the list
 bool dllist_exists(dllist *list, void *value, dllist_cmp cmp);
 
+// Macro usage:
+// DLLIST_FOREACH(list) {
+    // your code here
+    // you can use the variable "cur"
+    // inside of it that references the current item of the list
+// }
+#define DLLIST_FOREACH(list) dllist_node *cur = NULL; \
+    for (cur = (list)->first; cur != NULL; cur = cur->next)
+
 #endif

@@ -46,4 +46,15 @@ void cllist_remove(cllist *list, void *value, cllist_cmp cmp);
 // check to see if value {value} exists in the list
 bool cllist_exists(cllist *list, void *value, cllist_cmp cmp);
 
+
+// Macro usage:
+// CLLIST_FOREACH(list) {
+    // your code here
+    // you can use the variable "cur"
+    // inside of it that references the current item of the list
+// }
+#define CLLIST_FOREACH(list) cllist_node *cur = NULL; \
+    bool ended = false; \
+    for (cur = (list)->first; cur != NULL && !ended; ended = (cur == (list)->last) ? true: false, cur = cur->next)
+
 #endif
