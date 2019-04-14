@@ -35,7 +35,6 @@ void *array_get(array *_array, unsigned int index);
 // remove element at index and return it
 void *array_remove(array *_array, unsigned int index);
 
-// TODO: function to print contents
 // TODO: function to sort contents
 
 // add element to the beginning
@@ -43,5 +42,13 @@ void array_shift(array *_array, void *value);
 
 // remove first element and return it
 void *array_unshift(array *_array);
+
+// Macro usage:
+// ARRAY_FOREACH(array) {
+    // your code here
+    // you can use the variable "i" which contains the current index
+    // you'll have to assign the current element to a variable to use it
+// }
+#define ARRAY_FOREACH(array) for (unsigned int i = 0; i < (array)->length; i++)
 
 #endif
