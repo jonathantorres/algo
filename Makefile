@@ -31,6 +31,10 @@ stream_client: net/stream_client.c
 http_server: net/http_server.c
 	$(CFLAGS) src/net/http_server.c -o bin/http_server
 
+# Http server: non blocking connection
+http_server_nonblock: net/http_server_nonblock.c
+	$(CFLAGS) src/net/http_server_nonblock.c -o bin/http_server_nonblock
+
 # Singly linked list
 sllist_test: sllist_test.c sllist.o
 	$(CFLAGS) tests/sllist_test.c sllist.o -o bin/sllist_test
