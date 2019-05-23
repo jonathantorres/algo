@@ -35,6 +35,10 @@ http_server: net/http_server.c
 http_server_nonblock: net/http_server_nonblock.c
 	$(CFLAGS) src/net/http_server_nonblock.c -o bin/http_server_nonblock
 
+# Http server: serve images
+http_server_image: net/http_server_image.c
+	$(CFLAGS) src/net/http_server_image.c -o bin/http_server_image
+
 # Singly linked list
 sllist_test: sllist_test.c sllist.o
 	$(CFLAGS) tests/sllist_test.c sllist.o -o bin/sllist_test
