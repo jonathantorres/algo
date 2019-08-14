@@ -5,7 +5,7 @@
 
 static int default_compare(void *a, void *b)
 {
-    return 0; // FIX!
+    return strcmp((char*)a, (char*)b);
 }
 
 static int bstree_destroy_cb(bstree_node *node)
