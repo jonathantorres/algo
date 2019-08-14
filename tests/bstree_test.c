@@ -5,7 +5,6 @@
 #include "unittest.h"
 #include "bstree.h"
 
-bstree *tree = NULL;
 static int traverse_called = 0;
 char *test1 = "test data 1";
 char *test2 = "test data 2";
@@ -35,38 +34,47 @@ static int traverse_fail_cb(bstree_node *node)
 
 char *test_create()
 {
-    tree = bstree_create(NULL);
+    bstree *tree = bstree_create(NULL);
     assert(tree != NULL, "Failed to create tree");
     return NULL;
 }
 
 char *test_destroy()
 {
+    bstree *tree = bstree_create(NULL);
     bstree_destroy(tree);
     return NULL;
 }
 
 char *test_get_set()
 {
-    int rc = bstree_set(tree, &test1, &expect1);
-    assert(rc == 0, "Failed to set &test1");
-    char *result = bstree_get(tree, &test1);
-    assert(result == &expect1, "Wrong value for test1");
+    bstree *tree = bstree_create(NULL);
 
-    rc = bstree_set(tree, &test2, &expect2);
-    assert(rc == 0, "Failed to set &test2");
-    result = bstree_get(tree, &test2);
-    assert(result == &expect2, "Wrong value for test2");
+    int rc = bstree_set(tree, test1, expect1);
+    assert(rc == 0, "Failed to set test1");
+    char *result = bstree_get(tree, test1);
+    assert(result == expect1, "Wrong value for test1");
 
-    rc = bstree_set(tree, &test3, &expect3);
-    assert(rc == 0, "Failed to set &test3");
-    result = bstree_get(tree, &test3);
-    assert(result == &expect3, "Wrong value for test3");
+    rc = bstree_set(tree, test2, expect2);
+    assert(rc == 0, "Failed to set test2");
+    result = bstree_get(tree, test2);
+    assert(result == expect2, "Wrong value for test2");
+
+    rc = bstree_set(tree, test3, expect3);
+    assert(rc == 0, "Failed to set test3");
+    result = bstree_get(tree, test3);
+    assert(result == expect3, "Wrong value for test3");
+
     return NULL;
 }
 
 char *test_traverse()
 {
+    bstree *tree = bstree_create(NULL);
+    bstree_set(tree, test1, expect1);
+    bstree_set(tree, test2, expect2);
+    bstree_set(tree, test3, expect3);
+
     int rc = bstree_traverse(tree, traverse_good_cb);
     assert(rc == 0, "Failed to traverse");
     assert(traverse_called == 3, "Wrong traverse count");
@@ -81,29 +89,34 @@ char *test_traverse()
 
 char *test_delete()
 {
-    char *deleted = (char*) bstree_delete(tree, &test1);
+    bstree *tree = bstree_create(NULL);
+    bstree_set(tree, test1, expect1);
+    bstree_set(tree, test2, expect2);
+    bstree_set(tree, test3, expect3);
+
+    char *deleted = (char*) bstree_delete(tree, test1);
     assert(deleted != NULL, "Got NULL on delete");
-    assert(deleted == &expect1, "Should get test1");
-    char *result = bstree_get(tree, &test1);
+    assert(deleted == expect1, "Should get test1");
+    char *result = bstree_get(tree, test1);
     assert(result == NULL, "Should delete");
 
-    deleted = (char*) bstree_delete(tree, &test1);
+    deleted = (char*) bstree_delete(tree, test1);
     assert(deleted == NULL, "Should get NULL on delete");
 
-    deleted = (char*) bstree_delete(tree, &test2);
+    deleted = (char*) bstree_delete(tree, test2);
     assert(deleted != NULL, "Got NULL on delete");
-    assert(deleted == &expect2, "Should get test2");
-    result = bstree_get(tree, &test2);
+    assert(deleted == expect2, "Should get test2");
+    result = bstree_get(tree, test2);
     assert(result == NULL, "Should delete");
 
-    deleted = (char*) bstree_delete(tree, &test3);
+    deleted = (char*) bstree_delete(tree, test3);
     assert(deleted != NULL, "Got NULL on delete");
-    assert(deleted == &expect3, "Should get test3");
-    result = bstree_get(tree, &test3);
+    assert(deleted == expect3, "Should get test3");
+    result = bstree_get(tree, test3);
     assert(result == NULL, "Should delete");
 
-    // test deleting no-existing stuff
-    deleted = (char*) bstree_delete(tree, &test3);
+    // test deleting non-existing stuff
+    deleted = (char*) bstree_delete(tree, test3);
     assert(deleted == NULL, "Should get NULL");
 
     return NULL;
