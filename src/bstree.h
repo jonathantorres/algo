@@ -1,5 +1,5 @@
-#ifndef BSTREE_H
-#define BSTREE_H
+#ifndef _bstree_h
+#define _bstree_h
 
 typedef int (*bstree_compare) (void *a, void *b);
 
