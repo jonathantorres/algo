@@ -79,6 +79,10 @@ trie_test: trie_test.c trie.o array.o
 bstree_test: bstree_test.c bstree.o
 	$(CFLAGS) tests/bstree_test.c bstree.o -o bin/bstree_test
 
+# Ternary Search Tree
+tstree_test: tstree_test.c tstree.o
+	$(CFLAGS) tests/tstree_test.c tstree.o -o bin/tstree_test
+
 # Bubble Sort
 bubble_sort_test: bubble_sort_test.c bubble_sort.o array.o
 	$(CFLAGS) tests/bubble_sort_test.c bubble_sort.o array.o -o bin/bubble_sort_test
@@ -124,6 +128,8 @@ trie.o: trie.c trie.h
 	$(CFLAGS) -c src/trie.c src/trie.h
 bstree.o: bstree.c bstree.h
 	$(CFLAGS) -c src/bstree.c src/bstree.h
+tstree.o: tstree.c tstree.h
+	$(CFLAGS) -c src/tstree.c src/tstree.h
 bubble_sort.o: bubble_sort.c bubble_sort.h
 	$(CFLAGS) -c src/bubble_sort.c src/bubble_sort.h
 insertion_sort.o: insertion_sort.c insertion_sort.h

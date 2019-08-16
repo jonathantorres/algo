@@ -10,6 +10,8 @@ Various algorithms and data structures implemented in C
 - Stack
 - Queue
 - Hash Table
+- Binary Search Tree
+- Ternary Search Tree
 
 ## Algorithms
 - Bubble Sort
