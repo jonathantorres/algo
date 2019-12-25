@@ -107,6 +107,10 @@ quick_sort_test: quick_sort_test.c quick_sort.o array.o
 binary_search_test: binary_search_test.c binary_search.o array.o
 	$(CFLAGS) tests/binary_search_test.c binary_search.o array.o -o bin/binary_search_test
 
+# Graph
+graph_test: graph_test.c dllist.o queue.o
+	$(CFLAGS) tests/graph_test.c dllist.o queue.o -o bin/graph_test
+
 # Compiling objects
 sllist.o: sllist.c sllist.h
 	$(CFLAGS) -c src/sllist.c src/sllist.h
@@ -147,7 +151,8 @@ binary_search.o: binary_search.c binary_search.h
 .PHONY: test
 test: sllist_test dllist_test cllist_test stack_test queue_test array_test \
 bubble_sort_test insertion_sort_test selection_sort_test merge_sort_test \
-quick_sort_test cbuffer_test htable_test trie_test bstree_test binary_search_test
+quick_sort_test cbuffer_test htable_test trie_test bstree_test binary_search_test \
+graph_test
 	./bin/sllist_test
 	./bin/dllist_test
 	./bin/cllist_test
@@ -164,6 +169,7 @@ quick_sort_test cbuffer_test htable_test trie_test bstree_test binary_search_tes
 	./bin/htable_test
 	./bin/trie_test
 	./bin/bstree_test
+	./bin/graph_test
 
 clean:
 	rm -f ./*.o src/*.h.gch ./bin/*
