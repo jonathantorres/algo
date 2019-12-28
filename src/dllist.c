@@ -169,6 +169,7 @@ void *dllist_unshift(dllist *list)
     if (list->first->next == NULL) {
         void *value = list->first->value;
         destroy_node(list->first);
+        list->first = NULL;
 
         return value;
     }
