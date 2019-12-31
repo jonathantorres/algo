@@ -1,11 +1,8 @@
-#include "sllist.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
+#include "sl_list.h"
 
-sllist_node *create_node(void *value)
+sl_list_node *_sl_list_create_node(void *value)
 {
-    sllist_node *node = malloc(sizeof(sllist_node));
+    sl_list_node *node = malloc(sizeof(sl_list_node));
 
     if (!node) {
         fputs("Not enough memory.", stderr);
@@ -18,7 +15,7 @@ sllist_node *create_node(void *value)
     return node;
 }
 
-void destroy_node(sllist_node *node)
+void _sl_list_destroy_node(sl_list_node *node)
 {
     if (!node) {
         fputs("A valid node must be provided.", stderr);
@@ -31,9 +28,9 @@ void destroy_node(sllist_node *node)
     free(node);
 }
 
-sllist *sllist_new()
+sl_list *sl_list_new()
 {
-    sllist *new_list = malloc(sizeof(sllist));
+    sl_list *new_list = malloc(sizeof(sl_list));
 
     if (!new_list) {
         fputs("Not enough memory.", stderr);
@@ -45,52 +42,52 @@ sllist *sllist_new()
     return new_list;
 }
 
-void sllist_clear(sllist *list)
+void sl_list_clear(sl_list *list)
 {
     if (list->first != NULL) {
-        sllist_node *current_node = list->first;
-        sllist_node *prev_node = NULL;
+        sl_list_node *current_node = list->first;
+        sl_list_node *prev_node = NULL;
 
         while (current_node->next != NULL) {
             prev_node = current_node;
             current_node = current_node->next;
 
             if (prev_node) {
-                destroy_node(prev_node);
+                _sl_list_destroy_node(prev_node);
             }
         }
 
         if (current_node) {
-            destroy_node(current_node);
+            _sl_list_destroy_node(current_node);
         }
 
         list->first = NULL;
     }
 }
 
-void sllist_destroy(sllist *list)
+void sl_list_destroy(sl_list *list)
 {
     if (!list) {
-        fputs("Must provide a sllist.", stderr);
+        fputs("Must provide a sl_list.", stderr);
         return;
     }
 
-    sllist_clear(list);
+    sl_list_clear(list);
     free(list);
 }
 
 // get the length of the list
-int sllist_length(sllist *list)
+int sl_list_length(sl_list *list)
 {
     if (!list) {
-        fputs("Must provide a sllist.", stderr);
+        fputs("Must provide a sl_list.", stderr);
         return -1;
     }
 
     int length = 0;
 
     if (list->first != NULL) {
-        sllist_node *current_node = list->first;
+        sl_list_node *current_node = list->first;
         length++;
 
         while (current_node->next != NULL) {
@@ -103,14 +100,14 @@ int sllist_length(sllist *list)
 }
 
 // insert at the end
-void sllist_push(sllist *list, void *value)
+void sl_list_push(sl_list *list, void *value)
 {
     if (!list) {
-        fputs("Must provide a sllist.", stderr);
+        fputs("Must provide a sl_list.", stderr);
         return;
     }
 
-    sllist_node *new_node = create_node(value);
+    sl_list_node *new_node = _sl_list_create_node(value);
 
     // list is empty, this is the first element
     if (list->first == NULL) {
@@ -118,7 +115,7 @@ void sllist_push(sllist *list, void *value)
         return;
     }
 
-    sllist_node *current_node = list->first;
+    sl_list_node *current_node = list->first;
 
     while (current_node->next != NULL) {
         current_node = current_node->next;
@@ -128,14 +125,14 @@ void sllist_push(sllist *list, void *value)
 }
 
 // insert at the beginning
-void sllist_shift(sllist *list, void *value)
+void sl_list_shift(sl_list *list, void *value)
 {
     if (!list) {
-        fputs("Must provide a sllist.", stderr);
+        fputs("Must provide a sl_list.", stderr);
         return;
     }
 
-    sllist_node *new_node = create_node(value);
+    sl_list_node *new_node = _sl_list_create_node(value);
 
     // list is empty, this is the first element
     if (list->first == NULL) {
@@ -148,10 +145,10 @@ void sllist_shift(sllist *list, void *value)
 }
 
 // remove the first node and return it
-void *sllist_unshift(sllist *list)
+void *sl_list_unshift(sl_list *list)
 {
     if (!list) {
-        fputs("Must provide a sllist.", stderr);
+        fputs("Must provide a sl_list.", stderr);
         return NULL;
     }
 
@@ -168,7 +165,7 @@ void *sllist_unshift(sllist *list)
         return value;
     }
 
-    sllist_node *new_first = list->first->next;
+    sl_list_node *new_first = list->first->next;
     void *value = list->first->value;
 
     free(list->first);
@@ -178,10 +175,10 @@ void *sllist_unshift(sllist *list)
 }
 
 // remove the last node and return it
-void *sllist_pop(sllist *list)
+void *sl_list_pop(sl_list *list)
 {
     if (!list) {
-        fputs("Must provide a sllist.", stderr);
+        fputs("Must provide a sl_list.", stderr);
         return NULL;
     }
 
@@ -198,8 +195,8 @@ void *sllist_pop(sllist *list)
         return value;
     }
 
-    sllist_node *current_node = list->first;
-    sllist_node *prev_node = list->first;
+    sl_list_node *current_node = list->first;
+    sl_list_node *prev_node = list->first;
 
     while (current_node->next != NULL) {
         prev_node = current_node;
@@ -215,10 +212,10 @@ void *sllist_pop(sllist *list)
 }
 
 // remove node whose value is {value}
-void sllist_remove(sllist *list, void *value, sllist_cmp cmp)
+void sl_list_remove(sl_list *list, void *value, sl_list_cmp cmp)
 {
     if (!list) {
-        fputs("Must provide a valid sllist.", stderr);
+        fputs("Must provide a valid sl_list.", stderr);
         return;
     }
 
@@ -232,20 +229,20 @@ void sllist_remove(sllist *list, void *value, sllist_cmp cmp)
         void *node_value = list->first->value;
 
         if (cmp(node_value, value) == 0) {
-            sllist_pop(list);
+            sl_list_pop(list);
         }
 
         return;
     }
 
-    sllist_node *current_node = list->first;
-    sllist_node *prev_node = list->first;
+    sl_list_node *current_node = list->first;
+    sl_list_node *prev_node = list->first;
 
     // check the first one
     if (cmp(current_node->value, value) == 0) {
-        sllist_node *next_node = current_node->next;
+        sl_list_node *next_node = current_node->next;
         list->first = next_node;
-        destroy_node(current_node);
+        _sl_list_destroy_node(current_node);
         return;
     }
 
@@ -256,17 +253,17 @@ void sllist_remove(sllist *list, void *value, sllist_cmp cmp)
         if (cmp(current_node->value, value) == 0) {
             // remove the node
             prev_node->next = current_node->next;
-            destroy_node(current_node);
+            _sl_list_destroy_node(current_node);
             break;
         }
     }
 }
 
 // check to see if value {value} exists in the list
-bool sllist_exists(sllist *list, void *value, sllist_cmp cmp)
+bool sl_list_exists(sl_list *list, void *value, sl_list_cmp cmp)
 {
     if (!list) {
-        fputs("Must provide a valid sllist.", stderr);
+        fputs("Must provide a valid sl_list.", stderr);
         return -1;
     }
 
@@ -275,7 +272,7 @@ bool sllist_exists(sllist *list, void *value, sllist_cmp cmp)
         return false;
     }
 
-    sllist_node *current_node = list->first;
+    sl_list_node *current_node = list->first;
 
     // check the first one
     if (cmp(current_node->value, value) == 0) {

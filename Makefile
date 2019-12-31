@@ -40,8 +40,8 @@ http_server_image: net/http_server_image.c
 	$(CFLAGS) src/net/http_server_image.c -o bin/http_server_image
 
 # Singly linked list
-sllist_test: sllist_test.c sllist.o
-	$(CFLAGS) tests/sllist_test.c sllist.o -o bin/sllist_test
+sl_list_test: sl_list_test.c sl_list.o
+	$(CFLAGS) tests/sl_list_test.c sl_list.o -o bin/sl_list_test
 
 # Doubly linked list
 dllist_test: dllist_test.c dllist.o
@@ -108,8 +108,8 @@ binary_search_test: binary_search_test.c binary_search.o array.o
 	$(CFLAGS) tests/binary_search_test.c binary_search.o array.o -o bin/binary_search_test
 
 # Compiling objects
-sllist.o: sllist.c sllist.h
-	$(CFLAGS) -c src/sllist.c src/sllist.h
+sl_list.o: sl_list.c sl_list.h
+	$(CFLAGS) -c src/sl_list.c src/sl_list.h
 dllist.o: dllist.c dllist.h
 	$(CFLAGS) -c src/dllist.c src/dllist.h
 cllist.o: cllist.c cllist.h
@@ -145,10 +145,10 @@ binary_search.o: binary_search.c binary_search.h
 
 # Run tests
 .PHONY: test
-test: sllist_test dllist_test cllist_test stack_test queue_test array_test \
+test: sl_list_test dllist_test cllist_test stack_test queue_test array_test \
 bubble_sort_test insertion_sort_test selection_sort_test merge_sort_test \
 quick_sort_test cbuffer_test htable_test trie_test bstree_test binary_search_test
-	./bin/sllist_test
+	./bin/sl_list_test
 	./bin/dllist_test
 	./bin/cllist_test
 	./bin/stack_test
