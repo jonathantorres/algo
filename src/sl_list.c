@@ -161,6 +161,7 @@ void *sl_list_unshift(sl_list *list)
     if (list->first->next == NULL) {
         void *value = list->first->value;
         free(list->first);
+        list->first = NULL;
 
         return value;
     }
