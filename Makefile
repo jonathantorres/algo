@@ -44,16 +44,16 @@ sl_list_test: sl_list_test.c sl_list.o
 	$(CFLAGS) tests/sl_list_test.c sl_list.o -o bin/sl_list_test
 
 # Doubly linked list
-dllist_test: dllist_test.c dllist.o
-	$(CFLAGS) tests/dllist_test.c dllist.o -o bin/dllist_test
+dl_list_test: dl_list_test.c dl_list.o
+	$(CFLAGS) tests/dl_list_test.c dl_list.o -o bin/dl_list_test
 
 # Stack
-stack_test: stack_test.c stack.o dllist.o
-	$(CFLAGS) tests/stack_test.c stack.o dllist.o -o bin/stack_test
+stack_test: stack_test.c stack.o dl_list.o
+	$(CFLAGS) tests/stack_test.c stack.o dl_list.o -o bin/stack_test
 
 # Queue
-queue_test: queue_test.c queue.o dllist.o
-	$(CFLAGS) tests/queue_test.c queue.o dllist.o -o bin/queue_test
+queue_test: queue_test.c queue.o dl_list.o
+	$(CFLAGS) tests/queue_test.c queue.o dl_list.o -o bin/queue_test
 
 # Circular linked list
 cllist_test: cllist_test.c cllist.o
@@ -110,8 +110,8 @@ binary_search_test: binary_search_test.c binary_search.o array.o
 # Compiling objects
 sl_list.o: sl_list.c sl_list.h
 	$(CFLAGS) -c src/sl_list.c src/sl_list.h
-dllist.o: dllist.c dllist.h
-	$(CFLAGS) -c src/dllist.c src/dllist.h
+dl_list.o: dl_list.c dl_list.h
+	$(CFLAGS) -c src/dl_list.c src/dl_list.h
 cllist.o: cllist.c cllist.h
 	$(CFLAGS) -c src/cllist.c src/cllist.h
 stack.o: stack.c stack.h
@@ -145,11 +145,11 @@ binary_search.o: binary_search.c binary_search.h
 
 # Run tests
 .PHONY: test
-test: sl_list_test dllist_test cllist_test stack_test queue_test array_test \
+test: sl_list_test dl_list_test cllist_test stack_test queue_test array_test \
 bubble_sort_test insertion_sort_test selection_sort_test merge_sort_test \
 quick_sort_test cbuffer_test htable_test trie_test bstree_test binary_search_test
 	./bin/sl_list_test
-	./bin/dllist_test
+	./bin/dl_list_test
 	./bin/cllist_test
 	./bin/stack_test
 	./bin/queue_test

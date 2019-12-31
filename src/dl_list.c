@@ -1,11 +1,8 @@
-#include "dllist.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
+#include "dl_list.h"
 
-dllist_node *create_node(void *value)
+dl_list_node *_dl_list_create_node(void *value)
 {
-    dllist_node *node = malloc(sizeof(dllist_node));
+    dl_list_node *node = malloc(sizeof(dl_list_node));
 
     if (!node) {
         fputs("Not enough memory.", stderr);
@@ -19,7 +16,7 @@ dllist_node *create_node(void *value)
     return node;
 }
 
-void destroy_node(dllist_node *node)
+void _dl_list_destroy_node(dl_list_node *node)
 {
     if (!node) {
         fputs("A valid node must be provided.", stderr);
@@ -34,9 +31,9 @@ void destroy_node(dllist_node *node)
 }
 
 // create a new list
-dllist *dllist_new()
+dl_list *dl_list_new()
 {
-    dllist *new_list = malloc(sizeof(dllist));
+    dl_list *new_list = malloc(sizeof(dl_list));
 
     if (!new_list) {
         fputs("Not enough memory.", stderr);
@@ -49,21 +46,21 @@ dllist *dllist_new()
 }
 
 // remove all the values in the list
-void dllist_clear(dllist *list)
+void dl_list_clear(dl_list *list)
 {
     if (list->first != NULL) {
-        dllist_node *current_node = list->first;
+        dl_list_node *current_node = list->first;
 
         while (current_node->next != NULL) {
             current_node = current_node->next;
 
             if (current_node->prev) {
-                destroy_node(current_node->prev);
+                _dl_list_destroy_node(current_node->prev);
             }
         }
 
         if (current_node) {
-            destroy_node(current_node);
+            _dl_list_destroy_node(current_node);
         }
 
         list->first = NULL;
@@ -71,29 +68,29 @@ void dllist_clear(dllist *list)
 }
 
 // destroy the list
-void dllist_destroy(dllist *list)
+void dl_list_destroy(dl_list *list)
 {
     if (!list) {
-        fputs("Must provide a dllist.", stderr);
+        fputs("Must provide a dl_list.", stderr);
         return;
     }
 
-    dllist_clear(list);
+    dl_list_clear(list);
     free(list);
 }
 
 // get the length of the list
-int dllist_length(dllist *list)
+int dl_list_length(dl_list *list)
 {
     if (!list) {
-        fputs("Must provide a dllist.", stderr);
+        fputs("Must provide a dl_list.", stderr);
         return -1;
     }
 
     int length = 0;
 
     if (list->first != NULL) {
-        dllist_node *current_node = list->first;
+        dl_list_node *current_node = list->first;
         length++;
 
         while (current_node->next != NULL) {
@@ -106,14 +103,14 @@ int dllist_length(dllist *list)
 }
 
 // insert at the end
-void dllist_push(dllist *list, void *value)
+void dl_list_push(dl_list *list, void *value)
 {
     if (!list) {
-        fputs("Must provide a dllist.", stderr);
+        fputs("Must provide a dl_list.", stderr);
         return;
     }
 
-    dllist_node *new_node = create_node(value);
+    dl_list_node *new_node = _dl_list_create_node(value);
 
     // list is empty, this is the first element
     if (list->first == NULL) {
@@ -121,7 +118,7 @@ void dllist_push(dllist *list, void *value)
         return;
     }
 
-    dllist_node *current_node = list->first;
+    dl_list_node *current_node = list->first;
 
     while (current_node->next != NULL) {
         current_node = current_node->next;
@@ -132,14 +129,14 @@ void dllist_push(dllist *list, void *value)
 }
 
 // insert at the beginning
-void dllist_shift(dllist *list, void *value)
+void dl_list_shift(dl_list *list, void *value)
 {
     if (!list) {
-        fputs("Must provide a dllist.", stderr);
+        fputs("Must provide a dl_list.", stderr);
         return;
     }
 
-    dllist_node *new_node = create_node(value);
+    dl_list_node *new_node = _dl_list_create_node(value);
 
     // list is empty, this is the first element
     if (list->first == NULL) {
@@ -153,10 +150,10 @@ void dllist_shift(dllist *list, void *value)
 }
 
 // remove the first node and return it
-void *dllist_unshift(dllist *list)
+void *dl_list_unshift(dl_list *list)
 {
     if (!list) {
-        fputs("Must provide a dllist.", stderr);
+        fputs("Must provide a dl_list.", stderr);
         return NULL;
     }
 
@@ -168,16 +165,16 @@ void *dllist_unshift(dllist *list)
     // list has just 1 node
     if (list->first->next == NULL) {
         void *value = list->first->value;
-        destroy_node(list->first);
+        _dl_list_destroy_node(list->first);
         list->first = NULL;
 
         return value;
     }
 
-    dllist_node *new_first = list->first->next;
+    dl_list_node *new_first = list->first->next;
     void *value = list->first->value;
 
-    destroy_node(list->first);
+    _dl_list_destroy_node(list->first);
     new_first->prev = NULL;
     list->first = new_first;
 
@@ -185,10 +182,10 @@ void *dllist_unshift(dllist *list)
 }
 
 // remove the last node and return it
-void *dllist_pop(dllist *list)
+void *dl_list_pop(dl_list *list)
 {
     if (!list) {
-        fputs("Must provide a dllist.", stderr);
+        fputs("Must provide a dl_list.", stderr);
         return NULL;
     }
 
@@ -200,13 +197,13 @@ void *dllist_pop(dllist *list)
     // list has just 1 node
     if (list->first->next == NULL) {
         void *value = list->first->value;
-        destroy_node(list->first);
+        _dl_list_destroy_node(list->first);
         list->first = NULL;
 
         return value;
     }
 
-    dllist_node *current_node = list->first;
+    dl_list_node *current_node = list->first;
 
     while (current_node->next != NULL) {
         current_node = current_node->next;
@@ -214,16 +211,16 @@ void *dllist_pop(dllist *list)
 
     void *value = current_node->value;
     current_node->prev->next = NULL;
-    destroy_node(current_node);
+    _dl_list_destroy_node(current_node);
 
     return value;
 }
 
 // remove node whose value is {value}
-void dllist_remove(dllist *list, void *value, dllist_cmp cmp)
+void dl_list_remove(dl_list *list, void *value, dl_list_cmp cmp)
 {
     if (!list) {
-        fputs("Must provide a valid dllist.", stderr);
+        fputs("Must provide a valid dl_list.", stderr);
         return;
     }
 
@@ -237,20 +234,20 @@ void dllist_remove(dllist *list, void *value, dllist_cmp cmp)
         void *node_value = list->first->value;
 
         if (cmp(node_value, value) == 0) {
-            dllist_pop(list);
+            dl_list_pop(list);
         }
 
         return;
     }
 
-    dllist_node *current_node = list->first;
+    dl_list_node *current_node = list->first;
 
     // check the first one
     if (cmp(current_node->value, value) == 0) {
-        dllist_node *next_node = current_node->next;
+        dl_list_node *next_node = current_node->next;
         next_node->prev = NULL;
         list->first = next_node;
-        destroy_node(current_node);
+        _dl_list_destroy_node(current_node);
         return;
     }
 
@@ -261,17 +258,17 @@ void dllist_remove(dllist *list, void *value, dllist_cmp cmp)
             // remove the node
             current_node->prev->next = current_node->next;
             current_node->next->prev = current_node->prev;
-            destroy_node(current_node);
+            _dl_list_destroy_node(current_node);
             break;
         }
     }
 }
 
 // check to see if value {value} exists in the list
-bool dllist_exists(dllist *list, void *value, dllist_cmp cmp)
+bool dl_list_exists(dl_list *list, void *value, dl_list_cmp cmp)
 {
     if (!list) {
-        fputs("Must provide a valid dllist.", stderr);
+        fputs("Must provide a valid dl_list.", stderr);
         return -1;
     }
 
@@ -280,7 +277,7 @@ bool dllist_exists(dllist *list, void *value, dllist_cmp cmp)
         return false;
     }
 
-    dllist_node *current_node = list->first;
+    dl_list_node *current_node = list->first;
 
     // check the first one
     if (cmp(current_node->value, value) == 0) {
