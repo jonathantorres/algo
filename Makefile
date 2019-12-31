@@ -166,4 +166,6 @@ quick_sort_test cbuffer_test htable_test trie_test bstree_test binary_search_tes
 	./bin/bstree_test
 
 clean:
-	rm -f ./*.o src/*.h.gch ./bin/*
+	rm -f ./*.o src/*.h.gch
+	rm -fr ./bin
+	mkdir ./bin && touch ./bin/.gitkeep
