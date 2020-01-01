@@ -21,7 +21,7 @@ int stack_length(stack *_stack);
     // you can use the variable "cur"
     // inside of it that references the current item of the stack
 // }
-#define STACK_FOREACH(stack) dl_list_node *cur = NULL; \
-    for (cur = (stack)->first; cur != NULL; cur = cur->next)
+#define STACK_FOREACH(stack) \
+    for (dl_list_node *cur = (stack)->first; cur != NULL; cur = cur->next)
 
 #endif

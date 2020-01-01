@@ -54,8 +54,7 @@ bool cl_list_exists(cl_list *list, void *value, cl_list_cmp cmp);
     // you can use the variable "cur"
     // inside of it that references the current item of the list
 // }
-#define CL_LIST_FOREACH(list) cl_list_node *cur = NULL; \
-    bool ended = false; \
-    for (cur = (list)->first; cur != NULL && !ended; ended = (cur == (list)->last) ? true: false, cur = cur->next)
+#define CL_LIST_FOREACH(list) \
+    for (cl_list_node *cur = (list)->first; cur != NULL && !(cur == (list)->last); cur = cur->next)
 
 #endif

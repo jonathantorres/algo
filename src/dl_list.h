@@ -53,7 +53,7 @@ bool dl_list_exists(dl_list *list, void *value, dl_list_cmp cmp);
     // you can use the variable "cur"
     // inside of it that references the current item of the list
 // }
-#define DL_LIST_FOREACH(list) dl_list_node *cur = NULL; \
-    for (cur = (list)->first; cur != NULL; cur = cur->next)
+#define DL_LIST_FOREACH(list) \
+    for (dl_list_node *cur = (list)->first; cur != NULL; cur = cur->next)
 
 #endif

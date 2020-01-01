@@ -53,7 +53,7 @@ bool sl_list_exists(sl_list *list, void *value, sl_list_cmp cmp);
     // you can use the variable "cur"
     // inside of it that references the current item of the list
 // }
-#define SL_LIST_FOREACH(list) sl_list_node *cur = NULL; \
-    for (cur = (list)->first; cur != NULL; cur = cur->next)
+#define SL_LIST_FOREACH(list) \
+    for (sl_list_node *cur = (list)->first; cur != NULL; cur = cur->next)
 
 #endif

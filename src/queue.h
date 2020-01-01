@@ -21,7 +21,7 @@ int queue_length(queue *_queue);
     // you can use the variable "cur"
     // inside of it that references the current item of the queue
 // }
-#define QUEUE_FOREACH(queue) dl_list_node *cur = NULL; \
-    for (cur = (queue)->first; cur != NULL; cur = cur->next)
+#define QUEUE_FOREACH(queue) \
+    for (dl_list_node *cur = (queue)->first; cur != NULL; cur = cur->next)
 
 #endif
