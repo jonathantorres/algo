@@ -68,8 +68,8 @@ c_buffer_test: c_buffer_test.c c_buffer.o
 	$(CFLAGS) tests/c_buffer_test.c c_buffer.o -o bin/c_buffer_test
 
 # Hash Table
-htable_test: htable_test.c htable.o array.o
-	$(CFLAGS) tests/htable_test.c htable.o array.o -o bin/htable_test
+h_table_test: h_table_test.c h_table.o array.o
+	$(CFLAGS) tests/h_table_test.c h_table.o array.o -o bin/h_table_test
 
 # Trie
 trie_test: trie_test.c trie.o array.o
@@ -122,8 +122,8 @@ array.o: array.c array.h
 	$(CFLAGS) -c src/array.c src/array.h
 c_buffer.o: c_buffer.c c_buffer.h
 	$(CFLAGS) -c src/c_buffer.c src/c_buffer.h
-htable.o: htable.c htable.h
-	$(CFLAGS) -c src/htable.c src/htable.h
+h_table.o: h_table.c h_table.h
+	$(CFLAGS) -c src/h_table.c src/h_table.h
 trie.o: trie.c trie.h
 	$(CFLAGS) -c src/trie.c src/trie.h
 bs_tree.o: bs_tree.c bs_tree.h
@@ -147,7 +147,7 @@ binary_search.o: binary_search.c binary_search.h
 .PHONY: test
 test: sl_list_test dl_list_test cl_list_test stack_test queue_test array_test \
 bubble_sort_test insertion_sort_test selection_sort_test merge_sort_test \
-quick_sort_test c_buffer_test htable_test trie_test bs_tree_test binary_search_test
+quick_sort_test c_buffer_test h_table_test trie_test bs_tree_test binary_search_test
 	./bin/sl_list_test
 	./bin/dl_list_test
 	./bin/cl_list_test
@@ -161,7 +161,7 @@ quick_sort_test c_buffer_test htable_test trie_test bs_tree_test binary_search_t
 	./bin/quick_sort_test
 	./bin/binary_search_test
 	./bin/c_buffer_test
-	./bin/htable_test
+	./bin/h_table_test
 	./bin/trie_test
 	./bin/bs_tree_test
 

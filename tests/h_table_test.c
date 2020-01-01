@@ -1,43 +1,43 @@
 #include <string.h>
 #include "unittest.h"
-#include "htable.h"
+#include "h_table.h"
 
-int htable_compare_fn(void *a, void *b)
+int h_table_compare_fn(void *a, void *b)
 {
     return strcmp((char*)a, (char*)b);
 }
 
 char *test_create()
 {
-    htable *_htable = htable_create(htable_compare_fn);
-    assert(_htable != NULL, "Hashtable cannot be NULL");
-    assert(_htable->cmp == htable_compare_fn, "Hashtable must use the correct compare function");
-    assert(_htable->buckets != NULL, "Hashtable buckets cannot be NULL");
-    htable_destroy(_htable);
+    h_table *_h_table = h_table_create(h_table_compare_fn);
+    assert(_h_table != NULL, "Hash_table cannot be NULL");
+    assert(_h_table->cmp == h_table_compare_fn, "Hash_table must use the correct compare function");
+    assert(_h_table->buckets != NULL, "Hash_table buckets cannot be NULL");
+    h_table_destroy(_h_table);
 
     return NULL;
 }
 
 char *test_destroy()
 {
-    htable *_htable = htable_create(htable_compare_fn);
-    htable_destroy(_htable);
+    h_table *_h_table = h_table_create(h_table_compare_fn);
+    h_table_destroy(_h_table);
 
     return NULL;
 }
 
 char *test_set()
 {
-    htable *_htable = htable_create(htable_compare_fn);
-    bool success = htable_set(_htable, "john", "Jonathan Torres");
+    h_table *_h_table = h_table_create(h_table_compare_fn);
+    bool success = h_table_set(_h_table, "john", "Jonathan Torres");
     assert(success == true, "The 'john' key could not be set");
-    success = htable_set(_htable, "luis", "Jorge L Torres");
+    success = h_table_set(_h_table, "luis", "Jorge L Torres");
     assert(success == true, "The 'luis' key could not be set");
-    success = htable_set(_htable, "mar", "Marjory Torres");
+    success = h_table_set(_h_table, "mar", "Marjory Torres");
     assert(success == true, "The 'mar' key could not be set");
-    success = htable_set(_htable, "chris", "Christopher Torres");
+    success = h_table_set(_h_table, "chris", "Christopher Torres");
     assert(success == true, "The 'chris' key could not be set");
-    htable_destroy(_htable);
+    h_table_destroy(_h_table);
 
     return NULL;
 }
@@ -49,21 +49,21 @@ char *test_get()
     char *first_value = "Jonathan Torres";
     char *second_value = "Jorge L Torres";
 
-    htable *_htable = htable_create(htable_compare_fn);
-    bool success = htable_set(_htable, first_key, first_value);
+    h_table *_h_table = h_table_create(h_table_compare_fn);
+    bool success = h_table_set(_h_table, first_key, first_value);
     assert(success == true, "The 'john' key could not be set");
-    success = htable_set(_htable, second_key, second_value);
+    success = h_table_set(_h_table, second_key, second_value);
     assert(success == true, "The 'luis' key could not be set");
 
-    char *value = htable_get(_htable, first_key);
+    char *value = h_table_get(_h_table, first_key);
     assert(value != NULL, "Value for key 'john' shouldn't be NULL");
     assert(strcmp(value, first_value) == 0, "Value for key 'john' should be 'Jonathan Torres'");
-    value = htable_get(_htable, second_key);
+    value = h_table_get(_h_table, second_key);
     assert(value != NULL, "Value for key 'luis' shouldn't be NULL");
     assert(strcmp(value, second_value) == 0, "Value for key 'luis' should be 'Jorge L Torres'");
-    value = htable_get(_htable, "foo");
+    value = h_table_get(_h_table, "foo");
     assert(value == NULL, "Value for key 'foo' should be NULL");
-    htable_destroy(_htable);
+    h_table_destroy(_h_table);
 
     return NULL;
 }
@@ -75,20 +75,20 @@ char *test_remove()
     char *first_value = "Jonathan Torres";
     char *second_value = "Jorge L Torres";
 
-    htable *_htable = htable_create(htable_compare_fn);
-    htable_set(_htable, first_key, first_value);
-    htable_set(_htable, second_key, second_value);
-    char *value = htable_remove(_htable, first_key);
+    h_table *_h_table = h_table_create(h_table_compare_fn);
+    h_table_set(_h_table, first_key, first_value);
+    h_table_set(_h_table, second_key, second_value);
+    char *value = h_table_remove(_h_table, first_key);
     assert(value != NULL, "Value for key 'john' could not be removed");
     assert(strcmp(value, first_value) == 0, "Value for the removed key 'john' should be 'Jonathan Torres'");
-    value = htable_get(_htable, first_key);
+    value = h_table_get(_h_table, first_key);
     assert(value == NULL, "Value for the removed key 'john' should be NULL");
-    htable_destroy(_htable);
+    h_table_destroy(_h_table);
 
     return NULL;
 }
 
-bool node_traverse_fn(htable_node *node)
+bool node_traverse_fn(h_table_node *node)
 {
     if (node && node->key && node->value) {
         printf("%s:%s,", (char*)node->key, (char*)node->value);
@@ -104,12 +104,12 @@ char *test_traverse()
     char *first_value = "Jonathan Torres";
     char *second_value = "Jorge L Torres";
 
-    htable *_htable = htable_create(htable_compare_fn);
-    htable_set(_htable, first_key, first_value);
-    htable_set(_htable, second_key, second_value);
-    bool success = htable_traverse(_htable, node_traverse_fn);
-    assert(success == true, "There was a problem traversing the htable");
-    htable_destroy(_htable);
+    h_table *_h_table = h_table_create(h_table_compare_fn);
+    h_table_set(_h_table, first_key, first_value);
+    h_table_set(_h_table, second_key, second_value);
+    bool success = h_table_traverse(_h_table, node_traverse_fn);
+    assert(success == true, "There was a problem traversing the h_table");
+    h_table_destroy(_h_table);
 
     return NULL;
 }
