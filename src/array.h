@@ -1,7 +1,9 @@
 #ifndef _array_h
 #define _array_h
 
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct array {
     unsigned int length;

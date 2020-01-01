@@ -1,9 +1,19 @@
 #include "array.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 #define EXPAND_RATE 100
+
+void *_array_remove_element_at(array *_array, unsigned int index)
+{
+    if (_array->contents[index] != NULL) {
+        void *element = _array->contents[index];
+        _array->contents[index] = NULL;
+        _array->length--;
+
+        return element;
+    }
+
+    return NULL;
+}
 
 // creates a new empty array
 array *array_create(unsigned int capacity, size_t item_size)
@@ -91,19 +101,6 @@ void array_push(array *_array, void *value)
     }
 }
 
-void *remove_element_at(array *_array, unsigned int index)
-{
-    if (_array->contents[index] != NULL) {
-        void *element = _array->contents[index];
-        _array->contents[index] = NULL;
-        _array->length--;
-
-        return element;
-    }
-
-    return NULL;
-}
-
 // remove last element and return it
 void *array_pop(array *_array)
 {
@@ -114,7 +111,7 @@ void *array_pop(array *_array)
 
     void *element = NULL;
     if (_array->length > 0) {
-        element = remove_element_at(_array, _array->length - 1);
+        element = _array_remove_element_at(_array, _array->length - 1);
     }
 
     return element;
@@ -169,7 +166,7 @@ void *array_remove(array *_array, unsigned int index)
         return NULL;
     }
 
-    void *element = remove_element_at(_array, index);
+    void *element = _array_remove_element_at(_array, index);
 
     if (element != NULL && _array->contents[index + 1] != NULL) {
         memmove(
@@ -218,7 +215,7 @@ void *array_unshift(array *_array)
     void *element = NULL;
 
     if (_array->length > 0) {
-        element = remove_element_at(_array, 0);
+        element = _array_remove_element_at(_array, 0);
 
         memmove(
             _array->contents,
