@@ -71,6 +71,7 @@ char *test_insert_and_delete_ints()
     int n2 = 323;
     int n3 = 431;
     int n4 = 9090;
+    int n5 = 8080;
 
     bs_tree *tree = bs_tree_new(bs_tree_int_cmp);
     bs_tree_insert(tree, &n1);
@@ -80,10 +81,14 @@ char *test_insert_and_delete_ints()
     assert(tree->len == 3, "Len of tree should be 3");
     bs_tree_delete(tree, &n2, bs_tree_int_free_cb);
     assert(tree->len == 2, "Len of tree should be 2");
-    // bs_tree_delete(tree, &n1, bs_tree_int_free_cb); // fix segfault!
-    // assert(tree->len == 1, "Len of tree should be 1");
+    bs_tree_delete(tree, &n1, bs_tree_int_free_cb);
+    assert(tree->len == 1, "Len of tree should be 1");
     bs_tree_delete(tree, &n4, bs_tree_int_free_cb);
-    // assert(tree->len == 1, "Len of tree should be 1");
+    assert(tree->len == 1, "Len of tree should be 1");
+    bs_tree_insert(tree, &n5);
+    assert(tree->len == 2, "Len of tree should be 2");
+    bs_tree_delete(tree, &n5, bs_tree_int_free_cb);
+    assert(tree->len == 1, "Len of tree should be 1");
     bs_tree_free(tree, bs_tree_int_free_cb);
     return NULL;
 }

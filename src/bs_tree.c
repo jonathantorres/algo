@@ -148,7 +148,6 @@ void bs_tree_delete(bs_tree *tree, void *value, bs_tree_cb cb)
     if (node_to_delete == NULL) {
         return;
     }
-
     if (node_to_delete == tree->root) {
         deleted_root = true;
     }
@@ -156,10 +155,12 @@ void bs_tree_delete(bs_tree *tree, void *value, bs_tree_cb cb)
     // let's delete the node
     if (node_to_delete->left == NULL && node_to_delete->right == NULL) {
         // node with no children
-        if (node_to_delete == node_to_delete->parent->left) {
-            node_to_delete->parent->left = NULL;
-        } else if (node_to_delete == node_to_delete->parent->right) {
-            node_to_delete->parent->right = NULL;
+        if (node_to_delete->parent) {
+            if (node_to_delete == node_to_delete->parent->left) {
+                node_to_delete->parent->left = NULL;
+            } else if (node_to_delete == node_to_delete->parent->right) {
+                node_to_delete->parent->right = NULL;
+            }
         }
         if (deleted_root) {
             tree->root = NULL;
@@ -169,10 +170,12 @@ void bs_tree_delete(bs_tree *tree, void *value, bs_tree_cb cb)
         // node with a right child
         bs_tree_node *node_to_move = node_to_delete->right;
         node_to_move->parent = node_to_delete->parent;
-        if (node_to_delete->parent->right == node_to_delete) {
-            node_to_move->parent->right = node_to_move;
-        } else if (node_to_delete->parent->left == node_to_delete) {
-            node_to_move->parent->left = node_to_move;
+        if (node_to_delete->parent) {
+            if (node_to_delete->parent->right == node_to_delete) {
+                node_to_move->parent->right = node_to_move;
+            } else if (node_to_delete->parent->left == node_to_delete) {
+                node_to_move->parent->left = node_to_move;
+            }
         }
         if (deleted_root) {
             tree->root = node_to_move;
@@ -182,10 +185,12 @@ void bs_tree_delete(bs_tree *tree, void *value, bs_tree_cb cb)
         // node with a left child
         bs_tree_node *node_to_move = node_to_delete->left;
         node_to_move->parent = node_to_delete->parent;
-        if (node_to_delete->parent->right == node_to_delete) {
-            node_to_move->parent->right = node_to_move;
-        } else if (node_to_delete->parent->left == node_to_delete) {
-            node_to_move->parent->left = node_to_move;
+        if (node_to_delete->parent) {
+            if (node_to_delete->parent->right == node_to_delete) {
+                node_to_move->parent->right = node_to_move;
+            } else if (node_to_delete->parent->left == node_to_delete) {
+                node_to_move->parent->left = node_to_move;
+            }
         }
         if (deleted_root) {
             tree->root = node_to_move;
