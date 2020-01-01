@@ -3,7 +3,6 @@
 #include <string.h>
 
 #include "unittest.h"
-#include "dllist.h"
 #include "stack.h"
 
 void stack_print(stack *_stack)

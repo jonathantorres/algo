@@ -1,9 +1,11 @@
 #ifndef _stack_h
 #define _stack_h
 
-#include "dllist.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "dl_list.h"
 
-typedef dllist stack;
+typedef dl_list stack;
 
 stack *stack_new();
 void stack_destroy(stack *_stack);
@@ -19,7 +21,7 @@ int stack_length(stack *_stack);
     // you can use the variable "cur"
     // inside of it that references the current item of the stack
 // }
-#define STACK_FOREACH(stack) dllist_node *cur = NULL; \
+#define STACK_FOREACH(stack) dl_list_node *cur = NULL; \
     for (cur = (stack)->first; cur != NULL; cur = cur->next)
 
 #endif

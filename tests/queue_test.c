@@ -3,7 +3,6 @@
 #include <string.h>
 
 #include "unittest.h"
-#include "dllist.h"
 #include "queue.h"
 
 void queue_print(queue *_queue)

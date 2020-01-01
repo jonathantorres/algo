@@ -1,12 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "stack.h"
-#include "dllist.h"
 
 stack *stack_new()
 {
-    return dllist_new();
+    return dl_list_new();
 }
 
 void stack_push(stack *_stack, void *value)
@@ -16,7 +12,7 @@ void stack_push(stack *_stack, void *value)
         return;
     }
 
-    dllist_shift(_stack, value);
+    dl_list_shift(_stack, value);
 }
 
 void *stack_pop(stack *_stack)
@@ -26,7 +22,7 @@ void *stack_pop(stack *_stack)
         return NULL;
     }
 
-    return dllist_unshift(_stack);
+    return dl_list_unshift(_stack);
 }
 
 void *stack_peek(stack *_stack)
@@ -51,7 +47,7 @@ void stack_destroy(stack *_stack)
         return;
     }
 
-    dllist_destroy(_stack);
+    dl_list_destroy(_stack);
 }
 
 void stack_clear(stack *_stack)
@@ -61,7 +57,7 @@ void stack_clear(stack *_stack)
         return;
     }
 
-    dllist_clear(_stack);
+    dl_list_clear(_stack);
 }
 
 int stack_length(stack *_stack)
@@ -71,5 +67,5 @@ int stack_length(stack *_stack)
         return 0;
     }
 
-    return dllist_length(_stack);
+    return dl_list_length(_stack);
 }

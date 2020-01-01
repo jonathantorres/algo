@@ -1,12 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "queue.h"
-#include "dllist.h"
 
 queue *queue_new()
 {
-    return dllist_new();
+    return dl_list_new();
 }
 
 void queue_enqueue(queue *_queue, void *value)
@@ -16,7 +12,7 @@ void queue_enqueue(queue *_queue, void *value)
         return;
     }
 
-    dllist_push(_queue, value);
+    dl_list_push(_queue, value);
 }
 
 void *queue_dequeue(queue *_queue)
@@ -26,7 +22,7 @@ void *queue_dequeue(queue *_queue)
         return NULL;
     }
 
-    return dllist_unshift(_queue);
+    return dl_list_unshift(_queue);
 }
 
 void *queue_peek(queue *_queue)
@@ -51,7 +47,7 @@ void queue_destroy(queue *_queue)
         return;
     }
 
-    dllist_destroy(_queue);
+    dl_list_destroy(_queue);
 }
 
 void queue_clear(queue *_queue)
@@ -61,7 +57,7 @@ void queue_clear(queue *_queue)
         return;
     }
 
-    dllist_clear(_queue);
+    dl_list_clear(_queue);
 }
 
 int queue_length(queue *_queue)
@@ -71,5 +67,5 @@ int queue_length(queue *_queue)
         return 0;
     }
 
-    return dllist_length(_queue);
+    return dl_list_length(_queue);
 }

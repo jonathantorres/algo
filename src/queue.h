@@ -1,9 +1,11 @@
 #ifndef _queue_h
 #define _queue_h
 
-#include "dllist.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "dl_list.h"
 
-typedef dllist queue;
+typedef dl_list queue;
 
 queue *queue_new();
 void queue_destroy(queue *_queue);
@@ -19,7 +21,7 @@ int queue_length(queue *_queue);
     // you can use the variable "cur"
     // inside of it that references the current item of the queue
 // }
-#define QUEUE_FOREACH(queue) dllist_node *cur = NULL; \
+#define QUEUE_FOREACH(queue) dl_list_node *cur = NULL; \
     for (cur = (queue)->first; cur != NULL; cur = cur->next)
 
 #endif
