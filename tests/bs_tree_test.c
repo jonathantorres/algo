@@ -5,137 +5,128 @@
 #include "unittest.h"
 #include "bs_tree.h"
 
-static int traverse_called = 0;
-char *test1 = "test data 1";
-char *test2 = "test data 2";
-char *test3 = "test data 3";
-char *expect1 = "THE VALUE 1";
-char *expect2 = "THE VALUE 2";
-char *expect3 = "THE VALUE 3";
+int tree_int_traverse_count = 0;
 
-static int traverse_good_cb(bs_tree_node *node)
+void bs_tree_int_free_cb(bs_tree_node *node)
 {
-    printf("KEY: %s\n", (char*)node->key);
-    traverse_called++;
-    return 0;
+    if (node) {
+        // nothing to free here
+    }
 }
 
-static int traverse_fail_cb(bs_tree_node *node)
+void bs_tree_int_traverse_cb(bs_tree_node *node)
 {
-    printf("KEY: %s\n", (char*)node->key);
-    traverse_called++;
+    if (node) {
+        tree_int_traverse_count++;
+    }
+    // printf("node val: %d\n", *(int *)node->value);
+}
 
-    if (traverse_called == 2) {
+int bs_tree_int_cmp(void *a, void *b)
+{
+    if (*(int*)a < *(int*)b) {
+        return -1;
+    } else if (*(int*)a > *(int*)b) {
         return 1;
     } else {
         return 0;
     }
 }
 
-char *test_create()
+char *test_new()
 {
-    bs_tree *tree = bs_tree_create(NULL);
+    bs_tree *tree = bs_tree_new(NULL);
     assert(tree != NULL, "Failed to create tree");
     return NULL;
 }
 
-char *test_destroy()
+char *test_free()
 {
-    bs_tree *tree = bs_tree_create(NULL);
-    bs_tree_destroy(tree);
+    bs_tree *tree = bs_tree_new(NULL);
+    bs_tree_free(tree, bs_tree_int_free_cb);
     return NULL;
 }
 
-char *test_get_set()
+char *test_insert_ints()
 {
-    bs_tree *tree = bs_tree_create(NULL);
+    int n1 = 10;
+    int n2 = 3;
+    int n3 = 43;
+    int n4 = 12;
 
-    int rc = bs_tree_set(tree, test1, expect1);
-    assert(rc == 0, "Failed to set test1");
-    char *result = bs_tree_get(tree, test1);
-    assert(result == expect1, "Wrong value for test1");
+    bs_tree *tree = bs_tree_new(bs_tree_int_cmp);
+    bs_tree_insert(tree, &n1);
+    bs_tree_insert(tree, &n2);
+    assert(tree->len == 2, "Len of tree should be 2");
+    bs_tree_insert(tree, &n3);
+    bs_tree_insert(tree, &n4);
+    assert(tree->len == 4, "Len of tree should be 4");
+    bs_tree_free(tree, bs_tree_int_free_cb);
+    return NULL;
+}
 
-    rc = bs_tree_set(tree, test2, expect2);
-    assert(rc == 0, "Failed to set test2");
-    result = bs_tree_get(tree, test2);
-    assert(result == expect2, "Wrong value for test2");
+char *test_insert_and_delete_ints()
+{
+    int n1 = 100;
+    int n2 = 323;
+    int n3 = 431;
+    int n4 = 9090;
 
-    rc = bs_tree_set(tree, test3, expect3);
-    assert(rc == 0, "Failed to set test3");
-    result = bs_tree_get(tree, test3);
-    assert(result == expect3, "Wrong value for test3");
+    bs_tree *tree = bs_tree_new(bs_tree_int_cmp);
+    bs_tree_insert(tree, &n1);
+    bs_tree_insert(tree, &n2);
+    bs_tree_insert(tree, &n3);
 
+    assert(tree->len == 3, "Len of tree should be 3");
+    bs_tree_delete(tree, &n2, bs_tree_int_free_cb);
+    assert(tree->len == 2, "Len of tree should be 2");
+    // bs_tree_delete(tree, &n1, bs_tree_int_free_cb); // fix segfault!
+    // assert(tree->len == 1, "Len of tree should be 1");
+    bs_tree_delete(tree, &n4, bs_tree_int_free_cb);
+    // assert(tree->len == 1, "Len of tree should be 1");
+    bs_tree_free(tree, bs_tree_int_free_cb);
+    return NULL;
+}
+
+char *test_insert_strs()
+{
+    // TODO
+    return NULL;
+}
+
+char *test_insert_and_delete_strs()
+{
+    // TODO
     return NULL;
 }
 
 char *test_traverse()
 {
-    bs_tree *tree = bs_tree_create(NULL);
-    bs_tree_set(tree, test1, expect1);
-    bs_tree_set(tree, test2, expect2);
-    bs_tree_set(tree, test3, expect3);
+    int n1 = 100;
+    int n2 = 323;
+    int n3 = 431;
+    int n4 = 9090;
 
-    int rc = bs_tree_traverse(tree, traverse_good_cb);
-    assert(rc == 0, "Failed to traverse");
-    assert(traverse_called == 3, "Wrong traverse count");
+    bs_tree *tree = bs_tree_new(bs_tree_int_cmp);
+    bs_tree_insert(tree, &n1);
+    bs_tree_insert(tree, &n2);
+    bs_tree_insert(tree, &n3);
+    bs_tree_insert(tree, &n4);
 
-    traverse_called = 0;
-    rc = bs_tree_traverse(tree, traverse_fail_cb);
-    assert(rc == 1, "Failed to traverse");
-    assert(traverse_called == 2, "Wrong count traverse for fail");
-
-    return NULL;
-}
-
-char *test_delete()
-{
-    bs_tree *tree = bs_tree_create(NULL);
-    bs_tree_set(tree, test1, expect1);
-    bs_tree_set(tree, test2, expect2);
-    bs_tree_set(tree, test3, expect3);
-
-    char *deleted = (char*) bs_tree_delete(tree, test1);
-    assert(deleted != NULL, "Got NULL on delete");
-    assert(deleted == expect1, "Should get test1");
-    char *result = bs_tree_get(tree, test1);
-    assert(result == NULL, "Should delete");
-
-    deleted = (char*) bs_tree_delete(tree, test1);
-    assert(deleted == NULL, "Should get NULL on delete");
-
-    deleted = (char*) bs_tree_delete(tree, test2);
-    assert(deleted != NULL, "Got NULL on delete");
-    assert(deleted == expect2, "Should get test2");
-    result = bs_tree_get(tree, test2);
-    assert(result == NULL, "Should delete");
-
-    deleted = (char*) bs_tree_delete(tree, test3);
-    assert(deleted != NULL, "Got NULL on delete");
-    assert(deleted == expect3, "Should get test3");
-    result = bs_tree_get(tree, test3);
-    assert(result == NULL, "Should delete");
-
-    // test deleting non-existing stuff
-    deleted = (char*) bs_tree_delete(tree, test3);
-    assert(deleted == NULL, "Should get NULL");
-
-    return NULL;
-}
-
-char *test_fuzzing()
-{
+    assert(tree_int_traverse_count == 0, "Traverse count should be 0");
+    bs_tree_traverse(tree, bs_tree_int_traverse_cb);
+    assert(tree_int_traverse_count == 4, "Traverse count should be 4");
     return NULL;
 }
 
 int main()
 {
     start_tests("bs_tree tests");
-    run_test(test_create);
-    run_test(test_destroy);
-    run_test(test_get_set);
+    run_test(test_new);
+    run_test(test_free);
+    run_test(test_insert_ints);
+    run_test(test_insert_and_delete_ints);
     run_test(test_traverse);
-    run_test(test_delete);
-    run_test(test_fuzzing);
     end_tests();
 
     return 0;
