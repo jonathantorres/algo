@@ -1,8 +1,8 @@
 #include "merge_sort.h"
 
-void split_merge(array *copy, unsigned int begin, unsigned int end, array *_array, cmp_f cmp);
+void _split_merge(array *copy, unsigned int begin, unsigned int end, array *_array, cmp_f cmp);
 
-void *copy_array(array *_array)
+void *_copy_array(array *_array)
 {
     array *copy = array_create(_array->length, _array->item_size);
 
@@ -13,7 +13,7 @@ void *copy_array(array *_array)
     return copy;
 }
 
-void merge(array *copy, unsigned int begin, unsigned int middle, unsigned int end, array *_array, cmp_f cmp)
+void _merge(array *copy, unsigned int begin, unsigned int middle, unsigned int end, array *_array, cmp_f cmp)
 {
     unsigned int i = begin;
     unsigned int j = middle;
@@ -29,20 +29,20 @@ void merge(array *copy, unsigned int begin, unsigned int middle, unsigned int en
     }
 }
 
-void split_merge(array *copy, unsigned int begin, unsigned int end, array *_array, cmp_f cmp)
+void _split_merge(array *copy, unsigned int begin, unsigned int end, array *_array, cmp_f cmp)
 {
     if (end - begin < 2) {
         return;
     }
 
     unsigned int middle = (end + begin) / 2;
-    split_merge(_array, begin, middle, copy, cmp);
-    split_merge(_array, middle, end, copy, cmp);
-    merge(copy, begin, middle, end, _array, cmp);
+    _split_merge(_array, begin, middle, copy, cmp);
+    _split_merge(_array, middle, end, copy, cmp);
+    _merge(copy, begin, middle, end, _array, cmp);
 }
 
 void merge_sort(array *_array, cmp_f cmp)
 {
-    array *copy = copy_array(_array);
-    split_merge(copy, 0, _array->length, _array, cmp);
+    array *copy = _copy_array(_array);
+    _split_merge(copy, 0, _array->length, _array, cmp);
 }

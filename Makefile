@@ -64,8 +64,8 @@ array_test: array_test.c array.o
 	$(CFLAGS) tests/array_test.c array.o -o bin/array_test
 
 # Circular Buffer
-cbuffer_test: cbuffer_test.c cbuffer.o
-	$(CFLAGS) tests/cbuffer_test.c cbuffer.o -o bin/cbuffer_test
+c_buffer_test: c_buffer_test.c c_buffer.o
+	$(CFLAGS) tests/c_buffer_test.c c_buffer.o -o bin/c_buffer_test
 
 # Hash Table
 htable_test: htable_test.c htable.o array.o
@@ -120,8 +120,8 @@ queue.o: queue.c queue.h
 	$(CFLAGS) -c src/queue.c src/queue.h
 array.o: array.c array.h
 	$(CFLAGS) -c src/array.c src/array.h
-cbuffer.o: cbuffer.c cbuffer.h
-	$(CFLAGS) -c src/cbuffer.c src/cbuffer.h
+c_buffer.o: c_buffer.c c_buffer.h
+	$(CFLAGS) -c src/c_buffer.c src/c_buffer.h
 htable.o: htable.c htable.h
 	$(CFLAGS) -c src/htable.c src/htable.h
 trie.o: trie.c trie.h
@@ -147,7 +147,7 @@ binary_search.o: binary_search.c binary_search.h
 .PHONY: test
 test: sl_list_test dl_list_test cl_list_test stack_test queue_test array_test \
 bubble_sort_test insertion_sort_test selection_sort_test merge_sort_test \
-quick_sort_test cbuffer_test htable_test trie_test bstree_test binary_search_test
+quick_sort_test c_buffer_test htable_test trie_test bstree_test binary_search_test
 	./bin/sl_list_test
 	./bin/dl_list_test
 	./bin/cl_list_test
@@ -160,7 +160,7 @@ quick_sort_test cbuffer_test htable_test trie_test bstree_test binary_search_tes
 	./bin/merge_sort_test
 	./bin/quick_sort_test
 	./bin/binary_search_test
-	./bin/cbuffer_test
+	./bin/c_buffer_test
 	./bin/htable_test
 	./bin/trie_test
 	./bin/bstree_test

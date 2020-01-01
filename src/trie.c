@@ -6,7 +6,7 @@
 
 #define PATHS_LENGTH 26
 
-static void *create_node(void *value)
+static void *_trie_create_node(void *value)
 {
     trie_node *node = malloc(sizeof(trie_node));
     if (!node) {
@@ -26,7 +26,7 @@ static void *create_node(void *value)
     return node;
 }
 
-static void free_node(trie_node *node)
+static void _trie_free_node(trie_node *node)
 {
     // for (unsigned int i = 0; i < node->paths->length; i++) {
     //     void *item = array_get(node->paths, i);
@@ -39,7 +39,7 @@ static void free_node(trie_node *node)
     free(node);
 }
 
-static void free_nodes(trie_node *node)
+static void _trie_free_nodes(trie_node *node)
 {
     trie_node *curr_node = NULL;
 
@@ -48,9 +48,9 @@ static void free_nodes(trie_node *node)
         if (curr_node) {
             // we reached the end
             if (strcmp(curr_node->value, "") != 0) {
-                free_node(curr_node);
+                _trie_free_node(curr_node);
             } else {
-                free_nodes(curr_node);
+                _trie_free_nodes(curr_node);
             }
         }
     }
@@ -65,7 +65,7 @@ void *trie_create(trie_compare cmp)
         return NULL;
     }
 
-    trie_node *root = create_node("");
+    trie_node *root = _trie_create_node("");
     if (!root) {
         free(_trie);
         fputs("[trie_create] Root node could not be created.", stderr);
@@ -85,7 +85,7 @@ void trie_destroy(trie *_trie)
         return;
     }
 
-    free_nodes(_trie->root);
+    _trie_free_nodes(_trie->root);
     free(_trie);
 }
 
@@ -106,7 +106,7 @@ bool trie_insert(trie *_trie, void *key, void *value)
         if (curr_node) {
             root = curr_node;
         } else {
-            new_node = create_node("");
+            new_node = _trie_create_node("");
             if (new_node) {
                 array_set(root->paths, new_node, i);
                 root = new_node;

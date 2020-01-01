@@ -1,11 +1,13 @@
-#include "cbuffer.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#include "c_buffer.h"
 
-void *cbuffer_create(unsigned int length)
+unsigned int _c_buffer_available_data(c_buffer *buffer)
 {
-    cbuffer *buffer = malloc(sizeof(cbuffer));
+    return buffer->end % buffer->length - buffer->start;
+}
+
+void *c_buffer_create(unsigned int length)
+{
+    c_buffer *buffer = malloc(sizeof(c_buffer));
 
     if (!buffer) {
         fputs("Not enough memory.", stderr);
@@ -25,10 +27,10 @@ void *cbuffer_create(unsigned int length)
     return buffer;
 }
 
-void cbuffer_clear(cbuffer *buffer)
+void c_buffer_clear(c_buffer *buffer)
 {
     if (!buffer) {
-        fputs("Must provide a valid cbuffer.", stderr);
+        fputs("Must provide a valid c_buffer.", stderr);
         return;
     }
 
@@ -45,10 +47,10 @@ void cbuffer_clear(cbuffer *buffer)
     }
 }
 
-void cbuffer_destroy(cbuffer *buffer)
+void c_buffer_destroy(c_buffer *buffer)
 {
     if (!buffer) {
-        fputs("Must provide a valid cbuffer.", stderr);
+        fputs("Must provide a valid c_buffer.", stderr);
         return;
     }
 
@@ -58,19 +60,14 @@ void cbuffer_destroy(cbuffer *buffer)
     free(buffer);
 }
 
-unsigned int available_data(cbuffer *buffer)
-{
-    return buffer->end % buffer->length - buffer->start;
-}
-
-int cbuffer_write(cbuffer *buffer, char *data, unsigned int amount)
+int c_buffer_write(c_buffer *buffer, char *data, unsigned int amount)
 {
     if (!buffer) {
-        fputs("Must provide a valid cbuffer.", stderr);
+        fputs("Must provide a valid c_buffer.", stderr);
         return -1;
     }
 
-    if (available_data(buffer) == 0) {
+    if (_c_buffer_available_data(buffer) == 0) {
         buffer->start = 0;
         buffer->end = 0;
     }
@@ -90,14 +87,14 @@ int cbuffer_write(cbuffer *buffer, char *data, unsigned int amount)
     return amount;
 }
 
-int cbuffer_read(cbuffer *buffer, char *target, unsigned int amount)
+int c_buffer_read(c_buffer *buffer, char *target, unsigned int amount)
 {
     if (!buffer) {
-        fputs("Must provide a valid cbuffer.", stderr);
+        fputs("Must provide a valid c_buffer.", stderr);
         return -1;
     }
 
-    if (amount > available_data(buffer)) {
+    if (amount > _c_buffer_available_data(buffer)) {
         return -1;
     }
 
