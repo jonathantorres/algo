@@ -2,9 +2,9 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include "unittest.h"
-#include "tstree.h"
+#include "ts_tree.h"
 
-tstree *node = NULL;
+ts_tree *node = NULL;
 char *value_a = "VALUEA";
 char *value_b = "VALUEB";
 char *value_2 = "VALUE2";
@@ -19,16 +19,16 @@ char *test4 = "T";
 
 char *test_insert()
 {
-    node = tstree_insert(node, test1, strlen(test1), value_a);
+    node = ts_tree_insert(node, test1, strlen(test1), value_a);
     assert(node != NULL, "Failed to insert into tst.");
 
-    node = tstree_insert(node, test2, strlen(test2), value_2);
+    node = ts_tree_insert(node, test2, strlen(test2), value_2);
     assert(node != NULL, "Failed to insert into tst with second name");
 
-    node = tstree_insert(node, test3, strlen(test3), reverse);
+    node = ts_tree_insert(node, test3, strlen(test3), reverse);
     assert(node != NULL, "Failed to insert into tst with reverse name");
 
-    node = tstree_insert(node, test4, strlen(test4), value_4);
+    node = ts_tree_insert(node, test4, strlen(test4), value_4);
     assert(node != NULL, "Failed to insert into tst with single letter");
 
     return NULL;
@@ -37,11 +37,11 @@ char *test_insert()
 char *test_search_exact()
 {
     // tst returns the last one inserted
-    void *res = tstree_search(node, test1, strlen(test1));
+    void *res = ts_tree_search(node, test1, strlen(test1));
     assert(res == value_a, "Got the wrong value back, should get A not B");
 
     // tst does not find if not exact
-    res = tstree_search(node, "TESTNO", strlen("TESTNO"));
+    res = ts_tree_search(node, "TESTNO", strlen("TESTNO"));
     assert(res == NULL, "Should not find anything");
 
     return NULL;
@@ -49,24 +49,24 @@ char *test_search_exact()
 
 char *test_search_prefix()
 {
-    void *res = tstree_search_prefix(node, test1, strlen(test1));
+    void *res = ts_tree_search_prefix(node, test1, strlen(test1));
     printf("result: %p, expected: %p\n", res, value_a);
     assert(res == value_a, "Got wrong value_a by prefix.");
 
-    res = tstree_search_prefix(node, test1, 1);
+    res = ts_tree_search_prefix(node, test1, 1);
     printf("result: %p, expected: %p\n", res, value_a);
     assert(res == value_4, "Got wrong value_4 for prefix of 1");
 
-    res = tstree_search_prefix(node, "TE", strlen("TE"));
+    res = ts_tree_search_prefix(node, "TE", strlen("TE"));
     assert(res != NULL, "Should find for short prefix.");
 
-    res = tstree_search_prefix(node, "TE--", strlen("TE--"));
+    res = ts_tree_search_prefix(node, "TE--", strlen("TE--"));
     assert(res != NULL, "Should find for partial prefix.");
 
     return NULL;
 }
 
-void tstree_traverse_test_cb(void *value, void *data)
+void ts_tree_traverse_test_cb(void *value, void *data)
 {
     assert(value != NULL, "Should not get NULL value");
     assert(data == value_a, "Expecting value_a as the data");
@@ -76,7 +76,7 @@ void tstree_traverse_test_cb(void *value, void *data)
 char *test_traverse()
 {
     traverse_count = 0;
-    tstree_traverse(node, tstree_traverse_test_cb, value_a);
+    ts_tree_traverse(node, ts_tree_traverse_test_cb, value_a);
     printf("traverse count is: %d\n", traverse_count);
     assert(traverse_count == 4, "Didn't find the 4 keys.");
 
@@ -85,14 +85,14 @@ char *test_traverse()
 
 char *test_destroy()
 {
-    tstree_destroy(node);
+    ts_tree_destroy(node);
 
     return NULL;
 }
 
 int main()
 {
-    start_tests("tstree tests");
+    start_tests("ts_tree tests");
     run_test(test_insert);
     run_test(test_search_exact);
     run_test(test_search_prefix);

@@ -76,12 +76,12 @@ trie_test: trie_test.c trie.o array.o
 	$(CFLAGS) tests/trie_test.c trie.o array.o -o bin/trie_test
 
 # Binary Search Tree
-bstree_test: bstree_test.c bstree.o
-	$(CFLAGS) tests/bstree_test.c bstree.o -o bin/bstree_test
+bs_tree_test: bs_tree_test.c bs_tree.o
+	$(CFLAGS) tests/bs_tree_test.c bs_tree.o -o bin/bs_tree_test
 
 # Ternary Search Tree
-tstree_test: tstree_test.c tstree.o
-	$(CFLAGS) tests/tstree_test.c tstree.o -o bin/tstree_test
+ts_tree_test: ts_tree_test.c ts_tree.o
+	$(CFLAGS) tests/ts_tree_test.c ts_tree.o -o bin/ts_tree_test
 
 # Bubble Sort
 bubble_sort_test: bubble_sort_test.c bubble_sort.o array.o
@@ -126,10 +126,10 @@ htable.o: htable.c htable.h
 	$(CFLAGS) -c src/htable.c src/htable.h
 trie.o: trie.c trie.h
 	$(CFLAGS) -c src/trie.c src/trie.h
-bstree.o: bstree.c bstree.h
-	$(CFLAGS) -c src/bstree.c src/bstree.h
-tstree.o: tstree.c tstree.h
-	$(CFLAGS) -c src/tstree.c src/tstree.h
+bs_tree.o: bs_tree.c bs_tree.h
+	$(CFLAGS) -c src/bs_tree.c src/bs_tree.h
+ts_tree.o: ts_tree.c ts_tree.h
+	$(CFLAGS) -c src/ts_tree.c src/ts_tree.h
 bubble_sort.o: bubble_sort.c bubble_sort.h
 	$(CFLAGS) -c src/bubble_sort.c src/bubble_sort.h
 insertion_sort.o: insertion_sort.c insertion_sort.h
@@ -147,7 +147,7 @@ binary_search.o: binary_search.c binary_search.h
 .PHONY: test
 test: sl_list_test dl_list_test cl_list_test stack_test queue_test array_test \
 bubble_sort_test insertion_sort_test selection_sort_test merge_sort_test \
-quick_sort_test c_buffer_test htable_test trie_test bstree_test binary_search_test
+quick_sort_test c_buffer_test htable_test trie_test bs_tree_test binary_search_test
 	./bin/sl_list_test
 	./bin/dl_list_test
 	./bin/cl_list_test
@@ -163,7 +163,7 @@ quick_sort_test c_buffer_test htable_test trie_test bstree_test binary_search_te
 	./bin/c_buffer_test
 	./bin/htable_test
 	./bin/trie_test
-	./bin/bstree_test
+	./bin/bs_tree_test
 
 clean:
 	rm -f ./*.o src/*.h.gch

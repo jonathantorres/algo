@@ -2,12 +2,12 @@
 #include <stdio.h>
 #include <stddef.h>
 #include <assert.h>
-#include "tstree.h"
+#include "ts_tree.h"
 
-static inline tstree *tstree_insert_base(tstree *root, tstree *node, const char *key, size_t len, void *value)
+static inline ts_tree *_ts_tree_insert_base(ts_tree *root, ts_tree *node, const char *key, size_t len, void *value)
 {
     if (node == NULL) {
-        node = (tstree *)calloc(1, sizeof(tstree));
+        node = (ts_tree *)calloc(1, sizeof(ts_tree));
 
         if (root == NULL) {
             root = node;
@@ -17,29 +17,29 @@ static inline tstree *tstree_insert_base(tstree *root, tstree *node, const char 
     }
 
     if (*key < node->splitchar) {
-        node->low = tstree_insert_base(root, node->low, key, len, value);
+        node->low = _ts_tree_insert_base(root, node->low, key, len, value);
     } else if (*key == node->splitchar) {
         if (len > 1) {
-            node->equal = tstree_insert_base(root, node->equal, key + 1, len - 1, value);
+            node->equal = _ts_tree_insert_base(root, node->equal, key + 1, len - 1, value);
         } else {
             assert(node->value == NULL && "Duplicate insert into tst.");
             node->value = value;
         }
     } else {
-        node->high = tstree_insert_base(root, node->high, key, len, value);
+        node->high = _ts_tree_insert_base(root, node->high, key, len, value);
     }
 
     return node;
 }
 
-tstree *tstree_insert(tstree *node, const char *key, size_t len, void *value)
+ts_tree *ts_tree_insert(ts_tree *node, const char *key, size_t len, void *value)
 {
-    return tstree_insert_base(node, node, key, len, value);
+    return _ts_tree_insert_base(node, node, key, len, value);
 }
 
-void *tstree_search(tstree *root, const char *key, size_t len)
+void *ts_tree_search(ts_tree *root, const char *key, size_t len)
 {
-    tstree *node = root;
+    ts_tree *node = root;
     size_t i = 0;
 
     while (i < len && node) {
@@ -62,14 +62,14 @@ void *tstree_search(tstree *root, const char *key, size_t len)
     }
 }
 
-void *tstree_search_prefix(tstree *root, const char *key, size_t len)
+void *ts_tree_search_prefix(ts_tree *root, const char *key, size_t len)
 {
     if (len == 0) {
         return NULL;
     }
 
-    tstree *node = root;
-    tstree *last = NULL;
+    ts_tree *node = root;
+    ts_tree *last = NULL;
     size_t i = 0;
 
     while (i < len && node) {
@@ -99,22 +99,22 @@ void *tstree_search_prefix(tstree *root, const char *key, size_t len)
     return node ? node->value : NULL;
 }
 
-void tstree_traverse(tstree *node, tstree_traverse_cb cb, void *data)
+void ts_tree_traverse(ts_tree *node, ts_tree_traverse_cb cb, void *data)
 {
     if (!node) {
         return;
     }
 
     if (node->low) {
-        tstree_traverse(node->low, cb, data);
+        ts_tree_traverse(node->low, cb, data);
     }
 
     if (node->equal) {
-        tstree_traverse(node->equal, cb, data);
+        ts_tree_traverse(node->equal, cb, data);
     }
 
     if (node->high) {
-        tstree_traverse(node->high, cb, data);
+        ts_tree_traverse(node->high, cb, data);
     }
 
     if (node->value) {
@@ -122,22 +122,22 @@ void tstree_traverse(tstree *node, tstree_traverse_cb cb, void *data)
     }
 }
 
-void tstree_destroy(tstree *node)
+void ts_tree_destroy(ts_tree *node)
 {
     if (node == NULL) {
         return;
     }
 
     if (node->low) {
-        tstree_destroy(node->low);
+        ts_tree_destroy(node->low);
     }
 
     if (node->equal) {
-        tstree_destroy(node->equal);
+        ts_tree_destroy(node->equal);
     }
 
     if (node->high) {
-        tstree_destroy(node->high);
+        ts_tree_destroy(node->high);
     }
 
     free(node);
