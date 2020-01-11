@@ -111,6 +111,10 @@ merge_sort_test: merge_sort_test.c merge_sort.o array.o
 quick_sort_test: quick_sort_test.c quick_sort.o array.o
 	$(CFLAGS) tests/quick_sort_test.c quick_sort.o array.o -o bin/quick_sort_test
 
+# Heap Sort
+heap_sort_test: heap_sort_test.c heap_sort.o array.o p_queue.o bs_tree.o
+	$(CFLAGS) tests/heap_sort_test.c heap_sort.o array.o p_queue.o bs_tree.o -o bin/heap_sort_test
+
 # Binary Search
 binary_search_test: binary_search_test.c binary_search.o array.o
 	$(CFLAGS) tests/binary_search_test.c binary_search.o array.o -o bin/binary_search_test
@@ -152,6 +156,8 @@ merge_sort.o: merge_sort.c merge_sort.h
 	$(CFLAGS) -c src/merge_sort.c src/merge_sort.h
 quick_sort.o: quick_sort.c quick_sort.h
 	$(CFLAGS) -c src/quick_sort.c src/quick_sort.h
+heap_sort.o: heap_sort.c heap_sort.h
+	$(CFLAGS) -c src/heap_sort.c src/heap_sort.h
 binary_search.o: binary_search.c binary_search.h
 	$(CFLAGS) -c src/binary_search.c src/binary_search.h
 
@@ -160,7 +166,7 @@ binary_search.o: binary_search.c binary_search.h
 test: sl_list_test dl_list_test cl_list_test stack_test queue_test array_test \
 bubble_sort_test insertion_sort_test selection_sort_test merge_sort_test \
 quick_sort_test c_buffer_test h_table_test trie_test bs_tree_test \
-bs_tree_map_test binary_search_test p_queue_test
+bs_tree_map_test binary_search_test p_queue_test heap_sort_test
 	./bin/sl_list_test
 	./bin/dl_list_test
 	./bin/cl_list_test
@@ -172,6 +178,7 @@ bs_tree_map_test binary_search_test p_queue_test
 	./bin/selection_sort_test
 	./bin/merge_sort_test
 	./bin/quick_sort_test
+	./bin/heap_sort_test
 	./bin/binary_search_test
 	./bin/c_buffer_test
 	./bin/h_table_test
