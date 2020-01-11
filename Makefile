@@ -1,5 +1,5 @@
 VPATH = src tests bin
-CFLAGS = gcc -g -std=c11 -Wall -Wextra -Isrc
+CFLAGS = gcc -g -std=gnu11 -Wall -Wextra -Isrc
 CPPFLAGS = g++ -std=c++11 -Wall -Wextra -Isrc
 SOURCES = $(wildcard src/*.c)
 OBJECTS = $(subst .c,.o, $(SOURCES))
