@@ -33,7 +33,7 @@ void *p_queue_find_min(p_queue *queue)
     return bs_tree_find_min(queue->tree);
 }
 
-void *p_queue_delete_min(p_queue *queue)
+void *p_queue_delete_min(p_queue *queue, p_queue_cb cb)
 {
     if (!queue) {
         return NULL;
@@ -43,7 +43,7 @@ void *p_queue_delete_min(p_queue *queue)
         return NULL;
     }
 
-    bs_tree_delete(queue->tree, min, NULL);
+    bs_tree_delete(queue->tree, min, cb);
 
     return min;
 }
@@ -54,6 +54,14 @@ int p_queue_len(p_queue *queue)
         return -1;
     }
     return queue->tree->len;
+}
+
+void p_queue_traverse(p_queue *queue, p_queue_cb cb)
+{
+    if (!queue) {
+        return;
+    }
+    bs_tree_traverse(queue->tree, cb);
 }
 
 void p_queue_free(p_queue *queue, p_queue_cb cb)
