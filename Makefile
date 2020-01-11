@@ -87,6 +87,10 @@ bs_tree_map_test: bs_tree_map_test.c bs_tree_map.o
 ts_tree_test: ts_tree_test.c ts_tree.o
 	$(CFLAGS) tests/ts_tree_test.c ts_tree.o -o bin/ts_tree_test
 
+# Priority Queue
+p_queue_test: p_queue_test.c p_queue.o bs_tree.o
+	$(CFLAGS) tests/p_queue_test.c p_queue.o bs_tree.o -o bin/p_queue_test
+
 # Bubble Sort
 bubble_sort_test: bubble_sort_test.c bubble_sort.o array.o
 	$(CFLAGS) tests/bubble_sort_test.c bubble_sort.o array.o -o bin/bubble_sort_test
@@ -130,6 +134,8 @@ h_table.o: h_table.c h_table.h
 	$(CFLAGS) -c src/h_table.c src/h_table.h
 trie.o: trie.c trie.h
 	$(CFLAGS) -c src/trie.c src/trie.h
+p_queue.o: p_queue.c p_queue.h
+	$(CFLAGS) -c src/p_queue.c src/p_queue.h
 bs_tree.o: bs_tree.c bs_tree.h
 	$(CFLAGS) -c src/bs_tree.c src/bs_tree.h
 bs_tree_map.o: bs_tree_map.c bs_tree_map.h
