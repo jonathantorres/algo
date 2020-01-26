@@ -40,14 +40,14 @@ void *queue_peek(queue *_queue)
     return _queue->first->value;
 }
 
-void queue_destroy(queue *_queue)
+void queue_free(queue *_queue)
 {
     if (!_queue) {
         fputs("Must provide a valid queue.", stderr);
         return;
     }
 
-    dl_list_destroy(_queue);
+    dl_list_free(_queue);
 }
 
 void queue_clear(queue *_queue)

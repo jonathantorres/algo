@@ -17,34 +17,15 @@ typedef struct sl_list {
 
 typedef int(*sl_list_cmp)(void *a, void *b);
 
-// create a new list
 sl_list *sl_list_new();
-
-// remove all the values in the list
 void sl_list_clear(sl_list *list);
-
-// destroy the list
-void sl_list_destroy(sl_list *list);
-
-// get the length of the list
+void sl_list_free(sl_list *list);
 int sl_list_length(sl_list *list);
-
-// insert at the end
 void sl_list_push(sl_list *list, void *value);
-
-// insert at the beginning
 void sl_list_shift(sl_list *list, void *value);
-
-// remove the first node and return it
 void *sl_list_unshift(sl_list *list);
-
-// remove the last node and return it
 void *sl_list_pop(sl_list *list);
-
-// remove node whose value is {value}
 void sl_list_remove(sl_list *list, void *value, sl_list_cmp cmp);
-
-// check to see if value {value} exists in the list
 bool sl_list_exists(sl_list *list, void *value, sl_list_cmp cmp);
 
 // Macro usage:

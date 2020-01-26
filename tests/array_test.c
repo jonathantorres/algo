@@ -32,7 +32,7 @@ void array_print(array *_array, char type)
 
 char *test_create()
 {
-    array *_array = array_create(10, sizeof(int*));
+    array *_array = array_new(10, sizeof(int*));
 
     assert(_array->length == 0, "Array length should be 0");
     assert(_array->capacity == 10, "Array capacity should be 10");
@@ -40,14 +40,14 @@ char *test_create()
     assert(_array->item_size == sizeof(int*), "Array item_size is not correct, it should be sizeof(int*)");
     assert(_array->contents != NULL, "Array contents should not be NULL");
 
-    array_destroy(_array);
+    array_free(_array);
 
     return NULL;
 }
 
 char *test_destroy()
 {
-    array *_array = array_create(100, sizeof(int*));
+    array *_array = array_new(100, sizeof(int*));
 
     for (unsigned int i = 0; i < 100; i++) {
         int *value = malloc(sizeof(int));
@@ -68,14 +68,14 @@ char *test_destroy()
         }
     }
 
-    array_destroy(_array);
+    array_free(_array);
 
     return NULL;
 }
 
 char *test_clear()
 {
-    array *_array = array_create(100, sizeof(int*));
+    array *_array = array_new(100, sizeof(int*));
 
     for (unsigned int i = 0; i < 100; i++) {
         int *value = malloc(sizeof(int));
@@ -98,14 +98,14 @@ char *test_clear()
 
     array_clear(_array);
     assert(_array->length == 0, "Array length must be 0");
-    array_destroy(_array);
+    array_free(_array);
 
     return NULL;
 }
 
 char *test_push()
 {
-    array *_array = array_create(10, sizeof(int*));
+    array *_array = array_new(10, sizeof(int*));
 
     for (unsigned int i = 0; i < 100; i++) {
         int *value = malloc(sizeof(int));
@@ -126,14 +126,14 @@ char *test_push()
         }
     }
 
-    array_destroy(_array);
+    array_free(_array);
 
     return NULL;
 }
 
 char *test_pop()
 {
-    array *_array = array_create(10, sizeof(int*));
+    array *_array = array_new(10, sizeof(int*));
 
     for (unsigned int i = 0; i < 5; i++) {
         int *value = malloc(sizeof(int));
@@ -155,7 +155,7 @@ char *test_pop()
             free(val);
         }
     }
-    array_destroy(_array);
+    array_free(_array);
     free(last_num);
 
     return NULL;
@@ -163,7 +163,7 @@ char *test_pop()
 
 char *test_set()
 {
-    array *_array = array_create(10, sizeof(int*));
+    array *_array = array_new(10, sizeof(int*));
 
     for (unsigned int i = 0; i < 5; i++) {
         int *value = malloc(sizeof(int));
@@ -183,14 +183,14 @@ char *test_set()
             free(val);
         }
     }
-    array_destroy(_array);
+    array_free(_array);
 
     return NULL;
 }
 
 char *test_get()
 {
-    array *_array = array_create(10, sizeof(int*));
+    array *_array = array_new(10, sizeof(int*));
 
     for (unsigned int i = 0; i < 5; i++) {
         int *value = malloc(sizeof(int));
@@ -211,14 +211,14 @@ char *test_get()
             free(val);
         }
     }
-    array_destroy(_array);
+    array_free(_array);
 
     return NULL;
 }
 
 char *test_remove()
 {
-    array *_array = array_create(10, sizeof(int*));
+    array *_array = array_new(10, sizeof(int*));
 
     for (unsigned int i = 0; i < 5; i++) {
         int *value = malloc(sizeof(int));
@@ -239,7 +239,7 @@ char *test_remove()
             free(val);
         }
     }
-    array_destroy(_array);
+    array_free(_array);
     free(number);
 
     return NULL;
@@ -247,7 +247,7 @@ char *test_remove()
 
 char *test_shift()
 {
-    array *_array = array_create(10, sizeof(int*));
+    array *_array = array_new(10, sizeof(int*));
 
     for (unsigned int i = 0; i < 5; i++) {
         int *value = malloc(sizeof(int));
@@ -273,14 +273,14 @@ char *test_shift()
             free(val);
         }
     }
-    array_destroy(_array);
+    array_free(_array);
 
     return NULL;
 }
 
 char *test_unshift()
 {
-    array *_array = array_create(10, sizeof(int*));
+    array *_array = array_new(10, sizeof(int*));
 
     for (unsigned int i = 0; i < 5; i++) {
         int *value = malloc(sizeof(int));
@@ -301,7 +301,7 @@ char *test_unshift()
             free(val);
         }
     }
-    array_destroy(_array);
+    array_free(_array);
     free(first_num);
 
     return NULL;
@@ -309,7 +309,7 @@ char *test_unshift()
 
 char *test_array_of_strings()
 {
-    array *_array = array_create(10, sizeof(char**));
+    array *_array = array_new(10, sizeof(char**));
     char *strings[5] = {
         "foo",
         "bar",
@@ -342,7 +342,7 @@ char *test_array_of_strings()
         }
     }
 
-    array_destroy(_array);
+    array_free(_array);
     free(last);
     free(first);
 
@@ -351,7 +351,7 @@ char *test_array_of_strings()
 
 char *test_array_stack_items()
 {
-    array *_array = array_create(10, sizeof(char*));
+    array *_array = array_new(10, sizeof(char*));
 
     array_push(_array, "John");
     array_push(_array, "Jonathan");
@@ -365,7 +365,7 @@ char *test_array_stack_items()
     char *first = array_unshift(_array);
     assert(strcmp(first, "John") == 0, "String 'John' should be equal");
     assert(_array->length == 1, "Array length should be 1");
-    array_destroy(_array);
+    array_free(_array);
 
     return NULL;
 }
@@ -378,7 +378,7 @@ typedef struct person_dum {
 
 char *test_array_struct_pointers()
 {
-    array *_array = array_create(10, sizeof(person_dum_t*));
+    array *_array = array_new(10, sizeof(person_dum_t*));
     person_dum_t *p = malloc(sizeof(person_dum_t));
     p->first_name = "Jonathan";
     p->last_name = "Torres";
@@ -391,7 +391,7 @@ char *test_array_struct_pointers()
     assert(strcmp(per->first_name, "Jonathan") == 0, "String 'Jonathan' should be equal");
 
     free(_array->contents[0]);
-    array_destroy(_array);
+    array_free(_array);
 
     return NULL;
 }

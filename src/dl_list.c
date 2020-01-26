@@ -16,7 +16,7 @@ dl_list_node *_dl_list_create_node(void *value)
     return node;
 }
 
-void _dl_list_destroy_node(dl_list_node *node)
+void _dl_list_free_node(dl_list_node *node)
 {
     if (!node) {
         fputs("A valid node must be provided.", stderr);
@@ -55,12 +55,12 @@ void dl_list_clear(dl_list *list)
             current_node = current_node->next;
 
             if (current_node->prev) {
-                _dl_list_destroy_node(current_node->prev);
+                _dl_list_free_node(current_node->prev);
             }
         }
 
         if (current_node) {
-            _dl_list_destroy_node(current_node);
+            _dl_list_free_node(current_node);
         }
 
         list->first = NULL;
@@ -68,7 +68,7 @@ void dl_list_clear(dl_list *list)
 }
 
 // destroy the list
-void dl_list_destroy(dl_list *list)
+void dl_list_free(dl_list *list)
 {
     if (!list) {
         fputs("Must provide a dl_list.", stderr);
@@ -165,7 +165,7 @@ void *dl_list_unshift(dl_list *list)
     // list has just 1 node
     if (list->first->next == NULL) {
         void *value = list->first->value;
-        _dl_list_destroy_node(list->first);
+        _dl_list_free_node(list->first);
         list->first = NULL;
 
         return value;
@@ -174,7 +174,7 @@ void *dl_list_unshift(dl_list *list)
     dl_list_node *new_first = list->first->next;
     void *value = list->first->value;
 
-    _dl_list_destroy_node(list->first);
+    _dl_list_free_node(list->first);
     new_first->prev = NULL;
     list->first = new_first;
 
@@ -197,7 +197,7 @@ void *dl_list_pop(dl_list *list)
     // list has just 1 node
     if (list->first->next == NULL) {
         void *value = list->first->value;
-        _dl_list_destroy_node(list->first);
+        _dl_list_free_node(list->first);
         list->first = NULL;
 
         return value;
@@ -211,7 +211,7 @@ void *dl_list_pop(dl_list *list)
 
     void *value = current_node->value;
     current_node->prev->next = NULL;
-    _dl_list_destroy_node(current_node);
+    _dl_list_free_node(current_node);
 
     return value;
 }
@@ -247,7 +247,7 @@ void dl_list_remove(dl_list *list, void *value, dl_list_cmp cmp)
         dl_list_node *next_node = current_node->next;
         next_node->prev = NULL;
         list->first = next_node;
-        _dl_list_destroy_node(current_node);
+        _dl_list_free_node(current_node);
         return;
     }
 
@@ -258,7 +258,7 @@ void dl_list_remove(dl_list *list, void *value, dl_list_cmp cmp)
             // remove the node
             current_node->prev->next = current_node->next;
             current_node->next->prev = current_node->prev;
-            _dl_list_destroy_node(current_node);
+            _dl_list_free_node(current_node);
             break;
         }
     }

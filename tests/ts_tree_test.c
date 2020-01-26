@@ -83,9 +83,9 @@ char *test_traverse()
     return NULL;
 }
 
-char *test_destroy()
+char *test_free()
 {
-    ts_tree_destroy(node);
+    ts_tree_free(node);
 
     return NULL;
 }
@@ -97,7 +97,7 @@ int main()
     run_test(test_search_exact);
     run_test(test_search_prefix);
     run_test(test_traverse);
-    run_test(test_destroy);
+    run_test(test_free);
     end_tests();
 
     return 0;

@@ -25,7 +25,7 @@ char *test_new()
 
     assert(_queue != NULL, "Failed creating the queue");
     assert(queue_length(_queue) == 0, "The queue should have 0 nodes");
-    queue_destroy(_queue);
+    queue_free(_queue);
 
     return NULL;
 }
@@ -46,7 +46,7 @@ char *test_enqueue()
 
     assert(queue_peek(_queue) == john, "John must be the top item in the queue");
     assert(queue_length(_queue) == 4, "Length of the queue must be 4");
-    queue_destroy(_queue);
+    queue_free(_queue);
 
     return NULL;
 }
@@ -58,7 +58,7 @@ char *test_destroy()
     queue_enqueue(_queue, "one");
     queue_enqueue(_queue, "two");
     queue_enqueue(_queue, "three");
-    queue_destroy(_queue);
+    queue_free(_queue);
 
     return NULL;
 }
@@ -72,7 +72,7 @@ char *test_clear()
     queue_enqueue(_queue, "three");
     queue_clear(_queue);
     assert(queue_length(_queue) == 0, "queue length must be 0");
-    queue_destroy(_queue);
+    queue_free(_queue);
 
     return NULL;
 }
@@ -94,7 +94,7 @@ char *test_dequeue()
     char *value = (char*) queue_dequeue(_queue);
     assert(queue_length(_queue) == 3, "queue length must be 3");
     assert(strcmp(zero, value) == 0, "queue value should be equal");
-    queue_destroy(_queue);
+    queue_free(_queue);
 
     return NULL;
 }
@@ -113,7 +113,7 @@ char *test_peek()
     queue_enqueue(_queue, chris);
     queue_enqueue(_queue, mar);
     assert(queue_peek(_queue) == john, "John must be the top item in the queue");
-    queue_destroy(_queue);
+    queue_free(_queue);
 
     return NULL;
 }
@@ -132,7 +132,7 @@ char *test_length()
     queue_enqueue(_queue, chris);
     queue_enqueue(_queue, mar);
     assert(queue_length(_queue) == 4, "Length of queue should be 4");
-    queue_destroy(_queue);
+    queue_free(_queue);
 
     return NULL;
 }

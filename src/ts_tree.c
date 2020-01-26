@@ -122,22 +122,22 @@ void ts_tree_traverse(ts_tree *node, ts_tree_traverse_cb cb, void *data)
     }
 }
 
-void ts_tree_destroy(ts_tree *node)
+void ts_tree_free(ts_tree *node)
 {
     if (node == NULL) {
         return;
     }
 
     if (node->low) {
-        ts_tree_destroy(node->low);
+        ts_tree_free(node->low);
     }
 
     if (node->equal) {
-        ts_tree_destroy(node->equal);
+        ts_tree_free(node->equal);
     }
 
     if (node->high) {
-        ts_tree_destroy(node->high);
+        ts_tree_free(node->high);
     }
 
     free(node);

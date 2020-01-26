@@ -48,7 +48,7 @@ int gen_random_number()
 
 char *test_heap_sort()
 {
-    array *_array = array_create(10, sizeof(int*));
+    array *_array = array_new(10, sizeof(int*));
 
     for (unsigned int i = 0; i < 10; i++) {
         int *value = malloc(sizeof(int));
@@ -66,7 +66,7 @@ char *test_heap_sort()
         assert(cmp_int(a, b) <= 0, "Array is not sorted");
     }
 
-    array_destroy(_array);
+    array_free(_array);
 
     return NULL;
 }

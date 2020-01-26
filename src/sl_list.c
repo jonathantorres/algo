@@ -15,7 +15,7 @@ sl_list_node *_sl_list_create_node(void *value)
     return node;
 }
 
-void _sl_list_destroy_node(sl_list_node *node)
+void _sl_list_free_node(sl_list_node *node)
 {
     if (!node) {
         fputs("A valid node must be provided.", stderr);
@@ -53,19 +53,19 @@ void sl_list_clear(sl_list *list)
             current_node = current_node->next;
 
             if (prev_node) {
-                _sl_list_destroy_node(prev_node);
+                _sl_list_free_node(prev_node);
             }
         }
 
         if (current_node) {
-            _sl_list_destroy_node(current_node);
+            _sl_list_free_node(current_node);
         }
 
         list->first = NULL;
     }
 }
 
-void sl_list_destroy(sl_list *list)
+void sl_list_free(sl_list *list)
 {
     if (!list) {
         fputs("Must provide a sl_list.", stderr);
@@ -243,7 +243,7 @@ void sl_list_remove(sl_list *list, void *value, sl_list_cmp cmp)
     if (cmp(current_node->value, value) == 0) {
         sl_list_node *next_node = current_node->next;
         list->first = next_node;
-        _sl_list_destroy_node(current_node);
+        _sl_list_free_node(current_node);
         return;
     }
 
@@ -254,7 +254,7 @@ void sl_list_remove(sl_list *list, void *value, sl_list_cmp cmp)
         if (cmp(current_node->value, value) == 0) {
             // remove the node
             prev_node->next = current_node->next;
-            _sl_list_destroy_node(current_node);
+            _sl_list_free_node(current_node);
             break;
         }
     }

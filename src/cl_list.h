@@ -18,34 +18,15 @@ typedef struct cl_list {
 
 typedef int(*cl_list_cmp)(void *a, void *b);
 
-// create a new list
 cl_list *cl_list_new();
-
-// remove all the values in the list
 void cl_list_clear(cl_list *list);
-
-// destroy the list
-void cl_list_destroy(cl_list *list);
-
-// get the length of the list
+void cl_list_free(cl_list *list);
 int cl_list_length(cl_list *list);
-
-// insert at the end
 void cl_list_push(cl_list *list, void *value);
-
-// insert at the beginning
 void cl_list_shift(cl_list *list, void *value);
-
-// remove the first node and return it
 void *cl_list_unshift(cl_list *list);
-
-// remove the last node and return it
 void *cl_list_pop(cl_list *list);
-
-// remove node whose value is {value}
 void cl_list_remove(cl_list *list, void *value, cl_list_cmp cmp);
-
-// check to see if value {value} exists in the list
 bool cl_list_exists(cl_list *list, void *value, cl_list_cmp cmp);
 
 // Macro usage:

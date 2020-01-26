@@ -42,7 +42,7 @@ int cmp_int(void *a, void *b)
 
 char *test_insertion_sort()
 {
-    array *_array = array_create(10, sizeof(int*));
+    array *_array = array_new(10, sizeof(int*));
 
     for (unsigned int i = 0; i < 10; i++) {
         int *value = malloc(sizeof(int));

@@ -32,7 +32,7 @@ char *test_create()
     assert(list != NULL, "Failed creating the list");
     assert(dl_list_length(list) == 0, "List should have 0 nodes");
     assert(list->first == NULL, "First item in the list should be NULL");
-    dl_list_destroy(list);
+    dl_list_free(list);
 
     return NULL;
 }
@@ -53,7 +53,7 @@ char *test_push()
 
     assert(list->first->value == john, "John must be the first node in the list");
     assert(dl_list_length(list) == 4, "Length of the list must be 4");
-    dl_list_destroy(list);
+    dl_list_free(list);
 
     return NULL;
 }
@@ -65,7 +65,7 @@ char *test_destroy()
     dl_list_push(list, "one");
     dl_list_push(list, "two");
     dl_list_push(list, "three");
-    dl_list_destroy(list);
+    dl_list_free(list);
 
     return NULL;
 }
@@ -79,7 +79,7 @@ char *test_clear()
     dl_list_push(list, "three");
     dl_list_clear(list);
     assert(dl_list_length(list) == 0, "List length must be 0");
-    dl_list_destroy(list);
+    dl_list_free(list);
 
     return NULL;
 }
@@ -95,7 +95,7 @@ char *test_shift()
     assert(dl_list_length(list) == 3, "List length must be 3");
     dl_list_shift(list, "zero");
     assert(dl_list_length(list) == 4, "List length must be 4");
-    dl_list_destroy(list);
+    dl_list_free(list);
 
     return NULL;
 }
@@ -117,7 +117,7 @@ char *test_unshift()
     char *value = (char*) dl_list_unshift(list);
     assert(dl_list_length(list) == 3, "List length must be 3");
     assert(strcmp(zero, value) == 0, "List should be equal");
-    dl_list_destroy(list);
+    dl_list_free(list);
 
     return NULL;
 }
@@ -139,7 +139,7 @@ char *test_pop()
     char *value = (char*) dl_list_pop(list);
     assert(dl_list_length(list) == 3, "List length must be 3");
     assert(strcmp(three, value) == 0, "List should be equal");
-    dl_list_destroy(list);
+    dl_list_free(list);
 
     return NULL;
 }
@@ -159,7 +159,7 @@ char *test_remove()
     assert(dl_list_length(list) == 2, "List length must be 2");
     dl_list_remove(list, "one", cmp_func);
     assert(dl_list_length(list) == 1, "List length must be 1");
-    dl_list_destroy(list);
+    dl_list_free(list);
 
     return NULL;
 }
@@ -179,7 +179,7 @@ char *test_exists()
     assert(dl_list_exists(list, "three", cmp_func) == true, "three should exist in the list");
     assert(dl_list_exists(list, "foo", cmp_func) == false, "foo shouldn't exist in the list");
     assert(dl_list_length(list) == 4, "List length must be 4");
-    dl_list_destroy(list);
+    dl_list_free(list);
 
     return NULL;
 }
@@ -192,7 +192,7 @@ char *test_length()
     dl_list_push(list, "two");
     dl_list_push(list, "three");
     assert(dl_list_length(list) == 4, "List length must be 4");
-    dl_list_destroy(list);
+    dl_list_free(list);
 
     return NULL;
 }

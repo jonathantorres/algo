@@ -40,14 +40,14 @@ void *stack_peek(stack *_stack)
     return _stack->first->value;
 }
 
-void stack_destroy(stack *_stack)
+void stack_free(stack *_stack)
 {
     if (!_stack) {
         fputs("Must provide a valid stack.", stderr);
         return;
     }
 
-    dl_list_destroy(_stack);
+    dl_list_free(_stack);
 }
 
 void stack_clear(stack *_stack)

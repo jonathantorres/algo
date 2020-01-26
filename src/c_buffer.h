@@ -13,11 +13,11 @@ typedef struct c_buffer {
 } c_buffer;
 
 // create a new buffer
-void *c_buffer_create(unsigned int length);
+void *c_buffer_new(unsigned int length);
 // clear the contents of the buffer
 void c_buffer_clear(c_buffer *buffer);
-// destroy the buffer
-void c_buffer_destroy(c_buffer *buffer);
+// free the buffer
+void c_buffer_free(c_buffer *buffer);
 // write {amount} of bytes of {data} into the buffer
 int c_buffer_write(c_buffer *buffer, char *data, unsigned int amount);
 // read {amount} of bytes of data from the buffer into {target}

@@ -42,7 +42,7 @@ int cmp_int(void *a, void *b)
 
 char *test_binary_search_found()
 {
-    array *_array = array_create(10, sizeof(int*));
+    array *_array = array_new(10, sizeof(int*));
 
     for (int i = 1; i <= 10; i++) {
         int *val = malloc(sizeof(int));
@@ -55,14 +55,14 @@ char *test_binary_search_found()
 
     assert(*(int*)found == 30, "The found item should have been the number 30");
     assert(found != NULL, "The found item should not be NULL");
-    array_destroy(_array);
+    array_free(_array);
 
     return NULL;
 }
 
 char *test_binary_search_not_found()
 {
-    array *_array = array_create(10, sizeof(int*));
+    array *_array = array_new(10, sizeof(int*));
 
     for (int i = 1; i <= 10; i++) {
         int *val = malloc(sizeof(int));
@@ -74,7 +74,7 @@ char *test_binary_search_not_found()
     void *found = binary_search(_array, &search_for, cmp_int);
 
     assert(found == NULL, "The found item should be NULL");
-    array_destroy(_array);
+    array_free(_array);
 
     return NULL;
 }

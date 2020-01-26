@@ -13,7 +13,7 @@ static void *_trie_create_node(void *value)
         return NULL;
     }
 
-    array *paths = array_create(PATHS_LENGTH, sizeof(trie_node*));
+    array *paths = array_new(PATHS_LENGTH, sizeof(trie_node*));
     if (!paths) {
         free(node);
         return NULL;
@@ -35,7 +35,7 @@ static void _trie_free_node(trie_node *node)
     //     }
     // }
     // free(node->paths);
-    array_destroy(node->paths);
+    array_free(node->paths);
     free(node);
 }
 
@@ -56,19 +56,19 @@ static void _trie_free_nodes(trie_node *node)
     }
 }
 
-void *trie_create(trie_compare cmp)
+void *trie_new(trie_compare cmp)
 {
     trie *_trie = malloc(sizeof(trie));
 
     if (!_trie) {
-        fputs("[trie_create] Not enough memory.", stderr);
+        fputs("[trie_new] Not enough memory.", stderr);
         return NULL;
     }
 
     trie_node *root = _trie_create_node("");
     if (!root) {
         free(_trie);
-        fputs("[trie_create] Root node could not be created.", stderr);
+        fputs("[trie_new] Root node could not be created.", stderr);
         return NULL;
     }
 
@@ -78,10 +78,10 @@ void *trie_create(trie_compare cmp)
     return _trie;
 }
 
-void trie_destroy(trie *_trie)
+void trie_free(trie *_trie)
 {
     if (!_trie) {
-        fputs("[trie_destroy] Must provide a trie.", stderr);
+        fputs("[trie_free] Must provide a trie.", stderr);
         return;
     }
 

@@ -8,7 +8,7 @@
 typedef dl_list stack;
 
 stack *stack_new();
-void stack_destroy(stack *_stack);
+void stack_free(stack *_stack);
 void stack_clear(stack *_stack);
 void stack_push(stack *_stack, void *value);
 void *stack_pop(stack *_stack);

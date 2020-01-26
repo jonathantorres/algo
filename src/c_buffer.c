@@ -5,7 +5,7 @@ unsigned int _c_buffer_available_data(c_buffer *buffer)
     return buffer->end % buffer->length - buffer->start;
 }
 
-void *c_buffer_create(unsigned int length)
+void *c_buffer_new(unsigned int length)
 {
     c_buffer *buffer = malloc(sizeof(c_buffer));
 
@@ -47,7 +47,7 @@ void c_buffer_clear(c_buffer *buffer)
     }
 }
 
-void c_buffer_destroy(c_buffer *buffer)
+void c_buffer_free(c_buffer *buffer)
 {
     if (!buffer) {
         fputs("Must provide a valid c_buffer.", stderr);

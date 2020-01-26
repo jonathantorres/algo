@@ -8,7 +8,7 @@
 typedef dl_list queue;
 
 queue *queue_new();
-void queue_destroy(queue *_queue);
+void queue_free(queue *_queue);
 void queue_clear(queue *_queue);
 void queue_enqueue(queue *_queue, void *value);
 void *queue_dequeue(queue *_queue);

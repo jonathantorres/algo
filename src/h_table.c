@@ -33,33 +33,33 @@ array *_h_table_find_bucket(h_table *_h_table, void *key, size_t *bucket_hash, b
 
     array *bucket = array_get(_h_table->buckets, bucket_index);
     if (!bucket && create_new) {
-        bucket = array_create(NUM_OF_BUCKETS, sizeof(h_table_node*));
+        bucket = array_new(NUM_OF_BUCKETS, sizeof(h_table_node*));
         array_set(_h_table->buckets, bucket, bucket_index);
     }
 
     return bucket;
 }
 
-h_table *h_table_create(h_table_compare cmp)
+h_table *h_table_new(h_table_compare cmp)
 {
     h_table *_h_table = malloc(sizeof(h_table));
 
     if (!_h_table) {
-        fputs("[h_table_create] Not enough memory.", stderr);
+        fputs("[h_table_new] Not enough memory.", stderr);
         return NULL;
     }
 
     _h_table->cmp = cmp;
-    _h_table->buckets = array_create(NUM_OF_BUCKETS, sizeof(array*));
+    _h_table->buckets = array_new(NUM_OF_BUCKETS, sizeof(array*));
     _h_table->buckets->length = _h_table->buckets->capacity;
 
     return _h_table;
 }
 
-void h_table_destroy(h_table *_h_table)
+void h_table_free(h_table *_h_table)
 {
     if (!_h_table) {
-        fputs("[h_table_destroy] Must provide a hash_table.", stderr);
+        fputs("[h_table_free] Must provide a hash_table.", stderr);
         return;
     }
 

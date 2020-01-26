@@ -16,7 +16,7 @@ void *_array_remove_element_at(array *_array, unsigned int index)
 }
 
 // creates a new empty array
-array *array_create(unsigned int capacity, size_t item_size)
+array *array_new(unsigned int capacity, size_t item_size)
 {
     array *_array = malloc(sizeof(array));
 
@@ -39,8 +39,8 @@ array *array_create(unsigned int capacity, size_t item_size)
     return _array;
 }
 
-// empties and destroys the array completely
-void array_destroy(array *_array)
+// empties and frees the array completely
+void array_free(array *_array)
 {
     if (!_array) {
         fputs("[array_destroy] Must provide an array.", stderr);

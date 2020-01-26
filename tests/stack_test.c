@@ -25,7 +25,7 @@ char *test_new()
 
     assert(_stack != NULL, "Failed creating the stack");
     assert(stack_length(_stack) == 0, "The stack should have 0 nodes");
-    stack_destroy(_stack);
+    stack_free(_stack);
 
     return NULL;
 }
@@ -46,7 +46,7 @@ char *test_push()
 
     assert(stack_peek(_stack) == mar, "Marjorie must be the top item in the stack");
     assert(stack_length(_stack) == 4, "Length of the stack must be 4");
-    stack_destroy(_stack);
+    stack_free(_stack);
 
     return NULL;
 }
@@ -58,7 +58,7 @@ char *test_destroy()
     stack_push(_stack, "one");
     stack_push(_stack, "two");
     stack_push(_stack, "three");
-    stack_destroy(_stack);
+    stack_free(_stack);
 
     return NULL;
 }
@@ -72,7 +72,7 @@ char *test_clear()
     stack_push(_stack, "three");
     stack_clear(_stack);
     assert(stack_length(_stack) == 0, "Stack length must be 0");
-    stack_destroy(_stack);
+    stack_free(_stack);
 
     return NULL;
 }
@@ -94,7 +94,7 @@ char *test_pop()
     char *value = (char*) stack_pop(_stack);
     assert(stack_length(_stack) == 3, "Stack length must be 3");
     assert(strcmp(three, value) == 0, "Stack value should be equal");
-    stack_destroy(_stack);
+    stack_free(_stack);
 
     return NULL;
 }
@@ -113,7 +113,7 @@ char *test_peek()
     stack_push(_stack, chris);
     stack_push(_stack, mar);
     assert(stack_peek(_stack) == mar, "Marjorie must be the top item in the stack");
-    stack_destroy(_stack);
+    stack_free(_stack);
 
     return NULL;
 }
@@ -132,7 +132,7 @@ char *test_length()
     stack_push(_stack, chris);
     stack_push(_stack, mar);
     assert(stack_length(_stack) == 4, "Length of the stack should be 4");
-    stack_destroy(_stack);
+    stack_free(_stack);
 
     return NULL;
 }

@@ -22,8 +22,8 @@ typedef struct h_table_node {
 
 typedef bool (*h_table_node_cb)(h_table_node *node);
 
-h_table *h_table_create(h_table_compare cmp);
-void h_table_destroy(h_table *_h_table);
+h_table *h_table_new(h_table_compare cmp);
+void h_table_free(h_table *_h_table);
 void *h_table_get(h_table *_h_table, void *key);
 bool h_table_set(h_table *_h_table, void *key, void *value);
 void *h_table_remove(h_table *_h_table, void *key);
