@@ -81,27 +81,27 @@ void cl_list_free(cl_list *list)
     free(list);
 }
 
-// get the length of the list
-int cl_list_length(cl_list *list)
+// get the len of the list
+int cl_list_len(cl_list *list)
 {
     if (!list) {
         fputs("Must provide a cl_list.", stderr);
         return -1;
     }
 
-    int length = 0;
+    int len = 0;
 
     if (list->first != NULL) {
         cl_list_node *current_node = list->first;
-        length++;
+        len++;
 
         while (current_node != list->last) {
             current_node = current_node->next;
-            length++;
+            len++;
         }
     }
 
-    return length;
+    return len;
 }
 
 // insert at the end

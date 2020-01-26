@@ -13,7 +13,7 @@ void queue_clear(queue *_queue);
 void queue_enqueue(queue *_queue, void *value);
 void *queue_dequeue(queue *_queue);
 void *queue_peek(queue *_queue);
-int queue_length(queue *_queue);
+int queue_len(queue *_queue);
 
 // Macro usage:
 // QUEUE_FOREACH(queue) {

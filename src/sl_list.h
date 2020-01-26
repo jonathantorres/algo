@@ -20,7 +20,7 @@ typedef int(*sl_list_cmp)(void *a, void *b);
 sl_list *sl_list_new();
 void sl_list_clear(sl_list *list);
 void sl_list_free(sl_list *list);
-int sl_list_length(sl_list *list);
+int sl_list_len(sl_list *list);
 void sl_list_push(sl_list *list, void *value);
 void sl_list_shift(sl_list *list, void *value);
 void *sl_list_unshift(sl_list *list);

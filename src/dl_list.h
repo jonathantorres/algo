@@ -20,7 +20,7 @@ typedef int(*dl_list_cmp)(void *a, void *b);
 dl_list *dl_list_new();
 void dl_list_clear(dl_list *list);
 void dl_list_free(dl_list *list);
-int dl_list_length(dl_list *list);
+int dl_list_len(dl_list *list);
 void dl_list_push(dl_list *list, void *value);
 void dl_list_shift(dl_list *list, void *value);
 void *dl_list_unshift(dl_list *list);

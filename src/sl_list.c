@@ -76,27 +76,27 @@ void sl_list_free(sl_list *list)
     free(list);
 }
 
-// get the length of the list
-int sl_list_length(sl_list *list)
+// get the len of the list
+int sl_list_len(sl_list *list)
 {
     if (!list) {
         fputs("Must provide a sl_list.", stderr);
         return -1;
     }
 
-    int length = 0;
+    int len = 0;
 
     if (list->first != NULL) {
         sl_list_node *current_node = list->first;
-        length++;
+        len++;
 
         while (current_node->next != NULL) {
             current_node = current_node->next;
-            length++;
+            len++;
         }
     }
 
-    return length;
+    return len;
 }
 
 // insert at the end

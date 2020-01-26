@@ -9,7 +9,7 @@ void insertion_sort(array *_array, cmp_f cmp)
     }
 
     unsigned int i = 1;
-    while (i < _array->length) {
+    while (i < _array->len) {
         unsigned int j = i;
         while (j > 0 && cmp(array_get(_array, j - 1), array_get(_array, j)) > 0) {
             void *tmp = array_get(_array, j);

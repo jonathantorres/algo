@@ -12,7 +12,7 @@ void *binary_search(array *_array, void *key, cmp_f cmp)
 
     unsigned int low = 0;
     unsigned int mid = 0;
-    unsigned int high = _array->length - 1;
+    unsigned int high = _array->len - 1;
     void *guess = NULL;
 
     while (low <= high) {

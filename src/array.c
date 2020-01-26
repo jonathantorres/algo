@@ -7,7 +7,7 @@ void *_array_remove_element_at(array *_array, unsigned int index)
     if (_array->contents[index] != NULL) {
         void *element = _array->contents[index];
         _array->contents[index] = NULL;
-        _array->length--;
+        _array->len--;
 
         return element;
     }
@@ -25,7 +25,7 @@ array *array_new(unsigned int capacity, size_t item_size)
         return NULL;
     }
 
-    _array->length = 0;
+    _array->len = 0;
     _array->capacity = capacity;
     _array->expand_rate = EXPAND_RATE;
     _array->item_size = item_size;
@@ -60,13 +60,13 @@ void array_clear(array *_array)
         return;
     }
 
-    unsigned int array_length = _array->length;
+    unsigned int array_len = _array->len;
 
-    for (unsigned int i = 0; i < array_length; i++) {
+    for (unsigned int i = 0; i < array_len; i++) {
         if (_array->contents[i]) {
             _array->contents[i] = NULL;
         }
-        _array->length--;
+        _array->len--;
     }
 }
 
@@ -92,11 +92,11 @@ void array_push(array *_array, void *value)
         return;
     }
 
-    _array->contents[_array->length] = value;
-    _array->length++;
+    _array->contents[_array->len] = value;
+    _array->len++;
 
     // expand if necessary
-    if (_array->length >= _array->capacity) {
+    if (_array->len >= _array->capacity) {
         array_expand(_array);
     }
 }
@@ -110,8 +110,8 @@ void *array_pop(array *_array)
     }
 
     void *element = NULL;
-    if (_array->length > 0) {
-        element = _array_remove_element_at(_array, _array->length - 1);
+    if (_array->len > 0) {
+        element = _array_remove_element_at(_array, _array->len - 1);
     }
 
     return element;
@@ -130,8 +130,8 @@ void array_set(array *_array, void *elem, unsigned int index)
         return;
     }
 
-    if (index >= _array->length) {
-        _array->length = index + 1;
+    if (index >= _array->len) {
+        _array->len = index + 1;
     }
 
     _array->contents[index] = elem;
@@ -146,7 +146,7 @@ void *array_get(array *_array, unsigned int index)
     }
 
     // index is too large
-    if (index >= _array->length) {
+    if (index >= _array->len) {
         return NULL;
     }
 
@@ -162,7 +162,7 @@ void *array_remove(array *_array, unsigned int index)
     }
 
     // index is too large
-    if (index >= _array->length) {
+    if (index >= _array->len) {
         return NULL;
     }
 
@@ -172,7 +172,7 @@ void *array_remove(array *_array, unsigned int index)
         memmove(
             &_array->contents[index],
             &_array->contents[index + 1],
-            sizeof(_array->item_size) * (_array->length - index)
+            sizeof(_array->item_size) * (_array->len - index)
         );
     }
 
@@ -187,19 +187,19 @@ void array_shift(array *_array, void *value)
         return;
     }
 
-    if (_array->length > 0) {
+    if (_array->len > 0) {
         memmove(
             &_array->contents[1],
             _array->contents,
-            sizeof(_array->item_size) * _array->length
+            sizeof(_array->item_size) * _array->len
         );
     }
 
     _array->contents[0] = value;
-    _array->length++;
+    _array->len++;
 
     // expand if necessary
-    if (_array->length >= _array->capacity) {
+    if (_array->len >= _array->capacity) {
         array_expand(_array);
     }
 }
@@ -214,13 +214,13 @@ void *array_unshift(array *_array)
 
     void *element = NULL;
 
-    if (_array->length > 0) {
+    if (_array->len > 0) {
         element = _array_remove_element_at(_array, 0);
 
         memmove(
             _array->contents,
             &_array->contents[1],
-            sizeof(_array->item_size) * _array->length
+            sizeof(_array->item_size) * _array->len
         );
     }
 

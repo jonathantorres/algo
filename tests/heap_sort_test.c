@@ -11,7 +11,7 @@ void array_print(array *_array, char type)
     }
 
     printf("[");
-    for (unsigned int i = 0; i < _array->length; i++) {
+    for (unsigned int i = 0; i < _array->len; i++) {
         void *val = NULL;
         switch (type) {
             case 'i':
@@ -60,7 +60,7 @@ char *test_heap_sort()
     heap_sort(_array, cmp_int);
 
     // make sure it's sorted
-    for (unsigned int i = 1; i < _array->length; i++) {
+    for (unsigned int i = 1; i < _array->len; i++) {
         void *a = array_get(_array, i - 1);
         void *b = array_get(_array, i);
         assert(cmp_int(a, b) <= 0, "Array is not sorted");

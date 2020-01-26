@@ -79,27 +79,27 @@ void dl_list_free(dl_list *list)
     free(list);
 }
 
-// get the length of the list
-int dl_list_length(dl_list *list)
+// get the len of the list
+int dl_list_len(dl_list *list)
 {
     if (!list) {
         fputs("Must provide a dl_list.", stderr);
         return -1;
     }
 
-    int length = 0;
+    int len = 0;
 
     if (list->first != NULL) {
         dl_list_node *current_node = list->first;
-        length++;
+        len++;
 
         while (current_node->next != NULL) {
             current_node = current_node->next;
-            length++;
+            len++;
         }
     }
 
-    return length;
+    return len;
 }
 
 // insert at the end

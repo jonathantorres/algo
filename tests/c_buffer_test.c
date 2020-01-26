@@ -8,7 +8,7 @@ char *test_create()
     assert(buf != NULL, "Buffer should not be NULL");
     assert(buf->start == 0, "Buffer's start should be at 0");
     assert(buf->end == 0, "Buffer's end should be at 0");
-    assert(buf->length == 10, "Buffer length should be 10");
+    assert(buf->len == 10, "Buffer len should be 10");
     assert(buf->buffer != NULL, "Buffer's buffer should not be NULL");
     c_buffer_free(buf);
 
@@ -22,7 +22,7 @@ char *test_clear()
     c_buffer_clear(buf);
     assert(buf->start == 0, "Buffer's start should be at 0");
     assert(buf->end == 0, "Buffer's end should be at 0");
-    assert(buf->length == 100, "Buffer length should be 100");
+    assert(buf->len == 100, "Buffer len should be 100");
     c_buffer_free(buf);
 
     return NULL;

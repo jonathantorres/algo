@@ -21,7 +21,7 @@ typedef int(*cl_list_cmp)(void *a, void *b);
 cl_list *cl_list_new();
 void cl_list_clear(cl_list *list);
 void cl_list_free(cl_list *list);
-int cl_list_length(cl_list *list);
+int cl_list_len(cl_list *list);
 void cl_list_push(cl_list *list, void *value);
 void cl_list_shift(cl_list *list, void *value);
 void *cl_list_unshift(cl_list *list);

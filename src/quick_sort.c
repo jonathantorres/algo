@@ -34,5 +34,5 @@ void _sort(array *_array, cmp_f cmp, unsigned int low, unsigned int hi)
 
 void quick_sort(array *_array, cmp_f cmp)
 {
-    _sort(_array, cmp, 0, _array->length - 1);
+    _sort(_array, cmp, 0, _array->len - 1);
 }

@@ -60,12 +60,12 @@ void stack_clear(stack *_stack)
     dl_list_clear(_stack);
 }
 
-int stack_length(stack *_stack)
+int stack_len(stack *_stack)
 {
     if (!_stack) {
         fputs("Must provide a valid stack.", stderr);
         return 0;
     }
 
-    return dl_list_length(_stack);
+    return dl_list_len(_stack);
 }

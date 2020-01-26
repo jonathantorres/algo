@@ -6,7 +6,7 @@
 #include <string.h>
 
 typedef struct array {
-    unsigned int length;
+    unsigned int len;
     unsigned int capacity;
     unsigned int expand_rate;
     size_t item_size;
@@ -32,6 +32,6 @@ void *array_unshift(array *_array);
     // you can use the variable "i" which contains the current index
     // you'll have to assign the current element to a variable to use it
 // }
-#define ARRAY_FOREACH(array) for (unsigned int i = 0; i < (array)->length; i++)
+#define ARRAY_FOREACH(array) for (unsigned int i = 0; i < (array)->len; i++)
 
 #endif

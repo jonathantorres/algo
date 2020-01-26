@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include "trie.h"
 
-#define PATHS_LENGTH 26
+#define PATHS_LEN 26
 
 static void *_trie_create_node(void *value)
 {
@@ -13,13 +13,13 @@ static void *_trie_create_node(void *value)
         return NULL;
     }
 
-    array *paths = array_new(PATHS_LENGTH, sizeof(trie_node*));
+    array *paths = array_new(PATHS_LEN, sizeof(trie_node*));
     if (!paths) {
         free(node);
         return NULL;
     }
 
-    paths->length = paths->capacity;
+    paths->len = paths->capacity;
     node->value = value;
     node->paths = paths;
 
@@ -28,7 +28,7 @@ static void *_trie_create_node(void *value)
 
 static void _trie_free_node(trie_node *node)
 {
-    // for (unsigned int i = 0; i < node->paths->length; i++) {
+    // for (unsigned int i = 0; i < node->paths->len; i++) {
     //     void *item = array_get(node->paths, i);
     //     if (item) {
     //         free(item);
@@ -43,7 +43,7 @@ static void _trie_free_nodes(trie_node *node)
 {
     trie_node *curr_node = NULL;
 
-    for (unsigned int i = 0; i < node->paths->length; i++) {
+    for (unsigned int i = 0; i < node->paths->len; i++) {
         curr_node = array_get(node->paths, i);
         if (curr_node) {
             // we reached the end

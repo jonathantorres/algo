@@ -12,7 +12,7 @@ p_queue *make_heap(array *_array, cmp_f cmp)
     if (!queue) {
         return NULL;
     }
-    for (unsigned int i = 0; i < _array->length; i++) {
+    for (unsigned int i = 0; i < _array->len; i++) {
         p_queue_insert(queue, array_get(_array, i));
     }
     return queue;

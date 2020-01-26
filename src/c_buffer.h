@@ -7,13 +7,13 @@
 
 typedef struct c_buffer {
     char *buffer;
-    unsigned int length;
+    unsigned int len;
     unsigned int start;
     unsigned int end;
 } c_buffer;
 
 // create a new buffer
-void *c_buffer_new(unsigned int length);
+void *c_buffer_new(unsigned int len);
 // clear the contents of the buffer
 void c_buffer_clear(c_buffer *buffer);
 // free the buffer

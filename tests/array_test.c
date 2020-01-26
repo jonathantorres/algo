@@ -34,7 +34,7 @@ char *test_create()
 {
     array *_array = array_new(10, sizeof(int*));
 
-    assert(_array->length == 0, "Array length should be 0");
+    assert(_array->len == 0, "Array len should be 0");
     assert(_array->capacity == 10, "Array capacity should be 10");
     assert(_array->expand_rate == 100, "Array expand_rate should be 100");
     assert(_array->item_size == sizeof(int*), "Array item_size is not correct, it should be sizeof(int*)");
@@ -57,7 +57,7 @@ char *test_destroy()
         }
     }
 
-    assert(_array->length == 100, "Array length must be 100");
+    assert(_array->len == 100, "Array len must be 100");
     assert(_array->capacity == 200, "Array capacity must be 200");
     assert(_array->contents != NULL, "Array contents should not be NULL");
 
@@ -85,7 +85,7 @@ char *test_clear()
         }
     }
 
-    assert(_array->length == 100, "Array length must be 100");
+    assert(_array->len == 100, "Array len must be 100");
     assert(_array->capacity == 200, "Array capacity should be 200");
     assert(_array->contents != NULL, "Array contents should not be NULL");
 
@@ -97,7 +97,7 @@ char *test_clear()
     }
 
     array_clear(_array);
-    assert(_array->length == 0, "Array length must be 0");
+    assert(_array->len == 0, "Array len must be 0");
     array_free(_array);
 
     return NULL;
@@ -116,7 +116,7 @@ char *test_push()
     }
 
     assert(_array->capacity == 110, "Array capacity should be 110");
-    assert(_array->length == 100, "Array length should be 100");
+    assert(_array->len == 100, "Array len should be 100");
     assert(_array->contents != NULL, "Array contents should not be NULL");
 
     for (unsigned int i = 0; i < 100; i++) {
@@ -143,10 +143,10 @@ char *test_pop()
         }
     }
 
-    assert(_array->length == 5, "Array length should be 5");
+    assert(_array->len == 5, "Array len should be 5");
     int *last_num = array_pop(_array);
     assert(*last_num == 20, "Last element's value should be 20");
-    assert(_array->length == 4, "Array length should be 4");
+    assert(_array->len == 4, "Array len should be 4");
     assert(_array->contents != NULL, "Array contents should not be NULL");
 
     for (unsigned int i = 0; i < 4; i++) {
@@ -174,7 +174,7 @@ char *test_set()
     }
 
     assert(_array->capacity == 10, "Array capacity should be 10");
-    assert(_array->length == 5, "Array length should be 5");
+    assert(_array->len == 5, "Array len should be 5");
     assert(_array->contents != NULL, "Array contents should not be NULL");
 
     for (unsigned int i = 0; i < 5; i++) {
@@ -228,10 +228,10 @@ char *test_remove()
         }
     }
 
-    assert(_array->length == 5, "Array length should be 5");
+    assert(_array->len == 5, "Array len should be 5");
     int *number = array_remove(_array, 1);
     assert(*number == 5, "Element's value should be 5");
-    assert(_array->length == 4, "Array length should be 4");
+    assert(_array->len == 4, "Array len should be 4");
 
     for (unsigned int i = 0; i < 4; i++) {
         int *val = array_get(_array, i);
@@ -257,7 +257,7 @@ char *test_shift()
         }
     }
 
-    assert(_array->length == 5, "Array length should be 5");
+    assert(_array->len == 5, "Array len should be 5");
     int *new_value = malloc(sizeof(int));
     if (new_value != NULL) {
         *new_value = 200;
@@ -265,7 +265,7 @@ char *test_shift()
     }
     int *val = array_get(_array, 0);
     assert(*val == 200, "Value of new element should be 200");
-    assert(_array->length == 6, "Array length should be 6");
+    assert(_array->len == 6, "Array len should be 6");
 
     for (unsigned int i = 0; i < 6; i++) {
         int *val = array_get(_array, i);
@@ -290,10 +290,10 @@ char *test_unshift()
         }
     }
 
-    assert(_array->length == 5, "Array length should be 5");
+    assert(_array->len == 5, "Array len should be 5");
     int *first_num = array_unshift(_array);
     assert(*first_num == 0, "Value of removed element should be 0");
-    assert(_array->length == 4, "Array length should be 4");
+    assert(_array->len == 4, "Array len should be 4");
 
     for (unsigned int i = 0; i < 4; i++) {
         int *val = array_get(_array, i);
@@ -327,13 +327,13 @@ char *test_array_of_strings()
     }
 
     assert(_array->contents != NULL, "Array contents should not be NULL");
-    assert(_array->length == 5, "Array length should be 5");
+    assert(_array->len == 5, "Array len should be 5");
     char *last = array_pop(_array);
     assert(strcmp(last, strings[4]) == 0, "Strings 'again' should be equal");
-    assert(_array->length == 4, "Array length should be 4");
+    assert(_array->len == 4, "Array len should be 4");
     char *first = array_unshift(_array);
     assert(strcmp(first, strings[0]) == 0, "Strings 'foo' should be equal");
-    assert(_array->length == 3, "Array length should be 3");
+    assert(_array->len == 3, "Array len should be 3");
 
     for (unsigned int i = 0; i < 3; i++) {
         char *val = array_get(_array, i);
@@ -358,13 +358,13 @@ char *test_array_stack_items()
     array_push(_array, "George");
 
     assert(_array->contents != NULL, "Array contents should not be NULL");
-    assert(_array->length == 3, "Array length should be 3");
+    assert(_array->len == 3, "Array len should be 3");
     char *last = array_pop(_array);
     assert(strcmp(last, "George") == 0, "String 'George' should be equal");
-    assert(_array->length == 2, "Array length should be 2");
+    assert(_array->len == 2, "Array len should be 2");
     char *first = array_unshift(_array);
     assert(strcmp(first, "John") == 0, "String 'John' should be equal");
-    assert(_array->length == 1, "Array length should be 1");
+    assert(_array->len == 1, "Array len should be 1");
     array_free(_array);
 
     return NULL;
@@ -386,7 +386,7 @@ char *test_array_struct_pointers()
 
     array_push(_array, p);
     assert(_array->contents != NULL, "Array contents should not be NULL");
-    assert(_array->length == 1, "Array length should be 1");
+    assert(_array->len == 1, "Array len should be 1");
     person_dum_t *per = array_get(_array, 0);
     assert(strcmp(per->first_name, "Jonathan") == 0, "String 'Jonathan' should be equal");
 

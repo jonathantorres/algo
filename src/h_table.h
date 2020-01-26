@@ -36,10 +36,10 @@ bool h_table_traverse(h_table *_h_table, h_table_node_cb cb);
 // } H_TABLE_FOREACH_END
 #define H_TABLE_FOREACH(h_table) \
     if ((h_table)->buckets) { \
-        for (unsigned int i = 0; i < (h_table)->buckets->length; i++) { \
+        for (unsigned int i = 0; i < (h_table)->buckets->len; i++) { \
             array *bucket = array_get((h_table)->buckets, i); \
             if (bucket) { \
-                for (unsigned int j = 0; j < bucket->length; j++) { \
+                for (unsigned int j = 0; j < bucket->len; j++) { \
                     h_table_node *elem = array_get(bucket, j); \
                     if (elem)
 

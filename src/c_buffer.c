@@ -2,10 +2,10 @@
 
 unsigned int _c_buffer_available_data(c_buffer *buffer)
 {
-    return buffer->end % buffer->length - buffer->start;
+    return buffer->end % buffer->len - buffer->start;
 }
 
-void *c_buffer_new(unsigned int length)
+void *c_buffer_new(unsigned int len)
 {
     c_buffer *buffer = malloc(sizeof(c_buffer));
 
@@ -14,10 +14,10 @@ void *c_buffer_new(unsigned int length)
         return NULL;
     }
 
-    buffer->length = length;
+    buffer->len = len;
     buffer->start = 0;
     buffer->end = 0;
-    buffer->buffer = malloc(buffer->length);
+    buffer->buffer = malloc(buffer->len);
 
     if (!buffer->buffer) {
         fputs("Not enough memory.", stderr);
@@ -36,7 +36,7 @@ void c_buffer_clear(c_buffer *buffer)
 
     if (buffer->buffer) {
         free(buffer->buffer);
-        buffer->buffer = malloc(buffer->length);
+        buffer->buffer = malloc(buffer->len);
 
         if (!buffer->buffer) {
             fputs("Not enough memory.", stderr);
@@ -73,7 +73,7 @@ int c_buffer_write(c_buffer *buffer, char *data, unsigned int amount)
     }
 
     // not enough space
-    if (buffer->length - buffer->end < amount) {
+    if (buffer->len - buffer->end < amount) {
         return -1;
     }
 
@@ -82,7 +82,7 @@ int c_buffer_write(c_buffer *buffer, char *data, unsigned int amount)
         return -1;
     }
 
-    buffer->end = buffer->end + amount % buffer->length;
+    buffer->end = buffer->end + amount % buffer->len;
 
     return amount;
 }
@@ -103,7 +103,7 @@ int c_buffer_read(c_buffer *buffer, char *target, unsigned int amount)
         return -1;
     }
 
-    buffer->start = buffer->start + amount % buffer->length;
+    buffer->start = buffer->start + amount % buffer->len;
 
     if (buffer->start == buffer->end) {
         buffer->start = 0;

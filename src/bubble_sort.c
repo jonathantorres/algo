@@ -10,10 +10,10 @@ void bubble_sort(array *_array, cmp_f cmp)
     }
 
     int swapped = 0;
-    if (_array->length > 1) {
+    if (_array->len > 1) {
         do {
             swapped = 0;
-            for (unsigned int i = 1; i < _array->length; i++) {
+            for (unsigned int i = 1; i < _array->len; i++) {
                 if (cmp(array_get(_array, i - 1), array_get(_array, i)) > 0) {
                     void *tmp = array_get(_array, i);
                     array_set(_array, array_get(_array, i - 1), i);

@@ -4,9 +4,9 @@ void _split_merge(array *copy, unsigned int begin, unsigned int end, array *_arr
 
 void *_copy_array(array *_array)
 {
-    array *copy = array_new(_array->length, _array->item_size);
+    array *copy = array_new(_array->len, _array->item_size);
 
-    for (unsigned int i = 0; i < _array->length; i++) {
+    for (unsigned int i = 0; i < _array->len; i++) {
         array_push(copy, array_get(_array, i));
     }
 
@@ -44,5 +44,5 @@ void _split_merge(array *copy, unsigned int begin, unsigned int end, array *_arr
 void merge_sort(array *_array, cmp_f cmp)
 {
     array *copy = _copy_array(_array);
-    _split_merge(copy, 0, _array->length, _array, cmp);
+    _split_merge(copy, 0, _array->len, _array, cmp);
 }

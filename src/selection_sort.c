@@ -8,9 +8,9 @@ void selection_sort(array *_array, cmp_f cmp)
         return;
     }
 
-    for (unsigned int j = 0; j < _array->length - 1; j++) {
+    for (unsigned int j = 0; j < _array->len - 1; j++) {
         unsigned int min = j;
-        for (unsigned int i = j + 1; i < _array->length; i++) {
+        for (unsigned int i = j + 1; i < _array->len; i++) {
             if (cmp(array_get(_array, i), array_get(_array, min)) < 0) {
                 min = i;
             }

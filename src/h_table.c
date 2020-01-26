@@ -51,7 +51,7 @@ h_table *h_table_new(h_table_compare cmp)
 
     _h_table->cmp = cmp;
     _h_table->buckets = array_new(NUM_OF_BUCKETS, sizeof(array*));
-    _h_table->buckets->length = _h_table->buckets->capacity;
+    _h_table->buckets->len = _h_table->buckets->capacity;
 
     return _h_table;
 }
@@ -64,10 +64,10 @@ void h_table_free(h_table *_h_table)
     }
 
     if (_h_table->buckets) {
-        for (unsigned int i = 0; i < _h_table->buckets->length; i++) {
+        for (unsigned int i = 0; i < _h_table->buckets->len; i++) {
             array *bucket = array_get(_h_table->buckets, i);
             if (bucket) {
-                for (unsigned int j = 0; j < bucket->length; j++) {
+                for (unsigned int j = 0; j < bucket->len; j++) {
                     h_table_node *elem = array_get(bucket, j);
                     if (elem) {
                         if (elem->key) {
@@ -131,7 +131,7 @@ void *h_table_get(h_table *_h_table, void *key)
         return NULL;
     }
 
-    for (unsigned int i = 0; i < bucket->length; i++) {
+    for (unsigned int i = 0; i < bucket->len; i++) {
         h_table_node *node = array_get(bucket, i);
         if (node && node->hash == bucket_hash && _h_table->cmp(node->key, key) == 0) {
             return node->value;
@@ -155,7 +155,7 @@ void *h_table_remove(h_table *_h_table, void *key)
         return value;
     }
 
-    for (unsigned int i = 0; i < bucket->length; i++) {
+    for (unsigned int i = 0; i < bucket->len; i++) {
         h_table_node *node = array_get(bucket, i);
         if (node && node->hash == bucket_hash && _h_table->cmp(node->key, key) == 0) {
             value = node->value;
@@ -180,10 +180,10 @@ bool h_table_traverse(h_table *_h_table, h_table_node_cb cb)
     }
     unsigned int traverse_ok = false;
 
-    for (unsigned int i = 0; i < _h_table->buckets->length; i++) {
+    for (unsigned int i = 0; i < _h_table->buckets->len; i++) {
         array *bucket = array_get(_h_table->buckets, i);
         if (bucket) {
-            for (unsigned int j = 0; j < bucket->length; j++) {
+            for (unsigned int j = 0; j < bucket->len; j++) {
                 h_table_node *node = array_get(bucket, j);
                 if (node) {
                     if (cb(node)) {

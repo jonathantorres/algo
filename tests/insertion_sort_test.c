@@ -12,7 +12,7 @@ void array_print(array *_array, char type)
     }
 
     printf("[");
-    for (unsigned int i = 0; i < _array->length; i++) {
+    for (unsigned int i = 0; i < _array->len; i++) {
         void *val = NULL;
         switch (type) {
             case 'i':
@@ -54,7 +54,7 @@ char *test_insertion_sort()
 
     insertion_sort(_array, cmp_int);
     // make sure it's sorted
-    for (unsigned int i = 1; i < _array->length; i++) {
+    for (unsigned int i = 1; i < _array->len; i++) {
         void *val1 = array_get(_array, i - 1);
         void *val2 = array_get(_array, i);
         assert(cmp_int(val1, val2) < 0, "Array is not sorted");

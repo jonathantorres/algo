@@ -60,12 +60,12 @@ void queue_clear(queue *_queue)
     dl_list_clear(_queue);
 }
 
-int queue_length(queue *_queue)
+int queue_len(queue *_queue)
 {
     if (!_queue) {
         fputs("Must provide a valid queue.", stderr);
         return 0;
     }
 
-    return dl_list_length(_queue);
+    return dl_list_len(_queue);
 }

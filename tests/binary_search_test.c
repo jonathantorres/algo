@@ -12,7 +12,7 @@ void array_print(array *_array, char type)
     }
 
     printf("[");
-    for (unsigned int i = 0; i < _array->length; i++) {
+    for (unsigned int i = 0; i < _array->len; i++) {
         void *val = NULL;
         switch (type) {
             case 'i':

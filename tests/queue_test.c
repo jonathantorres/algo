@@ -24,7 +24,7 @@ char *test_new()
     queue *_queue = queue_new();
 
     assert(_queue != NULL, "Failed creating the queue");
-    assert(queue_length(_queue) == 0, "The queue should have 0 nodes");
+    assert(queue_len(_queue) == 0, "The queue should have 0 nodes");
     queue_free(_queue);
 
     return NULL;
@@ -45,7 +45,7 @@ char *test_enqueue()
     queue_enqueue(_queue, mar);
 
     assert(queue_peek(_queue) == john, "John must be the top item in the queue");
-    assert(queue_length(_queue) == 4, "Length of the queue must be 4");
+    assert(queue_len(_queue) == 4, "len of the queue must be 4");
     queue_free(_queue);
 
     return NULL;
@@ -71,7 +71,7 @@ char *test_clear()
     queue_enqueue(_queue, "two");
     queue_enqueue(_queue, "three");
     queue_clear(_queue);
-    assert(queue_length(_queue) == 0, "queue length must be 0");
+    assert(queue_len(_queue) == 0, "queue len must be 0");
     queue_free(_queue);
 
     return NULL;
@@ -90,9 +90,9 @@ char *test_dequeue()
     queue_enqueue(_queue, two);
     queue_enqueue(_queue, three);
 
-    assert(queue_length(_queue) == 4, "queue length must be 4");
+    assert(queue_len(_queue) == 4, "queue len must be 4");
     char *value = (char*) queue_dequeue(_queue);
-    assert(queue_length(_queue) == 3, "queue length must be 3");
+    assert(queue_len(_queue) == 3, "queue len must be 3");
     assert(strcmp(zero, value) == 0, "queue value should be equal");
     queue_free(_queue);
 
@@ -118,7 +118,7 @@ char *test_peek()
     return NULL;
 }
 
-char *test_length()
+char *test_len()
 {
     queue *_queue = queue_new();
 
@@ -131,7 +131,7 @@ char *test_length()
     queue_enqueue(_queue, luis);
     queue_enqueue(_queue, chris);
     queue_enqueue(_queue, mar);
-    assert(queue_length(_queue) == 4, "Length of queue should be 4");
+    assert(queue_len(_queue) == 4, "len of queue should be 4");
     queue_free(_queue);
 
     return NULL;
@@ -146,7 +146,7 @@ int main()
     run_test(test_enqueue);
     run_test(test_dequeue);
     run_test(test_peek);
-    run_test(test_length);
+    run_test(test_len);
     end_tests();
 
     return 0;
