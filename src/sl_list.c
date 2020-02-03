@@ -15,11 +15,14 @@ sl_list_node *_sl_list_create_node(void *value)
     return node;
 }
 
-void _sl_list_free_node(sl_list_node *node)
+void _sl_list_free_node(sl_list_node *node, sl_list_free_cb cb)
 {
     if (!node) {
         fputs("A valid node must be provided.", stderr);
         return;
+    }
+    if (cb) {
+        cb(node->value);
     }
 
     node->next = NULL;
@@ -42,7 +45,7 @@ sl_list *sl_list_new()
     return new_list;
 }
 
-void sl_list_clear(sl_list *list)
+void sl_list_clear(sl_list *list, sl_list_free_cb cb)
 {
     if (list->first != NULL) {
         sl_list_node *current_node = list->first;
@@ -53,26 +56,26 @@ void sl_list_clear(sl_list *list)
             current_node = current_node->next;
 
             if (prev_node) {
-                _sl_list_free_node(prev_node);
+                _sl_list_free_node(prev_node, cb);
             }
         }
 
         if (current_node) {
-            _sl_list_free_node(current_node);
+            _sl_list_free_node(current_node, cb);
         }
 
         list->first = NULL;
     }
 }
 
-void sl_list_free(sl_list *list)
+void sl_list_free(sl_list *list, sl_list_free_cb cb)
 {
     if (!list) {
         fputs("Must provide a sl_list.", stderr);
         return;
     }
 
-    sl_list_clear(list);
+    sl_list_clear(list, cb);
     free(list);
 }
 
@@ -213,7 +216,7 @@ void *sl_list_pop(sl_list *list)
 }
 
 // remove node whose value is {value}
-void sl_list_remove(sl_list *list, void *value, sl_list_cmp cmp)
+void sl_list_remove(sl_list *list, void *value, sl_list_cmp cmp, sl_list_free_cb cb)
 {
     if (!list) {
         fputs("Must provide a valid sl_list.", stderr);
@@ -230,9 +233,8 @@ void sl_list_remove(sl_list *list, void *value, sl_list_cmp cmp)
         void *node_value = list->first->value;
 
         if (cmp(node_value, value) == 0) {
-            sl_list_pop(list);
+            _sl_list_free_node(list->first, cb);
         }
-
         return;
     }
 
@@ -243,7 +245,7 @@ void sl_list_remove(sl_list *list, void *value, sl_list_cmp cmp)
     if (cmp(current_node->value, value) == 0) {
         sl_list_node *next_node = current_node->next;
         list->first = next_node;
-        _sl_list_free_node(current_node);
+        _sl_list_free_node(current_node, cb);
         return;
     }
 
@@ -254,7 +256,7 @@ void sl_list_remove(sl_list *list, void *value, sl_list_cmp cmp)
         if (cmp(current_node->value, value) == 0) {
             // remove the node
             prev_node->next = current_node->next;
-            _sl_list_free_node(current_node);
+            _sl_list_free_node(current_node, cb);
             break;
         }
     }

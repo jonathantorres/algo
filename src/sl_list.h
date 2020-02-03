@@ -16,16 +16,17 @@ typedef struct sl_list {
 } sl_list;
 
 typedef int(*sl_list_cmp)(void *a, void *b);
+typedef void(*sl_list_free_cb)(void *value);
 
 sl_list *sl_list_new();
-void sl_list_clear(sl_list *list);
-void sl_list_free(sl_list *list);
+void sl_list_clear(sl_list *list, sl_list_free_cb cb);
+void sl_list_free(sl_list *list, sl_list_free_cb cb);
 int sl_list_len(sl_list *list);
 void sl_list_push(sl_list *list, void *value);
 void sl_list_shift(sl_list *list, void *value);
 void *sl_list_unshift(sl_list *list);
 void *sl_list_pop(sl_list *list);
-void sl_list_remove(sl_list *list, void *value, sl_list_cmp cmp);
+void sl_list_remove(sl_list *list, void *value, sl_list_cmp cmp, sl_list_free_cb cb);
 bool sl_list_exists(sl_list *list, void *value, sl_list_cmp cmp);
 
 // Macro usage:
