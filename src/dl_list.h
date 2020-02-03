@@ -16,16 +16,17 @@ typedef struct dl_list {
 } dl_list;
 
 typedef int(*dl_list_cmp)(void *a, void *b);
+typedef void(*dl_list_free_cb)(void *value);
 
 dl_list *dl_list_new();
-void dl_list_clear(dl_list *list);
-void dl_list_free(dl_list *list);
+void dl_list_clear(dl_list *list, dl_list_free_cb cb);
+void dl_list_free(dl_list *list, dl_list_free_cb cb);
 int dl_list_len(dl_list *list);
 void dl_list_push(dl_list *list, void *value);
 void dl_list_shift(dl_list *list, void *value);
 void *dl_list_unshift(dl_list *list);
 void *dl_list_pop(dl_list *list);
-void dl_list_remove(dl_list *list, void *value, dl_list_cmp cmp);
+void dl_list_remove(dl_list *list, void *value, dl_list_cmp cmp, dl_list_free_cb cb);
 bool dl_list_exists(dl_list *list, void *value, dl_list_cmp cmp);
 
 // Macro usage:
