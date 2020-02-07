@@ -40,20 +40,20 @@ array *array_new(unsigned int capacity, size_t item_size)
 }
 
 // empties and frees the array completely
-void array_free(array *_array)
+void array_free(array *_array, array_free_cb cb)
 {
     if (!_array) {
         fputs("[array_destroy] Must provide an array.", stderr);
         return;
     }
 
-    array_clear(_array);
+    array_clear(_array, cb);
     free(_array->contents);
     free(_array);
 }
 
 // removes all the elements on the array, leaving it empty
-void array_clear(array *_array)
+void array_clear(array *_array, array_free_cb cb)
 {
     if (!_array) {
         fputs("[array_clear] Must provide an array.", stderr);
@@ -64,6 +64,9 @@ void array_clear(array *_array)
 
     for (unsigned int i = 0; i < array_len; i++) {
         if (_array->contents[i]) {
+            if (cb) {
+                cb(_array->contents[i]);
+            }
             _array->contents[i] = NULL;
         }
         _array->len--;

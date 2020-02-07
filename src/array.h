@@ -13,9 +13,11 @@ typedef struct array {
     void **contents;
 } array;
 
+typedef void(*array_free_cb)(void *value);
+
 array *array_new(unsigned int capacity, size_t item_size);
-void array_free(array *_array);
-void array_clear(array *_array);
+void array_free(array *_array, array_free_cb cb);
+void array_clear(array *_array, array_free_cb cb);
 void array_push(array *_array, void *value);
 void *array_pop(array *_array);
 void array_set(array *_array, void *elem, unsigned int index);
