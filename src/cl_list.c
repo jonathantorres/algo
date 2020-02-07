@@ -16,11 +16,14 @@ cl_list_node *_cl_list_create_node(void *value)
     return node;
 }
 
-void _cl_list_free_node(cl_list_node *node)
+void _cl_list_free_node(cl_list_node *node, cl_list_free_cb cb)
 {
     if (!node) {
         fputs("A valid node must be provided.", stderr);
         return;
+    }
+    if (cb) {
+        cb(node->value);
     }
 
     node->prev = NULL;
@@ -47,7 +50,7 @@ cl_list *cl_list_new()
 }
 
 // remove all the values in the list
-void cl_list_clear(cl_list *list)
+void cl_list_clear(cl_list *list, cl_list_free_cb cb)
 {
     if (list->first != NULL) {
         cl_list_node *current_node = list->first;
@@ -56,12 +59,12 @@ void cl_list_clear(cl_list *list)
             current_node = current_node->next;
 
             if (current_node->prev) {
-                _cl_list_free_node(current_node->prev);
+                _cl_list_free_node(current_node->prev, cb);
             }
         }
 
         if (current_node) {
-            _cl_list_free_node(current_node);
+            _cl_list_free_node(current_node, cb);
         }
 
         list->first = NULL;
@@ -70,14 +73,14 @@ void cl_list_clear(cl_list *list)
 }
 
 // destroy the list
-void cl_list_free(cl_list *list)
+void cl_list_free(cl_list *list, cl_list_free_cb cb)
 {
     if (!list) {
         fputs("Must provide a cl_list.", stderr);
         return;
     }
 
-    cl_list_clear(list);
+    cl_list_clear(list, cb);
     free(list);
 }
 
@@ -170,7 +173,7 @@ void *cl_list_unshift(cl_list *list)
     // list has just 1 node
     if (list->first == list->last) {
         void *value = list->first->value;
-        _cl_list_free_node(list->first);
+        _cl_list_free_node(list->first, NULL);
 
         list->first = NULL;
         list->last = NULL;
@@ -181,7 +184,7 @@ void *cl_list_unshift(cl_list *list)
     cl_list_node *new_first = list->first->next;
     void *value = list->first->value;
 
-    _cl_list_free_node(list->first);
+    _cl_list_free_node(list->first, NULL);
     new_first->prev = list->last;
     list->first = new_first;
 
@@ -204,7 +207,7 @@ void *cl_list_pop(cl_list *list)
     // list has just 1 node
     if (list->first == list->last) {
         void *value = list->first->value;
-        _cl_list_free_node(list->first);
+        _cl_list_free_node(list->first, NULL);
         list->first = NULL;
         list->last = NULL;
 
@@ -220,13 +223,13 @@ void *cl_list_pop(cl_list *list)
     void *value = current_node->value;
     current_node->prev->next = list->first;
     list->last = current_node->prev;
-    _cl_list_free_node(current_node);
+    _cl_list_free_node(current_node, NULL);
 
     return value;
 }
 
 // remove node whose value is {value}
-void cl_list_remove(cl_list *list, void *value, cl_list_cmp cmp)
+void cl_list_remove(cl_list *list, void *value, cl_list_cmp cmp, cl_list_free_cb cb)
 {
     if (!list) {
         fputs("Must provide a valid cl_list.", stderr);
@@ -243,7 +246,7 @@ void cl_list_remove(cl_list *list, void *value, cl_list_cmp cmp)
         void *node_value = list->first->value;
 
         if (cmp(node_value, value) == 0) {
-            cl_list_pop(list);
+            _cl_list_free_node(list->first, cb);
         }
 
         return;
@@ -256,7 +259,7 @@ void cl_list_remove(cl_list *list, void *value, cl_list_cmp cmp)
         cl_list_node *next_node = current_node->next;
         next_node->prev = list->last;
         list->first = next_node;
-        _cl_list_free_node(current_node);
+        _cl_list_free_node(current_node, cb);
         return;
     }
 
@@ -267,7 +270,7 @@ void cl_list_remove(cl_list *list, void *value, cl_list_cmp cmp)
             // remove the node
             current_node->prev->next = current_node->next;
             current_node->next->prev = current_node->prev;
-            _cl_list_free_node(current_node);
+            _cl_list_free_node(current_node, cb);
             break;
         }
     }

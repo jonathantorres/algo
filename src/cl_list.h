@@ -17,16 +17,17 @@ typedef struct cl_list {
 } cl_list;
 
 typedef int(*cl_list_cmp)(void *a, void *b);
+typedef void(*cl_list_free_cb)(void *value);
 
 cl_list *cl_list_new();
-void cl_list_clear(cl_list *list);
-void cl_list_free(cl_list *list);
+void cl_list_clear(cl_list *list, cl_list_free_cb cb);
+void cl_list_free(cl_list *list, cl_list_free_cb cb);
 int cl_list_len(cl_list *list);
 void cl_list_push(cl_list *list, void *value);
 void cl_list_shift(cl_list *list, void *value);
 void *cl_list_unshift(cl_list *list);
 void *cl_list_pop(cl_list *list);
-void cl_list_remove(cl_list *list, void *value, cl_list_cmp cmp);
+void cl_list_remove(cl_list *list, void *value, cl_list_cmp cmp, cl_list_free_cb cb);
 bool cl_list_exists(cl_list *list, void *value, cl_list_cmp cmp);
 
 // Macro usage:

@@ -25,6 +25,13 @@ int cmp_func(void *a, void *b)
     return strcmp((char*) a, (char*) b);
 }
 
+void cl_list_free_func(void *value)
+{
+    if (value) {
+        free(value);
+    }
+}
+
 char *test_create()
 {
     cl_list *list = cl_list_new();
@@ -33,7 +40,7 @@ char *test_create()
     assert(cl_list_len(list) == 0, "List should have 0 nodes");
     assert(list->first == NULL, "First item in the list should be NULL");
     assert(list->last == NULL, "Last item in the list should be NULL");
-    cl_list_free(list);
+    cl_list_free(list, NULL);
 
     return NULL;
 }
@@ -55,7 +62,7 @@ char *test_push()
     assert(list->first->value == john, "John must be the first node in the list");
     assert(cl_list_len(list) == 4, "len of the list must be 4");
     assert(list->last->value == mar, "Marjorie must be the last node in the list");
-    cl_list_free(list);
+    cl_list_free(list, NULL);
 
     return NULL;
 }
@@ -67,7 +74,7 @@ char *test_destroy()
     cl_list_push(list, "one");
     cl_list_push(list, "two");
     cl_list_push(list, "three");
-    cl_list_free(list);
+    cl_list_free(list, NULL);
 
     return NULL;
 }
@@ -79,9 +86,9 @@ char *test_clear()
     cl_list_push(list, "one");
     cl_list_push(list, "two");
     cl_list_push(list, "three");
-    cl_list_clear(list);
+    cl_list_clear(list, NULL);
     assert(cl_list_len(list) == 0, "List len must be 0");
-    cl_list_free(list);
+    cl_list_free(list, NULL);
 
     return NULL;
 }
@@ -96,7 +103,7 @@ char *test_shift()
     assert(cl_list_len(list) == 3, "List len must be 3");
     cl_list_shift(list, "zero");
     assert(cl_list_len(list) == 4, "List len must be 4");
-    cl_list_free(list);
+    cl_list_free(list, NULL);
 
     return NULL;
 }
@@ -118,7 +125,7 @@ char *test_unshift()
     char *value = (char*) cl_list_unshift(list);
     assert(cl_list_len(list) == 3, "List len must be 3");
     assert(strcmp(zero, value) == 0, "List should be equal");
-    cl_list_free(list);
+    cl_list_free(list, NULL);
 
     return NULL;
 }
@@ -140,7 +147,7 @@ char *test_pop()
     char *value = (char*) cl_list_pop(list);
     assert(cl_list_len(list) == 3, "List len must be 3");
     assert(strcmp(three, value) == 0, "List should be equal");
-    cl_list_free(list);
+    cl_list_free(list, NULL);
 
     return NULL;
 }
@@ -154,13 +161,13 @@ char *test_remove()
     cl_list_push(list, "three");
 
     assert(cl_list_len(list) == 4, "List len must be 4");
-    cl_list_remove(list, "zero", cmp_func);
+    cl_list_remove(list, "zero", cmp_func, NULL);
     assert(cl_list_len(list) == 3, "List len must be 3");
-    cl_list_remove(list, "two", cmp_func);
+    cl_list_remove(list, "two", cmp_func, NULL);
     assert(cl_list_len(list) == 2, "List len must be 2");
-    cl_list_remove(list, "one", cmp_func);
+    cl_list_remove(list, "one", cmp_func, NULL);
     assert(cl_list_len(list) == 1, "List len must be 1");
-    cl_list_free(list);
+    cl_list_free(list, NULL);
 
     return NULL;
 }
@@ -180,7 +187,7 @@ char *test_exists()
     assert(cl_list_exists(list, "three", cmp_func) == true, "three should exist in the list");
     assert(cl_list_exists(list, "foo", cmp_func) == false, "foo shouldn't exist in the list");
     assert(cl_list_len(list) == 4, "List len must be 4");
-    cl_list_free(list);
+    cl_list_free(list, NULL);
 
     return NULL;
 }
@@ -193,7 +200,7 @@ char *test_len()
     cl_list_push(list, "two");
     cl_list_push(list, "three");
     assert(cl_list_len(list) == 4, "List len must be 4");
-    cl_list_free(list);
+    cl_list_free(list, NULL);
 
     return NULL;
 }
