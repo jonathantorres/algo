@@ -6,10 +6,11 @@
 #include "dl_list.h"
 
 typedef dl_list stack;
+typedef void(*stack_free_cb)(void *value);
 
 stack *stack_new();
-void stack_free(stack *_stack);
-void stack_clear(stack *_stack);
+void stack_free(stack *_stack, stack_free_cb cb);
+void stack_clear(stack *_stack, stack_free_cb cb);
 void stack_push(stack *_stack, void *value);
 void *stack_pop(stack *_stack);
 void *stack_peek(stack *_stack);

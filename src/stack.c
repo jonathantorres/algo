@@ -40,24 +40,24 @@ void *stack_peek(stack *_stack)
     return _stack->first->value;
 }
 
-void stack_free(stack *_stack)
+void stack_free(stack *_stack, stack_free_cb cb)
 {
     if (!_stack) {
         fputs("Must provide a valid stack.", stderr);
         return;
     }
 
-    dl_list_free(_stack);
+    dl_list_free(_stack, cb);
 }
 
-void stack_clear(stack *_stack)
+void stack_clear(stack *_stack, stack_free_cb cb)
 {
     if (!_stack) {
         fputs("Must provide a valid stack.", stderr);
         return;
     }
 
-    dl_list_clear(_stack);
+    dl_list_clear(_stack, cb);
 }
 
 int stack_len(stack *_stack)

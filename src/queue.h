@@ -6,10 +6,11 @@
 #include "dl_list.h"
 
 typedef dl_list queue;
+typedef void(*queue_free_cb)(void *value);
 
 queue *queue_new();
-void queue_free(queue *_queue);
-void queue_clear(queue *_queue);
+void queue_free(queue *_queue, queue_free_cb cb);
+void queue_clear(queue *_queue, queue_free_cb cb);
 void queue_enqueue(queue *_queue, void *value);
 void *queue_dequeue(queue *_queue);
 void *queue_peek(queue *_queue);

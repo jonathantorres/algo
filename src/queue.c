@@ -40,24 +40,24 @@ void *queue_peek(queue *_queue)
     return _queue->first->value;
 }
 
-void queue_free(queue *_queue)
+void queue_free(queue *_queue, queue_free_cb cb)
 {
     if (!_queue) {
         fputs("Must provide a valid queue.", stderr);
         return;
     }
 
-    dl_list_free(_queue);
+    dl_list_free(_queue, cb);
 }
 
-void queue_clear(queue *_queue)
+void queue_clear(queue *_queue, queue_free_cb cb)
 {
     if (!_queue) {
         fputs("Must provide a valid queue.", stderr);
         return;
     }
 
-    dl_list_clear(_queue);
+    dl_list_clear(_queue, cb);
 }
 
 int queue_len(queue *_queue)
