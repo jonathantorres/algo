@@ -60,7 +60,7 @@ char *test_merge_sort()
         assert(cmp_int(val1, val2) < 0, "Array is not sorted");
     }
 
-    array_free(_array);
+    array_free(_array, NULL);
 
     return NULL;
 }

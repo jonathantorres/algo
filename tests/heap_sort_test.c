@@ -66,7 +66,7 @@ char *test_heap_sort()
         assert(cmp_int(a, b) <= 0, "Array is not sorted");
     }
 
-    array_free(_array);
+    array_free(_array, NULL);
 
     return NULL;
 }

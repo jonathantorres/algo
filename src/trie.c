@@ -35,7 +35,7 @@ static void _trie_free_node(trie_node *node)
     //     }
     // }
     // free(node->paths);
-    array_free(node->paths);
+    array_free(node->paths, NULL);
     free(node);
 }
 

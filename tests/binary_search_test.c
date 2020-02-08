@@ -55,7 +55,7 @@ char *test_binary_search_found()
 
     assert(*(int*)found == 30, "The found item should have been the number 30");
     assert(found != NULL, "The found item should not be NULL");
-    array_free(_array);
+    array_free(_array, NULL);
 
     return NULL;
 }
@@ -74,7 +74,7 @@ char *test_binary_search_not_found()
     void *found = binary_search(_array, &search_for, cmp_int);
 
     assert(found == NULL, "The found item should be NULL");
-    array_free(_array);
+    array_free(_array, NULL);
 
     return NULL;
 }
