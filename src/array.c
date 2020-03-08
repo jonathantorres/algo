@@ -229,3 +229,25 @@ void *array_unshift(array *_array)
 
     return element;
 }
+
+void array_swap(array *_array, unsigned int a, unsigned int b)
+{
+    if (!_array) {
+        fputs("[array_swap] Must provide an array.", stderr);
+        return;
+    }
+    if (a == b) {
+        return;
+    }
+    if (a > _array->len-1 || b > _array->len-1) {
+        return;
+    }
+
+    void *a_tmp = array_get(_array, a);
+    void *b_tmp = array_get(_array, b);
+    if (!a_tmp || !b_tmp) {
+        return;
+    }
+    array_set(_array, b_tmp, a);
+    array_set(_array, a_tmp, b);
+}

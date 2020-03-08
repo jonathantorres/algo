@@ -329,6 +329,30 @@ char *test_array_struct_pointers()
     return NULL;
 }
 
+char *test_array_swap()
+{
+    array *_array = array_new(10, sizeof(int*));
+
+    for (unsigned int i = 0; i < 5; i++) {
+        int *value = malloc(sizeof(int));
+        if (value != NULL) {
+            *value = i * 5;
+            array_push(_array, value);
+        }
+    }
+
+    assert(_array->len == 5, "Array len should be 5");
+    assert(*(int*)array_get(_array, 0) == 0, "Index 0 of array should be zero");
+    assert(*(int*)array_get(_array, 1) == 5, "Index 0 of array should be five");
+    array_swap(_array, 0, 1);
+    assert(*(int*)array_get(_array, 0) == 5, "Index 0 of array should be five");
+    assert(*(int*)array_get(_array, 1) == 0, "Index 0 of array should be zero");
+    assert(_array->len == 5, "Array len should be 5");
+    array_free(_array, array_free_cb_func);
+
+    return NULL;
+}
+
 int main()
 {
     start_tests("array tests");
@@ -345,6 +369,7 @@ int main()
     run_test(test_array_of_strings);
     run_test(test_array_stack_items);
     run_test(test_array_struct_pointers);
+    run_test(test_array_swap);
     end_tests();
 
     return 0;

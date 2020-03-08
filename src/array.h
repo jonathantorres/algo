@@ -25,8 +25,7 @@ void *array_get(array *_array, unsigned int index);
 void *array_remove(array *_array, unsigned int index);
 void array_shift(array *_array, void *value);
 void *array_unshift(array *_array);
-
-// TODO: function to sort contents
+void array_swap(array *_array, unsigned int a, unsigned int b);
 
 // Macro usage:
 // ARRAY_FOREACH(array) {
