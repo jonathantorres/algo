@@ -1,8 +1,8 @@
+#include "unittest.h"
+#include "ts_tree.h"
 #include <string.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include "unittest.h"
-#include "ts_tree.h"
 
 ts_tree *node = NULL;
 char *value_a = "VALUEA";
@@ -30,7 +30,6 @@ char *test_insert()
 
     node = ts_tree_insert(node, test4, strlen(test4), value_4);
     assert(node != NULL, "Failed to insert into tst with single letter");
-
     return NULL;
 }
 
@@ -43,7 +42,6 @@ char *test_search_exact()
     // tst does not find if not exact
     res = ts_tree_search(node, "TESTNO", strlen("TESTNO"));
     assert(res == NULL, "Should not find anything");
-
     return NULL;
 }
 
@@ -62,7 +60,6 @@ char *test_search_prefix()
 
     res = ts_tree_search_prefix(node, "TE--", strlen("TE--"));
     assert(res != NULL, "Should find for partial prefix.");
-
     return NULL;
 }
 
@@ -79,14 +76,12 @@ char *test_traverse()
     ts_tree_traverse(node, ts_tree_traverse_test_cb, value_a);
     printf("traverse count is: %d\n", traverse_count);
     assert(traverse_count == 4, "Didn't find the 4 keys.");
-
     return NULL;
 }
 
 char *test_free()
 {
     ts_tree_free(node);
-
     return NULL;
 }
 
@@ -99,6 +94,5 @@ int main()
     run_test(test_traverse);
     run_test(test_free);
     end_tests();
-
     return 0;
 }

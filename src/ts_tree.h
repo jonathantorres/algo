@@ -1,6 +1,8 @@
 #ifndef _ts_tree_h
 #define _ts_tree_h
 
+#include <stdlib.h>
+#include <stdio.h>
 #include <stddef.h>
 
 typedef struct ts_tree {

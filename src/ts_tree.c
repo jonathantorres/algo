@@ -1,7 +1,3 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <stddef.h>
-#include <assert.h>
 #include "ts_tree.h"
 
 static inline ts_tree *_ts_tree_insert_base(ts_tree *root, ts_tree *node, const char *key, size_t len, void *value)
@@ -12,7 +8,6 @@ static inline ts_tree *_ts_tree_insert_base(ts_tree *root, ts_tree *node, const 
         if (root == NULL) {
             root = node;
         }
-
         node->splitchar = *key;
     }
 
@@ -22,7 +17,6 @@ static inline ts_tree *_ts_tree_insert_base(ts_tree *root, ts_tree *node, const 
         if (len > 1) {
             node->equal = _ts_tree_insert_base(root, node->equal, key + 1, len - 1, value);
         } else {
-            assert(node->value == NULL && "Duplicate insert into tst.");
             node->value = value;
         }
     } else {
@@ -54,7 +48,6 @@ void *ts_tree_search(ts_tree *root, const char *key, size_t len)
             node = node->high;
         }
     }
-
     if (node) {
         return node->value;
     } else {
@@ -67,7 +60,6 @@ void *ts_tree_search_prefix(ts_tree *root, const char *key, size_t len)
     if (len == 0) {
         return NULL;
     }
-
     ts_tree *node = root;
     ts_tree *last = NULL;
     size_t i = 0;
@@ -87,7 +79,6 @@ void *ts_tree_search_prefix(ts_tree *root, const char *key, size_t len)
             node = node->high;
         }
     }
-
     node = node ? node : last;
 
     // traverse until we find the first value in the equal chain
@@ -104,19 +95,15 @@ void ts_tree_traverse(ts_tree *node, ts_tree_traverse_cb cb, void *data)
     if (!node) {
         return;
     }
-
     if (node->low) {
         ts_tree_traverse(node->low, cb, data);
     }
-
     if (node->equal) {
         ts_tree_traverse(node->equal, cb, data);
     }
-
     if (node->high) {
         ts_tree_traverse(node->high, cb, data);
     }
-
     if (node->value) {
         cb(node->value, data);
     }
@@ -127,15 +114,12 @@ void ts_tree_free(ts_tree *node)
     if (node == NULL) {
         return;
     }
-
     if (node->low) {
         ts_tree_free(node->low);
     }
-
     if (node->equal) {
         ts_tree_free(node->equal);
     }
-
     if (node->high) {
         ts_tree_free(node->high);
     }
