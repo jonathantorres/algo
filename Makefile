@@ -11,8 +11,8 @@ TESTFILES := $(subst tests/, , $(TESTFILES))
 all: test hangman stream_server stream_client http_server
 
 # Compiling executables
-hangman: hangman/hangman.cpp
-	$(CPPFLAGS) src/hangman/hangman.cpp -o bin/hangman
+hangman: hangman/hangman.c array.o
+	$(CFLAGS) src/hangman/hangman.c array.o -o bin/hangman
 	cp src/hangman/words.txt bin/words.txt
 daytime_server: net/daytime_server.c
 	$(CFLAGS) src/net/daytime_server.c -o bin/daytime_server
