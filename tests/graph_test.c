@@ -168,7 +168,7 @@ void graph_bfs(graph *graph, int start)
     queue_enqueue(_queue, &start);
     discovered[start] = true;
 
-    while (queue_length(_queue) != 0) {
+    while (queue_len(_queue) != 0) {
         cur_vertex = *(int*)queue_dequeue(_queue);
         graph_process_vertex_early(cur_vertex);
         processed[cur_vertex] = true;
@@ -187,7 +187,7 @@ void graph_bfs(graph *graph, int start)
         }
         graph_process_vertex_late(cur_vertex);
     }
-    queue_destroy(_queue);
+    queue_free(_queue, NULL);
 }
 
 void graph_dfs(graph *graph, int v)
