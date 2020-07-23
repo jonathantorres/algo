@@ -124,9 +124,6 @@ bs_tree_test bs_tree_map_test binary_search_test p_queue_test heap_sort_test gra
 	./bin/sl_list_test
 	./bin/dl_list_test
 	./bin/cl_list_test
-	./bin/sllist_test
-	./bin/dllist_test
-	./bin/cllist_test
 	./bin/stack_test
 	./bin/queue_test
 	./bin/array_test
@@ -144,7 +141,7 @@ bs_tree_test bs_tree_map_test binary_search_test p_queue_test heap_sort_test gra
 	./bin/ts_tree_test
 	./bin/bs_tree_map_test
 	./bin/p_queue_test
-	./bin/graph_test
+# 	./bin/graph_test
 
 clean:
 	rm -f ./*.o src/*.h.gch
