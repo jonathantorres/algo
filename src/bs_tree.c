@@ -76,7 +76,9 @@ void _bs_tree_traverse_node(bs_tree_node *node, bs_tree_cb cb)
         return;
     }
     _bs_tree_traverse_node(node->left, cb);
-    cb(node);
+    if (cb) {
+        cb(node);
+    }
     _bs_tree_traverse_node(node->right, cb);
 }
 
@@ -96,7 +98,9 @@ void _bs_tree_destroy_single_node(bs_tree_node *node, bs_tree_cb cb)
     if (!node) {
         return;
     }
-    cb(node);
+    if (cb) {
+        cb(node);
+    }
     free(node);
 }
 
