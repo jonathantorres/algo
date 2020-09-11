@@ -73,7 +73,6 @@ char *test_insert_and_delete_strs()
     char *s1_v = "val1";
     char *s2_v = "val2";
     char *s3_v = "val3";
-    char *s4_v = "val4";
     char *s5_v = "val5";
 
     bs_tree_map *tree = bs_tree_map_new(bs_tree_map_str_cmp);
