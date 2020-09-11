@@ -33,10 +33,16 @@ int bs_tree_int_cmp(void *a, void *b)
     }
 }
 
+int bs_tree_str_cmp(void *a, void *b)
+{
+    return strcmp((char*)a, (char*)b);
+}
+
 char *test_new()
 {
     bs_tree *tree = bs_tree_new(NULL);
     assert(tree != NULL, "Failed to create tree");
+    bs_tree_free(tree, NULL);
     return NULL;
 }
 
@@ -95,13 +101,42 @@ char *test_insert_and_delete_ints()
 
 char *test_insert_strs()
 {
-    // TODO
+    char *str1 = "Jonathan";
+    char *str2 = "Torres";
+    char *str3 = "This is another string";
+    char *str4 = "And a fourth string";
+
+    bs_tree *tree = bs_tree_new(bs_tree_str_cmp);
+    bs_tree_insert(tree, &str1);
+    bs_tree_insert(tree, &str2);
+    bs_tree_insert(tree, &str3);
+    assert(tree->len == 3, "Len of tree should be 3");
+    bs_tree_insert(tree, &str4);
+    assert(tree->len == 4, "Len of tree should be 4");
+    bs_tree_free(tree, NULL);
     return NULL;
 }
 
 char *test_insert_and_delete_strs()
 {
-    // TODO
+    char *str1 = "Jonathan";
+    char *str2 = "Torres";
+    char *str3 = "This is another string";
+    char *str4 = "And a fourth string";
+
+    bs_tree *tree = bs_tree_new(bs_tree_str_cmp);
+    bs_tree_insert(tree, &str1);
+    bs_tree_insert(tree, &str2);
+    bs_tree_insert(tree, &str3);
+    assert(tree->len == 3, "Len of tree should be 3");
+    bs_tree_delete(tree, &str1, NULL);
+    assert(tree->len == 2, "Len of tree should be 2");
+    bs_tree_insert(tree, &str4);
+    assert(tree->len == 3, "Len of tree should be 3");
+    bs_tree_delete(tree, &str2, NULL);
+    bs_tree_delete(tree, &str3, NULL);
+    assert(tree->len == 1, "Len of tree should be 1");
+    bs_tree_free(tree, NULL);
     return NULL;
 }
 
@@ -130,7 +165,9 @@ int main()
     run_test(test_new);
     run_test(test_free);
     run_test(test_insert_ints);
+    run_test(test_insert_strs);
     run_test(test_insert_and_delete_ints);
+    run_test(test_insert_and_delete_strs);
     run_test(test_traverse);
     end_tests();
 
