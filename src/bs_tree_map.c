@@ -209,6 +209,9 @@ void bs_tree_map_delete(bs_tree_map *tree, void *key, bs_tree_map_cb cb)
         if (replacement->parent) {
             if (replacement->parent->left == replacement) {
                 replacement->parent->left = NULL;
+                if (replacement->right != NULL) {
+                    replacement->parent->left = replacement->right;
+                }
             }
         }
         replacement->parent = node_to_delete->parent;
