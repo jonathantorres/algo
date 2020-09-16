@@ -1,7 +1,3 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdbool.h>
 #include "trie.h"
 
 #define PATHS_LEN 26
@@ -56,19 +52,16 @@ static void _trie_free_nodes(trie_node *node)
     }
 }
 
-void *trie_new(trie_compare cmp)
+void *trie_new(trie_cmp cmp)
 {
     trie *_trie = malloc(sizeof(trie));
-
     if (!_trie) {
-        fputs("[trie_new] Not enough memory.", stderr);
         return NULL;
     }
 
     trie_node *root = _trie_create_node("");
     if (!root) {
         free(_trie);
-        fputs("[trie_new] Root node could not be created.", stderr);
         return NULL;
     }
 
@@ -81,7 +74,6 @@ void *trie_new(trie_compare cmp)
 void trie_free(trie *_trie)
 {
     if (!_trie) {
-        fputs("[trie_free] Must provide a trie.", stderr);
         return;
     }
 
@@ -92,7 +84,6 @@ void trie_free(trie *_trie)
 bool trie_insert(trie *_trie, void *key, void *value)
 {
     if (!_trie) {
-        fputs("[trie_insert] Must provide a trie.", stderr);
         return false;
     }
 
