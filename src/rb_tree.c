@@ -1,8 +1,8 @@
-#include "avl_tree.h"
+#include "rb_tree.h"
 
-avl_tree_node *_avl_tree_create_node(void *value)
+rb_tree_node *_rb_tree_create_node(void *value)
 {
-    avl_tree_node *node = malloc(sizeof(avl_tree_node));
+    rb_tree_node *node = malloc(sizeof(rb_tree_node));
     if (!node) {
         return NULL;
     }
@@ -15,10 +15,10 @@ avl_tree_node *_avl_tree_create_node(void *value)
     return node;
 }
 
-void _avl_tree_insert_node(avl_tree *tree, avl_tree_node **node, avl_tree_node *parent, void *value, avl_tree_cmp cmp)
+void _rb_tree_insert_node(rb_tree *tree, rb_tree_node **node, rb_tree_node *parent, void *value, rb_tree_cmp cmp)
 {
     if (*node == NULL) {
-        avl_tree_node *new_node = _avl_tree_create_node(value);
+        rb_tree_node *new_node = _rb_tree_create_node(value);
         new_node->parent = parent;
         *node = new_node;
         tree->len++;
@@ -26,36 +26,36 @@ void _avl_tree_insert_node(avl_tree *tree, avl_tree_node **node, avl_tree_node *
     }
 
     if (cmp(value, (*node)->value) < 0) {
-        _avl_tree_insert_node(tree, &(*node)->left, *node, value, cmp);
+        _rb_tree_insert_node(tree, &(*node)->left, *node, value, cmp);
     } else {
-        _avl_tree_insert_node(tree, &(*node)->right, *node, value, cmp);
+        _rb_tree_insert_node(tree, &(*node)->right, *node, value, cmp);
     }
 }
 
-void _avl_tree_traverse_node(avl_tree_node *node, avl_tree_cb cb)
+void _rb_tree_traverse_node(rb_tree_node *node, rb_tree_cb cb)
 {
     if (!node) {
         return;
     }
-    _avl_tree_traverse_node(node->left, cb);
+    _rb_tree_traverse_node(node->left, cb);
     if (cb) {
         cb(node);
     }
-    _avl_tree_traverse_node(node->right, cb);
+    _rb_tree_traverse_node(node->right, cb);
 }
 
-void _avl_tree_destroy_node(avl_tree_node *node)
+void _rb_tree_destroy_node(rb_tree_node *node)
 {
     if (!node) {
         return;
     }
 
-    _avl_tree_destroy_node(node->left);
-    _avl_tree_destroy_node(node->right);
+    _rb_tree_destroy_node(node->left);
+    _rb_tree_destroy_node(node->right);
     free(node);
 }
 
-void _avl_tree_destroy_single_node(avl_tree_node *node, avl_tree_cb cb)
+void _rb_tree_destroy_single_node(rb_tree_node *node, rb_tree_cb cb)
 {
     if (!node) {
         return;
@@ -66,7 +66,7 @@ void _avl_tree_destroy_single_node(avl_tree_node *node, avl_tree_cb cb)
     free(node);
 }
 
-avl_tree_node *_avl_tree_find_node(avl_tree_node *node, void *value, avl_tree_cmp cmp)
+rb_tree_node *_rb_tree_find_node(rb_tree_node *node, void *value, rb_tree_cmp cmp)
 {
     if (!node) {
         return NULL;
@@ -76,17 +76,17 @@ avl_tree_node *_avl_tree_find_node(avl_tree_node *node, void *value, avl_tree_cm
     if (result == 0) {
         return node;
     } else if (result < 0) {
-        return _avl_tree_find_node(node->left, value, cmp);
+        return _rb_tree_find_node(node->left, value, cmp);
     } else if (result > 0) {
-        return _avl_tree_find_node(node->right, value, cmp);
+        return _rb_tree_find_node(node->right, value, cmp);
     }
 
     return NULL;
 }
 
-avl_tree_node *_avl_tree_find_min_node(avl_tree_node *node)
+rb_tree_node *_rb_tree_find_min_node(rb_tree_node *node)
 {
-    avl_tree_node *min_node = node;
+    rb_tree_node *min_node = node;
 
     while (min_node->left != NULL) {
         min_node = min_node->left;
@@ -94,9 +94,9 @@ avl_tree_node *_avl_tree_find_min_node(avl_tree_node *node)
     return min_node;
 }
 
-avl_tree_node *_avl_tree_find_max_node(avl_tree_node *node)
+rb_tree_node *_rb_tree_find_max_node(rb_tree_node *node)
 {
-    avl_tree_node *max_node = node;
+    rb_tree_node *max_node = node;
 
     while (max_node->right != NULL) {
         max_node = max_node->right;
@@ -104,7 +104,7 @@ avl_tree_node *_avl_tree_find_max_node(avl_tree_node *node)
     return max_node;
 }
 
-avl_tree_node *_avl_tree_update_parent_node(avl_tree_node *node_to_delete, avl_tree_node *node_to_move)
+rb_tree_node *_rb_tree_update_parent_node(rb_tree_node *node_to_delete, rb_tree_node *node_to_move)
 {
     if (node_to_move) {
         node_to_move->parent = node_to_delete->parent;
@@ -128,9 +128,9 @@ avl_tree_node *_avl_tree_update_parent_node(avl_tree_node *node_to_delete, avl_t
     return node_to_move;
 }
 
-avl_tree *avl_tree_new(avl_tree_cmp cmp)
+rb_tree *rb_tree_new(rb_tree_cmp cmp)
 {
-    avl_tree *tree = malloc(sizeof(avl_tree));
+    rb_tree *tree = malloc(sizeof(rb_tree));
 
     if (!tree) {
         return NULL;
@@ -142,13 +142,13 @@ avl_tree *avl_tree_new(avl_tree_cmp cmp)
     return tree;
 }
 
-void avl_tree_insert(avl_tree *tree, void *value)
+void rb_tree_insert(rb_tree *tree, void *value)
 {
     if (!tree) {
         return;
     }
     if (tree->root == NULL) {
-        avl_tree_node *node = _avl_tree_create_node(value);
+        rb_tree_node *node = _rb_tree_create_node(value);
         if (!node) {
             return;
         }
@@ -158,12 +158,12 @@ void avl_tree_insert(avl_tree *tree, void *value)
         return;
     }
 
-    _avl_tree_insert_node(tree, &tree->root, tree->root, value, tree->cmp);
+    _rb_tree_insert_node(tree, &tree->root, tree->root, value, tree->cmp);
     return;
 }
 
 // TODO: most likely refactor this thing
-void avl_tree_delete(avl_tree *tree, void *value, avl_tree_cb cb)
+void rb_tree_delete(rb_tree *tree, void *value, rb_tree_cb cb)
 {
     if (!tree) {
         return;
@@ -173,7 +173,7 @@ void avl_tree_delete(avl_tree *tree, void *value, avl_tree_cb cb)
     }
 
     bool deleted_root = false;
-    avl_tree_node *node_to_delete = _avl_tree_find_node(tree->root, value, tree->cmp);
+    rb_tree_node *node_to_delete = _rb_tree_find_node(tree->root, value, tree->cmp);
     if (node_to_delete == NULL) {
         return;
     }
@@ -184,28 +184,28 @@ void avl_tree_delete(avl_tree *tree, void *value, avl_tree_cb cb)
     // let's delete the node
     if (node_to_delete->left == NULL && node_to_delete->right == NULL) {
         // node with no children
-        avl_tree_node *new_root = _avl_tree_update_parent_node(node_to_delete, NULL);
+        rb_tree_node *new_root = _rb_tree_update_parent_node(node_to_delete, NULL);
         if (deleted_root) {
             tree->root = new_root;
         }
-        _avl_tree_destroy_single_node(node_to_delete, cb);
+        _rb_tree_destroy_single_node(node_to_delete, cb);
     } else if (node_to_delete->left == NULL && node_to_delete->right != NULL) {
         // node with a right child
-        avl_tree_node *new_root = _avl_tree_update_parent_node(node_to_delete, node_to_delete->right);
+        rb_tree_node *new_root = _rb_tree_update_parent_node(node_to_delete, node_to_delete->right);
         if (deleted_root) {
             tree->root = new_root;
         }
-        _avl_tree_destroy_single_node(node_to_delete, cb);
+        _rb_tree_destroy_single_node(node_to_delete, cb);
     } else if (node_to_delete->left != NULL && node_to_delete->right == NULL) {
         // node with a left child
-        avl_tree_node *new_root = _avl_tree_update_parent_node(node_to_delete, node_to_delete->left);
+        rb_tree_node *new_root = _rb_tree_update_parent_node(node_to_delete, node_to_delete->left);
         if (deleted_root) {
             tree->root = new_root;
         }
-        _avl_tree_destroy_single_node(node_to_delete, cb);
+        _rb_tree_destroy_single_node(node_to_delete, cb);
     } else if (node_to_delete->left != NULL && node_to_delete->right != NULL) {
         // node with left and right children
-        avl_tree_node *replacement = _avl_tree_find_min_node(node_to_delete->right);
+        rb_tree_node *replacement = _rb_tree_find_min_node(node_to_delete->right);
         if (replacement->parent) {
             if (replacement->parent->left == replacement) {
                 replacement->parent->left = NULL;
@@ -235,12 +235,12 @@ void avl_tree_delete(avl_tree *tree, void *value, avl_tree_cb cb)
         if (deleted_root) {
             tree->root = replacement;
         }
-        _avl_tree_destroy_single_node(node_to_delete, cb);
+        _rb_tree_destroy_single_node(node_to_delete, cb);
     }
     tree->len--;
 }
 
-void *avl_tree_search(avl_tree *tree, void *value)
+void *rb_tree_search(rb_tree *tree, void *value)
 {
     if (!tree) {
         return NULL;
@@ -249,7 +249,7 @@ void *avl_tree_search(avl_tree *tree, void *value)
         return NULL;
     }
 
-    avl_tree_node *node_found = _avl_tree_find_node(tree->root, value, tree->cmp);
+    rb_tree_node *node_found = _rb_tree_find_node(tree->root, value, tree->cmp);
     if (!node_found) {
         return NULL;
     }
@@ -257,7 +257,7 @@ void *avl_tree_search(avl_tree *tree, void *value)
     return node_found->value;
 }
 
-void *avl_tree_find_max(avl_tree *tree)
+void *rb_tree_find_max(rb_tree *tree)
 {
     if (!tree) {
         return NULL;
@@ -266,7 +266,7 @@ void *avl_tree_find_max(avl_tree *tree)
         return NULL;
     }
 
-    avl_tree_node *max_node = _avl_tree_find_max_node(tree->root);
+    rb_tree_node *max_node = _rb_tree_find_max_node(tree->root);
     if (max_node == NULL) {
         return NULL;
     }
@@ -274,7 +274,7 @@ void *avl_tree_find_max(avl_tree *tree)
     return max_node->value;
 }
 
-void *avl_tree_find_min(avl_tree *tree)
+void *rb_tree_find_min(rb_tree *tree)
 {
     if (!tree) {
         return NULL;
@@ -283,7 +283,7 @@ void *avl_tree_find_min(avl_tree *tree)
         return NULL;
     }
 
-    avl_tree_node *min_node = _avl_tree_find_min_node(tree->root);
+    rb_tree_node *min_node = _rb_tree_find_min_node(tree->root);
     if (min_node == NULL) {
         return NULL;
     }
@@ -291,7 +291,7 @@ void *avl_tree_find_min(avl_tree *tree)
     return min_node->value;
 }
 
-void avl_tree_traverse(avl_tree *tree, avl_tree_cb cb)
+void rb_tree_traverse(rb_tree *tree, rb_tree_cb cb)
 {
     if (!tree) {
         return;
@@ -300,10 +300,10 @@ void avl_tree_traverse(avl_tree *tree, avl_tree_cb cb)
         return;
     }
 
-    _avl_tree_traverse_node(tree->root, cb);
+    _rb_tree_traverse_node(tree->root, cb);
 }
 
-void avl_tree_free(avl_tree *tree, avl_tree_cb cb)
+void rb_tree_free(rb_tree *tree, rb_tree_cb cb)
 {
     if (!tree) {
         return;
@@ -312,8 +312,8 @@ void avl_tree_free(avl_tree *tree, avl_tree_cb cb)
         return;
     }
 
-    avl_tree_traverse(tree, cb);
-    _avl_tree_destroy_node(tree->root);
+    rb_tree_traverse(tree, cb);
+    _rb_tree_destroy_node(tree->root);
 
     if (tree) {
         free(tree);

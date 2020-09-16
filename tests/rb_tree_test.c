@@ -1,5 +1,5 @@
 #include "unittest.h"
-#include "avl_tree.h"
+#include "rb_tree.h"
 
 char *test_new()
 {
@@ -8,7 +8,7 @@ char *test_new()
 
 int main(void)
 {
-    start_tests("avl_tree tests");
+    start_tests("rb_tree tests");
     run_test(test_new);
     // run_test(test_free);
     // run_test(test_insert_ints);
