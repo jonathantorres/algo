@@ -50,7 +50,7 @@ static void _trie_free_nodes(trie_node *node, trie_cb cb)
     }
 }
 
-trie *trie_new(trie_cmp cmp)
+trie *trie_new(void)
 {
     trie *_trie = malloc(sizeof(trie));
     if (!_trie) {
@@ -64,7 +64,6 @@ trie *trie_new(trie_cmp cmp)
     }
 
     _trie->root = root;
-    _trie->cmp = cmp;
 
     return _trie;
 }

@@ -3,17 +3,11 @@
 #include "unittest.h"
 #include "trie.h"
 
-int trie_cmp_fn(void *a, void *b)
-{
-    return strcmp((char*)a, (char*)b);
-}
-
 char *test_create()
 {
-    trie *_trie = trie_new(trie_cmp_fn);
+    trie *_trie = trie_new();
     assert(_trie != NULL, "The trie should not be NULL");
     assert(_trie->root != NULL, "The root of the trie should not be NULL");
-    assert(_trie->cmp == trie_cmp_fn, "The comparison function for the trie cannot be set");
     trie_free(_trie, NULL);
 
     return NULL;
@@ -21,7 +15,7 @@ char *test_create()
 
 char *test_destroy()
 {
-    trie *_trie = trie_new(trie_cmp_fn);
+    trie *_trie = trie_new();
     trie_insert(_trie, "john", "Jonathan Torres");
     trie_insert(_trie, "luis", "Jorge L Torres");
     trie_insert(_trie, "chris", "Christopher Torres");
@@ -33,7 +27,7 @@ char *test_destroy()
 
 char *test_insert()
 {
-    trie *_trie = trie_new(trie_cmp_fn);
+    trie *_trie = trie_new();
     bool success = trie_insert(_trie, "john", "Jonathan Torres");
     assert(success == true, "They key 'john' was not inserted succesfully");
     success = trie_insert(_trie, "luis", "Jorge L Torres");
@@ -49,7 +43,7 @@ char *test_insert()
 
 char *test_get_strings()
 {
-    trie *_trie = trie_new(trie_cmp_fn);
+    trie *_trie = trie_new();
     trie_insert(_trie, "basket", "This is a string");
     trie_insert(_trie, "basketball", "This is another string");
     trie_insert(_trie, "wastebasket", "Wastebasket stuff");
@@ -74,7 +68,7 @@ char *test_get_ints()
     int val2 = 2;
     int val3 = 3;
     int val4 = 4;
-    trie *_trie = trie_new(trie_cmp_fn);
+    trie *_trie = trie_new();
     trie_insert(_trie, "master", &val1);
     trie_insert(_trie, "masters", &val2);
     trie_insert(_trie, "mastErinG", &val3);

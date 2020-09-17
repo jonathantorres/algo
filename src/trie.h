@@ -7,8 +7,6 @@
 #include <string.h>
 #include "array.h"
 
-typedef int (*trie_cmp)(void *a, void *b);
-
 typedef struct trie_node {
     void *value;
     array *paths;
@@ -16,12 +14,11 @@ typedef struct trie_node {
 
 typedef struct trie {
     trie_node *root;
-    trie_cmp cmp;
 } trie;
 
 typedef void (*trie_cb)(trie_node *node);
 
-trie *trie_new(trie_cmp cmp);
+trie *trie_new(void);
 void trie_free(trie *_trie, trie_cb cb);
 bool trie_insert(trie *_trie, char *key, void *value);
 void *trie_get(trie *_trie, char *key);
