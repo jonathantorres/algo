@@ -1,6 +1,7 @@
 #ifndef _trie_h
 #define _trie_h
 
+#include <ctype.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
@@ -20,10 +21,10 @@ typedef struct trie {
 
 typedef void (*trie_cb)(trie_node *node);
 
-void *trie_new(trie_cmp cmp);
-void trie_free(trie *_trie);
-bool trie_insert(trie *_trie, void *key, void *value);
-void *trie_get(trie *_trie, void *key);
+trie *trie_new(trie_cmp cmp);
+void trie_free(trie *_trie, trie_cb cb);
+bool trie_insert(trie *_trie, char *key, void *value);
+void *trie_get(trie *_trie, char *key);
 void trie_traverse(trie *_trie, trie_cb cb);
 
 #endif
