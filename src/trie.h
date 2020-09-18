@@ -16,7 +16,7 @@ typedef struct trie {
     trie_node *root;
 } trie;
 
-typedef void (*trie_cb)(trie_node *node);
+typedef void (*trie_cb)(void *value);
 
 trie *trie_new(void);
 void trie_free(trie *_trie, trie_cb cb);

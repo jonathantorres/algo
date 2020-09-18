@@ -50,6 +50,20 @@ static void _trie_free_nodes(trie_node *node, trie_cb cb)
     }
 }
 
+static void _trie_traverse_node(trie_node *node, trie_cb cb)
+{
+    for (unsigned int i = 0; i < node->paths->len; i++) {
+        trie_node *curr_node = array_get(node->paths, i);
+        if (!curr_node) {
+            continue;
+        }
+        _trie_traverse_node(curr_node, cb);
+    }
+    if (node->value && cb) {
+        cb(node->value);
+    }
+}
+
 trie *trie_new(void)
 {
     trie *_trie = malloc(sizeof(trie));
@@ -126,4 +140,12 @@ void *trie_get(trie *_trie, char *key)
     }
 
     return root->value;
+}
+
+void trie_traverse(trie *_trie, trie_cb cb)
+{
+    if (!_trie) {
+        return;
+    }
+    _trie_traverse_node(_trie->root, cb);
 }

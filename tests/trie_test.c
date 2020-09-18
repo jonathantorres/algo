@@ -3,6 +3,11 @@
 #include "unittest.h"
 #include "trie.h"
 
+void trie_traverse_cb(void *value)
+{
+    printf("%s\n", (char*)value);
+}
+
 char *test_create()
 {
     trie *_trie = trie_new();
@@ -89,6 +94,19 @@ char *test_get_ints()
     return NULL;
 }
 
+char *test_traversal()
+{
+    trie *_trie = trie_new();
+    trie_insert(_trie, "basket", "My basket");
+    trie_insert(_trie, "basketball", "Basketball for playing hoops");
+    trie_insert(_trie, "wastebasket", "Wastebasket for the dirty clothes");
+    trie_insert(_trie, "baskets", "Many baskets for organizing things");
+    trie_traverse(_trie, trie_traverse_cb);
+    trie_free(_trie, NULL);
+
+    return NULL;
+}
+
 int main()
 {
     start_tests("trie tests");
@@ -97,6 +115,7 @@ int main()
     run_test(test_insert);
     run_test(test_get_strings);
     run_test(test_get_ints);
+    run_test(test_traversal);
     end_tests();
 
     return 0;
