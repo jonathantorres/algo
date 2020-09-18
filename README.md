@@ -1,17 +1,19 @@
 # Algo
-Various algorithms and data structures implemented in C
+Various algorithms and data structures
 
 ## Data Structures
 - Array
-- Circular Buffer
 - Linked List
 - Doubly Linked List
 - Circular Linked List
 - Stack
 - Queue
+- Priority Queue
 - Hash Table
+- Circular Buffer
 - Binary Search Tree
-- Ternary Search Tree
+- Binary Search Tree Map
+- Trie
 
 ## Algorithms
 - Bubble Sort
@@ -19,6 +21,7 @@ Various algorithms and data structures implemented in C
 - Merge Sort
 - Quick Sort
 - Selection Sort
+- Heap Sort
 - Binary Search
 
 ## Internet/Network
