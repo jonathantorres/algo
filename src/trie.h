@@ -1,10 +1,11 @@
 #ifndef _trie_h
 #define _trie_h
 
-#include "array.h"
+#include <ctype.h>
 #include <stdbool.h>
-
-typedef int (*trie_compare)(void *a, void *b);
+#include <stdlib.h>
+#include <string.h>
+#include "array.h"
 
 typedef struct trie_node {
     void *value;
@@ -13,15 +14,14 @@ typedef struct trie_node {
 
 typedef struct trie {
     trie_node *root;
-    trie_compare cmp;
 } trie;
 
-typedef bool (*trie_traverse_cb)(trie_node *node);
+typedef void (*trie_cb)(void *value);
 
-void *trie_new(trie_compare cmp);
-void trie_free(trie *_trie);
-bool trie_insert(trie *_trie, void *key, void *value);
-void *trie_get(trie *_trie, void *key);
-bool trie_traverse(trie *_trie, trie_traverse_cb cb);
+trie *trie_new(void);
+void trie_free(trie *_trie, trie_cb cb);
+bool trie_insert(trie *_trie, char *key, void *value);
+void *trie_get(trie *_trie, char *key);
+void trie_traverse(trie *_trie, trie_cb cb);
 
 #endif
