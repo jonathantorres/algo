@@ -7,6 +7,7 @@
 #include <stdio.h>
 
 typedef int (*bs_tree_map_cmp)(void *a, void *b);
+typedef void (*bs_tree_map_cb)(void *key, void *value);
 
 typedef struct bs_tree_map_node {
     struct bs_tree_map_node *parent;
@@ -22,7 +23,6 @@ typedef struct bs_tree_map {
     int len;
 } bs_tree_map;
 
-typedef void (*bs_tree_map_cb)(bs_tree_map_node *node);
 
 bs_tree_map *bs_tree_map_new(bs_tree_map_cmp cmp);
 void bs_tree_map_insert(bs_tree_map *tree, void *key, void *value);

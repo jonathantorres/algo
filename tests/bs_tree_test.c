@@ -7,19 +7,12 @@
 
 int tree_int_traverse_count = 0;
 
-void bs_tree_int_free_cb(bs_tree_node *node)
+void bs_tree_int_traverse_cb(void *value)
 {
-    if (node) {
-        // nothing to free here
-    }
-}
-
-void bs_tree_int_traverse_cb(bs_tree_node *node)
-{
-    if (node) {
+    if (value) {
         tree_int_traverse_count++;
     }
-    // printf("node val: %d\n", *(int *)node->value);
+    // printf("value: %d\n", *(int *)value);
 }
 
 int bs_tree_int_cmp(void *a, void *b)
@@ -49,7 +42,7 @@ char *test_new()
 char *test_free()
 {
     bs_tree *tree = bs_tree_new(NULL);
-    bs_tree_free(tree, bs_tree_int_free_cb);
+    bs_tree_free(tree, NULL);
     return NULL;
 }
 
@@ -67,7 +60,7 @@ char *test_insert_ints()
     bs_tree_insert(tree, &n3);
     bs_tree_insert(tree, &n4);
     assert(tree->len == 4, "Len of tree should be 4");
-    bs_tree_free(tree, bs_tree_int_free_cb);
+    bs_tree_free(tree, NULL);
     return NULL;
 }
 
@@ -85,17 +78,17 @@ char *test_insert_and_delete_ints()
     bs_tree_insert(tree, &n3);
 
     assert(tree->len == 3, "Len of tree should be 3");
-    bs_tree_delete(tree, &n2, bs_tree_int_free_cb);
+    bs_tree_delete(tree, &n2, NULL);
     assert(tree->len == 2, "Len of tree should be 2");
-    bs_tree_delete(tree, &n1, bs_tree_int_free_cb);
+    bs_tree_delete(tree, &n1, NULL);
     assert(tree->len == 1, "Len of tree should be 1");
-    bs_tree_delete(tree, &n4, bs_tree_int_free_cb);
+    bs_tree_delete(tree, &n4, NULL);
     assert(tree->len == 1, "Len of tree should be 1");
     bs_tree_insert(tree, &n5);
     assert(tree->len == 2, "Len of tree should be 2");
-    bs_tree_delete(tree, &n5, bs_tree_int_free_cb);
+    bs_tree_delete(tree, &n5, NULL);
     assert(tree->len == 1, "Len of tree should be 1");
-    bs_tree_free(tree, bs_tree_int_free_cb);
+    bs_tree_free(tree, NULL);
     return NULL;
 }
 
@@ -146,6 +139,8 @@ char *test_traverse()
     int n2 = 323;
     int n3 = 431;
     int n4 = 9090;
+
+    tree_int_traverse_count = 0;
 
     bs_tree *tree = bs_tree_new(bs_tree_int_cmp);
     bs_tree_insert(tree, &n1);

@@ -78,7 +78,7 @@ void _bs_tree_map_traverse_node(bs_tree_map_node *node, bs_tree_map_cb cb)
     }
     _bs_tree_map_traverse_node(node->left, cb);
     if (cb) {
-        cb(node);
+        cb(node->key, node->value);
     }
     _bs_tree_map_traverse_node(node->right, cb);
 }
@@ -100,7 +100,7 @@ void _bs_tree_map_destroy_single_node(bs_tree_map_node *node, bs_tree_map_cb cb)
         return;
     }
     if (cb) {
-        cb(node);
+        cb(node->key, node->value);
     }
     free(node);
 }
