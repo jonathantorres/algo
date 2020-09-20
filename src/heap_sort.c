@@ -1,8 +1,9 @@
 #include "heap_sort.h"
 
-void p_queue_int_free_cb(bs_tree_node *node)
+void p_queue_int_free_cb(void *value)
 {
-    if (node) {
+    if (value) {
+        // nothing to do here
     }
 }
 

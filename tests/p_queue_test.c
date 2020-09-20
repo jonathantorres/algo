@@ -18,19 +18,19 @@ int p_queue_int_cmp(void *a, void *b)
     }
 }
 
-void p_queue_int_free_cb(bs_tree_node *node)
+void p_queue_int_free_cb(void *value)
 {
-    if (node) {
+    if (value) {
         // nothing to free here
     }
 }
 
-void p_queue_int_traverse_cb(bs_tree_node *node)
+void p_queue_int_traverse_cb(void *value)
 {
-    if (node) {
+    if (value) {
         p_queue_int_traverse_count++;
     }
-    // printf("value: %d\n", *(int *)node->value);
+    // printf("value: %d\n", *(int *)value);
 }
 
 char *test_new()

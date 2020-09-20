@@ -7,18 +7,25 @@
 
 int tree_str_traverse_count = 0;
 
-void bs_tree_map_str_free_cb(bs_tree_map_node *node)
+void bs_tree_map_str_free_cb(void *key, void *value)
 {
-    if (node) {
+    if (key) {
+        // nothing to free here
+    }
+    if (value) {
         // nothing to free here
     }
 }
 
-void bs_tree_map_str_traverse_cb(bs_tree_map_node *node)
+void bs_tree_map_str_traverse_cb(void *key, void *value)
 {
-    if (node) {
-        tree_str_traverse_count++;
-        // printf("key:%s - val:%s\n", (char*)node->key, (char*)node->value);
+    tree_str_traverse_count++;
+    printf("key:%s - val:%s\n", (char*)key, (char*)value);
+    if (key) {
+        // nothing to do here
+    }
+    if (value) {
+        // nothing to do here
     }
 }
 

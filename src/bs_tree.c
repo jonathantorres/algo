@@ -77,7 +77,7 @@ void _bs_tree_traverse_node(bs_tree_node *node, bs_tree_cb cb)
     }
     _bs_tree_traverse_node(node->left, cb);
     if (cb) {
-        cb(node);
+        cb(node->value);
     }
     _bs_tree_traverse_node(node->right, cb);
 }
@@ -99,7 +99,7 @@ void _bs_tree_destroy_single_node(bs_tree_node *node, bs_tree_cb cb)
         return;
     }
     if (cb) {
-        cb(node);
+        cb(node->value);
     }
     free(node);
 }
@@ -208,6 +208,9 @@ void bs_tree_delete(bs_tree *tree, void *value, bs_tree_cb cb)
         if (replacement->parent) {
             if (replacement->parent->left == replacement) {
                 replacement->parent->left = NULL;
+                if (replacement->right != NULL) {
+                    replacement->parent->left = replacement->right;
+                }
             }
         }
         replacement->parent = node_to_delete->parent;

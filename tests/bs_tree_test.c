@@ -7,19 +7,12 @@
 
 int tree_int_traverse_count = 0;
 
-void bs_tree_int_free_cb(bs_tree_node *node)
+void bs_tree_int_traverse_cb(void *value)
 {
-    if (node) {
-        // nothing to free here
-    }
-}
-
-void bs_tree_int_traverse_cb(bs_tree_node *node)
-{
-    if (node) {
+    if (value) {
         tree_int_traverse_count++;
     }
-    // printf("node val: %d\n", *(int *)node->value);
+    // printf("value: %d\n", *(int *)value);
 }
 
 int bs_tree_int_cmp(void *a, void *b)
@@ -49,7 +42,7 @@ char *test_new()
 char *test_free()
 {
     bs_tree *tree = bs_tree_new(NULL);
-    bs_tree_free(tree, bs_tree_int_free_cb);
+    bs_tree_free(tree, NULL);
     return NULL;
 }
 
@@ -67,7 +60,7 @@ char *test_insert_ints()
     bs_tree_insert(tree, &n3);
     bs_tree_insert(tree, &n4);
     assert(tree->len == 4, "Len of tree should be 4");
-    bs_tree_free(tree, bs_tree_int_free_cb);
+    bs_tree_free(tree, NULL);
     return NULL;
 }
 
@@ -85,17 +78,17 @@ char *test_insert_and_delete_ints()
     bs_tree_insert(tree, &n3);
 
     assert(tree->len == 3, "Len of tree should be 3");
-    bs_tree_delete(tree, &n2, bs_tree_int_free_cb);
+    bs_tree_delete(tree, &n2, NULL);
     assert(tree->len == 2, "Len of tree should be 2");
-    bs_tree_delete(tree, &n1, bs_tree_int_free_cb);
+    bs_tree_delete(tree, &n1, NULL);
     assert(tree->len == 1, "Len of tree should be 1");
-    bs_tree_delete(tree, &n4, bs_tree_int_free_cb);
+    bs_tree_delete(tree, &n4, NULL);
     assert(tree->len == 1, "Len of tree should be 1");
     bs_tree_insert(tree, &n5);
     assert(tree->len == 2, "Len of tree should be 2");
-    bs_tree_delete(tree, &n5, bs_tree_int_free_cb);
+    bs_tree_delete(tree, &n5, NULL);
     assert(tree->len == 1, "Len of tree should be 1");
-    bs_tree_free(tree, bs_tree_int_free_cb);
+    bs_tree_free(tree, NULL);
     return NULL;
 }
 
@@ -147,6 +140,8 @@ char *test_traverse()
     int n3 = 431;
     int n4 = 9090;
 
+    tree_int_traverse_count = 0;
+
     bs_tree *tree = bs_tree_new(bs_tree_int_cmp);
     bs_tree_insert(tree, &n1);
     bs_tree_insert(tree, &n2);
@@ -159,6 +154,46 @@ char *test_traverse()
     return NULL;
 }
 
+char *test_deletion()
+{
+    int n1 = 1;
+    int n2 = 2;
+    int n3 = 3;
+    int n4 = 4;
+    int n5 = 5;
+    int n6 = 6;
+    int n7 = 7;
+    int n8 = 8;
+    int n9 = 9;
+    int n10 = 10;
+    int n11 = 11;
+    int n12 = 12;
+
+    bs_tree *tree = bs_tree_new(bs_tree_int_cmp);
+    bs_tree_insert(tree, &n4);
+    bs_tree_insert(tree, &n2);
+    bs_tree_insert(tree, &n8);
+    bs_tree_insert(tree, &n1);
+    bs_tree_insert(tree, &n3);
+    bs_tree_insert(tree, &n6);
+    bs_tree_insert(tree, &n12);
+    bs_tree_insert(tree, &n5);
+    bs_tree_insert(tree, &n7);
+    bs_tree_insert(tree, &n11);
+    bs_tree_insert(tree, &n9);
+    bs_tree_insert(tree, &n10);
+
+    assert(tree->len == 12, "Len of tree should be 12");
+    bs_tree_delete(tree, &n7, NULL);
+    assert(tree->len == 11, "Len of tree should be 11");
+    bs_tree_delete(tree, &n6, NULL);
+    assert(tree->len == 10, "Len of tree should be 10");
+    bs_tree_delete(tree, &n8, NULL);
+    assert(tree->len == 9, "Len of tree should be 9");
+    bs_tree_free(tree, NULL);
+    return NULL;
+}
+
 int main()
 {
     start_tests("bs_tree tests");
@@ -166,6 +201,7 @@ int main()
     run_test(test_free);
     run_test(test_insert_ints);
     run_test(test_insert_strs);
+    run_test(test_deletion);
     run_test(test_insert_and_delete_ints);
     run_test(test_insert_and_delete_strs);
     run_test(test_traverse);

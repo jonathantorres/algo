@@ -7,16 +7,23 @@ int h_table_compare_fn(void *a, void *b)
     return strcmp((char*)a, (char*)b);
 }
 
-void h_table_traverse_fn(h_table_node *node)
+void h_table_traverse_fn(void *key, void *value)
 {
-    if (node && node->key && node->value) {
-        printf("%s:%s,", (char*)node->key, (char*)node->value);
+    if (key) {
+        // nothing to do here
     }
+    if (value) {
+        // nothing to do here
+    }
+    // printf("%s:%s,", (char*)key, (char*)value);
 }
 
-void h_table_free_fn(h_table_node *node)
+void h_table_free_fn(void *key, void *value)
 {
-    if (node) {
+    if (key) {
+        // nothing to free here
+    }
+    if (value) {
         // nothing to free here
     }
 }

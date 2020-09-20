@@ -7,6 +7,7 @@
 #include <stdio.h>
 
 typedef int (*bs_tree_cmp)(void *a, void *b);
+typedef void (*bs_tree_cb)(void *value);
 
 typedef struct bs_tree_node {
     struct bs_tree_node *parent;
@@ -20,8 +21,6 @@ typedef struct bs_tree {
     bs_tree_cmp cmp;
     int len;
 } bs_tree;
-
-typedef void (*bs_tree_cb)(bs_tree_node *node);
 
 bs_tree *bs_tree_new(bs_tree_cmp cmp);
 void bs_tree_insert(bs_tree *tree, void *value);

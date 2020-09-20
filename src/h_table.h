@@ -7,11 +7,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef int (*h_table_compare)(void *a, void *b);
+typedef int (*h_table_cmp)(void *a, void *b);
+typedef void (*h_table_cb)(void *key, void *value);
 
 typedef struct h_table {
     array *buckets;
-    h_table_compare cmp;
+    h_table_cmp cmp;
 } h_table;
 
 typedef struct h_table_node {
@@ -20,14 +21,13 @@ typedef struct h_table_node {
     size_t hash;
 } h_table_node;
 
-typedef void (*h_table_node_cb)(h_table_node *node);
 
-h_table *h_table_new(h_table_compare cmp);
-void h_table_free(h_table *_h_table, h_table_node_cb cb);
+h_table *h_table_new(h_table_cmp cmp);
+void h_table_free(h_table *_h_table, h_table_cb cb);
 void *h_table_get(h_table *_h_table, char *key);
 void h_table_set(h_table *_h_table, char *key, void *value);
-void *h_table_remove(h_table *_h_table, char *key, h_table_node_cb cb);
-void h_table_traverse(h_table *_h_table, h_table_node_cb cb);
+void *h_table_remove(h_table *_h_table, char *key, h_table_cb cb);
+void h_table_traverse(h_table *_h_table, h_table_cb cb);
 
 // Macro Usage:
 // H_TABLE_FOREACH(h_table) {
