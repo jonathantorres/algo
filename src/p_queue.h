@@ -12,7 +12,7 @@ typedef struct p_queue {
 } p_queue;
 
 typedef int (*p_queue_cmp)(void *a, void *b);
-typedef void (*p_queue_cb)(bs_tree_node *node);
+typedef void (*p_queue_cb)(void *value);
 
 p_queue *p_queue_new(p_queue_cmp cmp);
 void p_queue_insert(p_queue *queue, void *value);
