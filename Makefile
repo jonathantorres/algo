@@ -50,13 +50,8 @@ bs_tree_test: bs_tree_test.c bs_tree.o
 	$(CFLAGS) tests/bs_tree_test.c bs_tree.o -o bin/bs_tree_test
 bs_tree_map_test: bs_tree_map_test.c bs_tree_map.o
 	$(CFLAGS) tests/bs_tree_map_test.c bs_tree_map.o -o bin/bs_tree_map_test
-<<<<<<< HEAD
-ts_tree_test: ts_tree_test.c ts_tree.o
-	$(CFLAGS) tests/ts_tree_test.c ts_tree.o -o bin/ts_tree_test
 rb_tree_test: rb_tree_test.c rb_tree.o
 	$(CFLAGS) tests/rb_tree_test.c rb_tree.o -o bin/rb_tree_test
-=======
->>>>>>> master
 p_queue_test: p_queue_test.c p_queue.o bs_tree.o
 	$(CFLAGS) tests/p_queue_test.c p_queue.o bs_tree.o -o bin/p_queue_test
 bubble_sort_test: bubble_sort_test.c bubble_sort.o array.o
@@ -103,13 +98,8 @@ bs_tree.o: bs_tree.c bs_tree.h
 	$(CFLAGS) -c src/bs_tree.c src/bs_tree.h
 bs_tree_map.o: bs_tree_map.c bs_tree_map.h
 	$(CFLAGS) -c src/bs_tree_map.c src/bs_tree_map.h
-<<<<<<< HEAD
-ts_tree.o: ts_tree.c ts_tree.h
-	$(CFLAGS) -c src/ts_tree.c src/ts_tree.h
 rb_tree.o: rb_tree.c rb_tree.h
 	$(CFLAGS) -c src/rb_tree.c src/rb_tree.h
-=======
->>>>>>> master
 bubble_sort.o: bubble_sort.c bubble_sort.h
 	$(CFLAGS) -c src/bubble_sort.c src/bubble_sort.h
 insertion_sort.o: insertion_sort.c insertion_sort.h
