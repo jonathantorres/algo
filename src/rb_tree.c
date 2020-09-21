@@ -11,6 +11,7 @@ rb_tree_node *_rb_tree_create_node(void *value)
     node->parent = NULL;
     node->left = NULL;
     node->right = NULL;
+    rb_tree_red(node);
 
     return node;
 }
@@ -39,7 +40,7 @@ void _rb_tree_traverse_node(rb_tree_node *node, rb_tree_cb cb)
     }
     _rb_tree_traverse_node(node->left, cb);
     if (cb) {
-        cb(node);
+        cb(node->value);
     }
     _rb_tree_traverse_node(node->right, cb);
 }
@@ -61,7 +62,7 @@ void _rb_tree_destroy_single_node(rb_tree_node *node, rb_tree_cb cb)
         return;
     }
     if (cb) {
-        cb(node);
+        cb(node->value);
     }
     free(node);
 }
@@ -152,17 +153,17 @@ void rb_tree_insert(rb_tree *tree, void *value)
         if (!node) {
             return;
         }
-
+        rb_tree_black(node);
         tree->root = node;
         tree->len++;
         return;
     }
 
     _rb_tree_insert_node(tree, &tree->root, tree->root, value, tree->cmp);
-    return;
+
+    // TODO: Do rotation stuff
 }
 
-// TODO: most likely refactor this thing
 void rb_tree_delete(rb_tree *tree, void *value, rb_tree_cb cb)
 {
     if (!tree) {
@@ -238,6 +239,8 @@ void rb_tree_delete(rb_tree *tree, void *value, rb_tree_cb cb)
         _rb_tree_destroy_single_node(node_to_delete, cb);
     }
     tree->len--;
+
+    // TODO: Do rotation stuff
 }
 
 void *rb_tree_search(rb_tree *tree, void *value)
@@ -309,6 +312,7 @@ void rb_tree_free(rb_tree *tree, rb_tree_cb cb)
         return;
     }
     if (tree->root == NULL) {
+        free(tree);
         return;
     }
 
