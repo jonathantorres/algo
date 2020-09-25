@@ -24,6 +24,7 @@ typedef struct rb_tree_node {
 
 typedef struct rb_tree {
     rb_tree_node *root;
+    rb_tree_node *sentinel;
     rb_tree_cmp cmp;
     int len;
 } rb_tree;
