@@ -225,6 +225,46 @@ char *test_traverse()
     return NULL;
 }
 
+char *test_find_min()
+{
+    int n1 = 10;
+    int n2 = 3;
+    int n3 = 43;
+    int n4 = 12;
+
+    rb_tree *tree = rb_tree_new(rb_tree_int_cmp);
+    rb_tree_insert(tree, &n1);
+    rb_tree_insert(tree, &n2);
+    rb_tree_insert(tree, &n3);
+    rb_tree_insert(tree, &n4);
+
+    int *min = rb_tree_find_min(tree);
+    assert(min != NULL, "Min value should not be NULL");
+    assert(*min == 3, "Min value should be 3");
+    rb_tree_free(tree, NULL);
+    return NULL;
+}
+
+char *test_find_max()
+{
+    int n1 = 10;
+    int n2 = 3;
+    int n3 = 43;
+    int n4 = 12;
+
+    rb_tree *tree = rb_tree_new(rb_tree_int_cmp);
+    rb_tree_insert(tree, &n1);
+    rb_tree_insert(tree, &n2);
+    rb_tree_insert(tree, &n3);
+    rb_tree_insert(tree, &n4);
+
+    int *max = rb_tree_find_max(tree);
+    assert(max != NULL, "Max value should not be NULL");
+    assert(*max == 43, "Max value should be 43");
+    rb_tree_free(tree, NULL);
+    return NULL;
+}
+
 int main(void)
 {
     start_tests("rb_tree tests");
@@ -237,6 +277,8 @@ int main(void)
     // run_test(test_insert_and_delete_strs);
     // run_test(test_deletion);
     run_test(test_traverse);
+    run_test(test_find_min);
+    run_test(test_find_max);
     end_tests();
     return 0;
 }
