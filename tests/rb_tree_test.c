@@ -265,6 +265,30 @@ char *test_find_max()
     return NULL;
 }
 
+char *test_search()
+{
+    int n1 = 10;
+    int n2 = 3;
+    int n3 = 43;
+    int n4 = 12;
+    int find1 = 12;
+    int find2 = 11;
+
+    rb_tree *tree = rb_tree_new(rb_tree_int_cmp);
+    rb_tree_insert(tree, &n1);
+    rb_tree_insert(tree, &n2);
+    rb_tree_insert(tree, &n3);
+    rb_tree_insert(tree, &n4);
+
+    int *num = rb_tree_search(tree, &find1);
+    assert(num != NULL, "Found value should not be NULL");
+    assert(*num == find1, "Found value should be 12");
+    int *num2 = rb_tree_search(tree, &find2);
+    assert(num2 == NULL, "Not found value should be NULL");
+    rb_tree_free(tree, NULL);
+    return NULL;
+}
+
 int main(void)
 {
     start_tests("rb_tree tests");
@@ -279,6 +303,7 @@ int main(void)
     run_test(test_traverse);
     run_test(test_find_min);
     run_test(test_find_max);
+    run_test(test_search);
     end_tests();
     return 0;
 }

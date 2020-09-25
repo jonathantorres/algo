@@ -83,9 +83,9 @@ void _rb_tree_destroy_single_node(rb_tree_node *node, rb_tree_cb cb)
     free(node);
 }
 
-rb_tree_node *_rb_tree_find_node(rb_tree_node *node, void *value, rb_tree_cmp cmp)
+rb_tree_node *_rb_tree_find_node(rb_tree_node *node, rb_tree_node *sentinel, void *value, rb_tree_cmp cmp)
 {
-    if (!node) {
+    if (node == sentinel) {
         return NULL;
     }
     int result = cmp(value, node->value);
@@ -93,9 +93,9 @@ rb_tree_node *_rb_tree_find_node(rb_tree_node *node, void *value, rb_tree_cmp cm
     if (result == 0) {
         return node;
     } else if (result < 0) {
-        return _rb_tree_find_node(node->left, value, cmp);
+        return _rb_tree_find_node(node->left, sentinel, value, cmp);
     } else if (result > 0) {
-        return _rb_tree_find_node(node->right, value, cmp);
+        return _rb_tree_find_node(node->right, sentinel, value, cmp);
     }
 
     return NULL;
@@ -276,7 +276,7 @@ void rb_tree_delete(rb_tree *tree, void *value, rb_tree_cb cb)
     }
 
     bool deleted_root = false;
-    rb_tree_node *node_to_delete = _rb_tree_find_node(tree->root, value, tree->cmp);
+    rb_tree_node *node_to_delete = _rb_tree_find_node(tree->root, tree->sentinel, value, tree->cmp);
     if (node_to_delete == NULL) {
         return;
     }
@@ -354,7 +354,7 @@ void *rb_tree_search(rb_tree *tree, void *value)
         return NULL;
     }
 
-    rb_tree_node *node_found = _rb_tree_find_node(tree->root, value, tree->cmp);
+    rb_tree_node *node_found = _rb_tree_find_node(tree->root, tree->sentinel, value, tree->cmp);
     if (!node_found) {
         return NULL;
     }
