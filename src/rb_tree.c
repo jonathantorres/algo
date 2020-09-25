@@ -49,16 +49,16 @@ rb_tree_node *_rb_tree_insert_node(rb_tree *tree, rb_tree_node **node, rb_tree_n
     return _rb_tree_insert_node(tree, &(*node)->right, *node, value, cmp);
 }
 
-void _rb_tree_traverse_node(rb_tree_node *node, rb_tree_cb cb)
+void _rb_tree_traverse_node(rb_tree_node *node, rb_tree_node *sentinel, rb_tree_cb cb)
 {
-    if (!node) {
+    if (node == sentinel) {
         return;
     }
-    _rb_tree_traverse_node(node->left, cb);
+    _rb_tree_traverse_node(node->left, sentinel, cb);
     if (cb) {
         cb(node->value);
     }
-    _rb_tree_traverse_node(node->right, cb);
+    _rb_tree_traverse_node(node->right, sentinel, cb);
 }
 
 void _rb_tree_destroy_node(rb_tree_node *node, rb_tree_node *sentinel)
@@ -405,7 +405,7 @@ void rb_tree_traverse(rb_tree *tree, rb_tree_cb cb)
         return;
     }
 
-    _rb_tree_traverse_node(tree->root, cb);
+    _rb_tree_traverse_node(tree->root, tree->sentinel, cb);
 }
 
 void rb_tree_free(rb_tree *tree, rb_tree_cb cb)

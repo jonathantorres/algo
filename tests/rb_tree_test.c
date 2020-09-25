@@ -236,7 +236,7 @@ int main(void)
     // run_test(test_insert_and_delete_ints);
     // run_test(test_insert_and_delete_strs);
     // run_test(test_deletion);
-    // run_test(test_traverse);
+    run_test(test_traverse);
     end_tests();
     return 0;
 }
