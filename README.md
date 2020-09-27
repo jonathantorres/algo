@@ -13,6 +13,8 @@ Various algorithms and data structures
 - Circular Buffer
 - Binary Search Tree
 - Binary Search Tree Map
+- Red Black Tree
+- Red Black Tree Map
 - Trie
 
 ## Algorithms
