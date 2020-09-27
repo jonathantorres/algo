@@ -79,7 +79,7 @@ char *test_insert_ints()
 char *test_insert_benchmark()
 {
     rb_tree *tree = rb_tree_new(rb_tree_int_cmp);
-    int max_val = 10000000;
+    int max_val = 10000;
 
     for (int i = 0; i < max_val; i++) {
         int *value = malloc(sizeof(int));
