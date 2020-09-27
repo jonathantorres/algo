@@ -79,7 +79,7 @@ char *test_insert_ints()
 char *test_insert_benchmark()
 {
     rb_tree *tree = rb_tree_new(rb_tree_int_cmp);
-    int max_val = 10000;
+    int max_val = 10000000;
 
     for (int i = 0; i < max_val; i++) {
         int *value = malloc(sizeof(int));
@@ -297,9 +297,9 @@ int main(void)
     run_test(test_insert_ints);
     run_test(test_insert_benchmark);
     run_test(test_insert_strs);
-    // run_test(test_insert_and_delete_ints);
-    // run_test(test_insert_and_delete_strs);
-    // run_test(test_deletion);
+    run_test(test_insert_and_delete_ints);
+    run_test(test_insert_and_delete_strs);
+    run_test(test_deletion);
     run_test(test_traverse);
     run_test(test_find_min);
     run_test(test_find_max);

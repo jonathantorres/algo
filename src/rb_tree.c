@@ -61,20 +61,20 @@ void _rb_tree_traverse_node(rb_tree_node *node, rb_tree_node *sentinel, rb_tree_
     _rb_tree_traverse_node(node->right, sentinel, cb);
 }
 
-void _rb_tree_destroy_node(rb_tree_node *node, rb_tree_node *sentinel)
+void _rb_tree_free_node(rb_tree_node *node, rb_tree_node *sentinel)
 {
     if (node == sentinel) {
         return;
     }
 
-    _rb_tree_destroy_node(node->left, sentinel);
-    _rb_tree_destroy_node(node->right, sentinel);
+    _rb_tree_free_node(node->left, sentinel);
+    _rb_tree_free_node(node->right, sentinel);
     free(node);
 }
 
-void _rb_tree_destroy_single_node(rb_tree_node *node, rb_tree_cb cb)
+void _rb_tree_free_single_node(rb_tree_node *node, rb_tree_node *sentinel, rb_tree_cb cb)
 {
-    if (!node) {
+    if (node == sentinel) {
         return;
     }
     if (cb) {
@@ -159,32 +159,15 @@ void _rb_tree_right_rotate(rb_tree *tree, rb_tree_node *node)
     node->parent = tmp;
 }
 
-rb_tree_node *_rb_tree_update_parent_node(rb_tree_node *node_to_delete, rb_tree_node *node_to_move, rb_tree_node *sentinel)
-{
-    if (node_to_move != sentinel) {
-        node_to_move->parent = node_to_delete->parent;
-    }
-    if (node_to_delete->parent != sentinel) {
-        if (node_to_delete == node_to_delete->parent->left) {
-            if (node_to_move != sentinel) {
-                node_to_move->parent->left = node_to_move;
-            } else {
-                node_to_delete->parent->left = node_to_move;
-            }
-        } else if (node_to_delete == node_to_delete->parent->right) {
-            if (node_to_move != sentinel) {
-                node_to_move->parent->right = node_to_move;
-            } else {
-                node_to_delete->parent->right = node_to_move;
-            }
-        }
-    }
-
-    return node_to_move;
-}
-
 void _rb_tree_insert_fixup(rb_tree *tree, rb_tree_node *node)
 {
+    if (!tree) {
+        return;
+    }
+    if (tree->root == tree->sentinel) {
+        return;
+    }
+
     while (node != tree->root && rb_tree_is_red(node->parent)) {
         if (node->parent == node->parent->parent->left) {
             rb_tree_node *right_node = node->parent->parent->right;
@@ -221,6 +204,85 @@ void _rb_tree_insert_fixup(rb_tree *tree, rb_tree_node *node)
         }
     }
     rb_tree_black(tree->root);
+}
+
+void _rb_tree_delete_fixup(rb_tree *tree, rb_tree_node *node)
+{
+    if (!tree) {
+        return;
+    }
+    if (tree->root == tree->sentinel) {
+        return;
+    }
+
+    rb_tree_node *tmp = NULL;
+    while (node != tree->root && rb_tree_is_black(node)) {
+        if (node == node->parent->left) {
+            tmp = node->parent->right;
+            if (rb_tree_is_red(tmp)) {
+                rb_tree_black(tmp);
+                rb_tree_red(node->parent);
+                _rb_tree_left_rotate(tree, node->parent);
+                tmp = node->parent->right;
+            }
+            if (rb_tree_is_black(tmp->left) && rb_tree_is_black(tmp->right)) {
+                rb_tree_red(tmp);
+                node = node->parent;
+            } else if (rb_tree_is_black(tmp->right)) {
+                rb_tree_black(tmp->left);
+                rb_tree_red(tmp);
+                _rb_tree_right_rotate(tree, tmp);
+                tmp = node->parent->right;
+            }
+            tmp->color = node->parent->color;
+            rb_tree_black(node->parent);
+            rb_tree_black(tmp->right);
+            _rb_tree_left_rotate(tree, node->parent);
+            node = tree->root;
+        } else {
+            tmp = node->parent->left;
+            if (rb_tree_is_red(tmp)) {
+                rb_tree_black(tmp);
+                rb_tree_red(node->parent);
+                _rb_tree_right_rotate(tree, node->parent);
+                tmp = node->parent->left;
+            }
+            if (rb_tree_is_black(tmp->left) && rb_tree_is_black(tmp->right)) {
+                rb_tree_red(tmp);
+                node = node->parent;
+            } else if (rb_tree_is_black(tmp->left)) {
+                rb_tree_black(tmp->right);
+                rb_tree_red(tmp);
+                _rb_tree_left_rotate(tree, tmp);
+                tmp = node->parent->left;
+            }
+            tmp->color = node->parent->color;
+            rb_tree_black(node->parent);
+            rb_tree_black(tmp->left);
+            _rb_tree_left_rotate(tree, node->parent);
+            node = tree->root;
+        }
+    }
+    rb_tree_black(node);
+}
+
+void _rb_tree_transplant(rb_tree *tree, rb_tree_node *node, rb_tree_node *tmp)
+{
+    if (!tree) {
+        return;
+    }
+    if (tree->root == tree->sentinel) {
+        return;
+    }
+
+    if (node->parent == tree->sentinel) {
+        tree->root = tmp;
+    } else if (node == node->parent->left) {
+        node->parent->left = tmp;
+    } else {
+        node->parent->right = tmp;
+    }
+    tmp->parent = node->parent;
 }
 
 rb_tree *rb_tree_new(rb_tree_cmp cmp)
@@ -275,74 +337,44 @@ void rb_tree_delete(rb_tree *tree, void *value, rb_tree_cb cb)
         return;
     }
 
-    bool deleted_root = false;
-    rb_tree_node *node_to_delete = _rb_tree_find_node(tree->root, tree->sentinel, value, tree->cmp);
-    if (node_to_delete == NULL) {
+    rb_tree_node *del_node = _rb_tree_find_node(tree->root, tree->sentinel, value, tree->cmp);
+    if (del_node == NULL) {
         return;
     }
-    if (node_to_delete == tree->root) {
-        deleted_root = true;
-    }
 
-    // let's delete the node
-    if (node_to_delete->left == tree->sentinel && node_to_delete->right == tree->sentinel) {
-        // node with no children
-        rb_tree_node *new_root = _rb_tree_update_parent_node(node_to_delete, tree->sentinel, tree->sentinel);
-        if (deleted_root) {
-            tree->root = new_root;
-        }
-        _rb_tree_destroy_single_node(node_to_delete, cb);
-    } else if (node_to_delete->left == tree->sentinel && node_to_delete->right != tree->sentinel) {
-        // node with a right child
-        rb_tree_node *new_root = _rb_tree_update_parent_node(node_to_delete, node_to_delete->right, tree->sentinel);
-        if (deleted_root) {
-            tree->root = new_root;
-        }
-        _rb_tree_destroy_single_node(node_to_delete, cb);
-    } else if (node_to_delete->left != tree->sentinel && node_to_delete->right == tree->sentinel) {
-        // node with a left child
-        rb_tree_node *new_root = _rb_tree_update_parent_node(node_to_delete, node_to_delete->left, tree->sentinel);
-        if (deleted_root) {
-            tree->root = new_root;
-        }
-        _rb_tree_destroy_single_node(node_to_delete, cb);
-    } else if (node_to_delete->left != tree->sentinel && node_to_delete->right != tree->sentinel) {
-        // node with left and right children
-        rb_tree_node *replacement = _rb_tree_find_min_node(node_to_delete->right, tree->sentinel);
-        if (replacement->parent != tree->sentinel) {
-            if (replacement->parent->left == replacement) {
-                replacement->parent->left = tree->sentinel;
-            }
-        }
-        replacement->parent = node_to_delete->parent;
+    rb_tree_node *tmp = del_node;
+    rb_tree_color tmp_orig_color = tmp->color;
+    rb_tree_node *rep_node = NULL;
 
-        if (node_to_delete->parent != tree->sentinel) {
-            if (node_to_delete->parent->right == node_to_delete) {
-                node_to_delete->parent->right = replacement;
-            } else if (node_to_delete->parent->left == node_to_delete) {
-                node_to_delete->parent->left = replacement;
-            }
-        }
-
-        // using just the right node as the replacement
-        if (node_to_delete->right == replacement) {
-            replacement->right = tree->sentinel;
-            replacement->left = node_to_delete->left;
-            node_to_delete->left->parent = replacement;
+    if (del_node->left == tree->sentinel) {
+        rep_node = del_node->right;
+        _rb_tree_transplant(tree, del_node, del_node->right);
+        _rb_tree_free_single_node(del_node, tree->sentinel, cb);
+    } else if (del_node->right == tree->sentinel) {
+        rep_node = del_node->left;
+        _rb_tree_transplant(tree, del_node, del_node->left);
+        _rb_tree_free_single_node(del_node, tree->sentinel, cb);
+    } else {
+        tmp = _rb_tree_find_min_node(del_node->right, tree->sentinel);
+        tmp_orig_color = tmp->color;
+        rep_node = tmp->right;
+        if (tmp->parent == del_node) {
+            rep_node->parent = tmp;
         } else {
-            replacement->right = node_to_delete->right;
-            replacement->left = node_to_delete->left;
-            node_to_delete->left->parent = replacement;
-            node_to_delete->right->parent = replacement;
+            _rb_tree_transplant(tree, tmp, tmp->right);
+            tmp->right = del_node->right;
+            tmp->right->parent = tmp;
         }
-        if (deleted_root) {
-            tree->root = replacement;
-        }
-        _rb_tree_destroy_single_node(node_to_delete, cb);
+        _rb_tree_transplant(tree, del_node, tmp);
+        tmp->left = del_node->left;
+        tmp->left->parent = tmp;
+        tmp->color = del_node->color;
+        _rb_tree_free_single_node(del_node, tree->sentinel, cb);
     }
     tree->len--;
-
-    // TODO: Do rotation stuff
+    if (tmp_orig_color == RB_TREE_BLACK) {
+        _rb_tree_delete_fixup(tree, rep_node);
+    }
 }
 
 void *rb_tree_search(rb_tree *tree, void *value)
@@ -420,7 +452,7 @@ void rb_tree_free(rb_tree *tree, rb_tree_cb cb)
     }
 
     rb_tree_traverse(tree, cb);
-    _rb_tree_destroy_node(tree->root, tree->sentinel);
+    _rb_tree_free_node(tree->root, tree->sentinel);
 
     if (tree) {
         free(tree->sentinel);
