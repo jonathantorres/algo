@@ -52,6 +52,8 @@ bs_tree_map_test: bs_tree_map_test.c bs_tree_map.o
 	$(CFLAGS) tests/bs_tree_map_test.c bs_tree_map.o -o bin/bs_tree_map_test
 rb_tree_test: rb_tree_test.c rb_tree.o
 	$(CFLAGS) tests/rb_tree_test.c rb_tree.o -o bin/rb_tree_test
+rb_tree_map_test: rb_tree_map_test.c rb_tree_map.o
+	$(CFLAGS) tests/rb_tree_map_test.c rb_tree_map.o -o bin/rb_tree_map_test
 p_queue_test: p_queue_test.c p_queue.o bs_tree.o
 	$(CFLAGS) tests/p_queue_test.c p_queue.o bs_tree.o -o bin/p_queue_test
 bubble_sort_test: bubble_sort_test.c bubble_sort.o array.o
@@ -100,6 +102,8 @@ bs_tree_map.o: bs_tree_map.c bs_tree_map.h
 	$(CFLAGS) -c src/bs_tree_map.c src/bs_tree_map.h
 rb_tree.o: rb_tree.c rb_tree.h
 	$(CFLAGS) -c src/rb_tree.c src/rb_tree.h
+rb_tree_map.o: rb_tree_map.c rb_tree_map.h
+	$(CFLAGS) -c src/rb_tree_map.c src/rb_tree_map.h
 bubble_sort.o: bubble_sort.c bubble_sort.h
 	$(CFLAGS) -c src/bubble_sort.c src/bubble_sort.h
 insertion_sort.o: insertion_sort.c insertion_sort.h
@@ -120,7 +124,7 @@ binary_search.o: binary_search.c binary_search.h
 test: sl_list_test dl_list_test cl_list_test stack_test queue_test array_test \
 bubble_sort_test insertion_sort_test selection_sort_test merge_sort_test \
 quick_sort_test c_buffer_test h_table_test trie_test bs_tree_test \
-bs_tree_map_test binary_search_test p_queue_test heap_sort_test graph_test
+bs_tree_map_test rb_tree_map_test binary_search_test p_queue_test heap_sort_test graph_test
 	./bin/sl_list_test
 	./bin/dl_list_test
 	./bin/cl_list_test
@@ -139,6 +143,8 @@ bs_tree_map_test binary_search_test p_queue_test heap_sort_test graph_test
 	./bin/trie_test
 	./bin/bs_tree_test
 	./bin/bs_tree_map_test
+	./bin/rb_tree_test
+	./bin/rb_tree_map_test
 	./bin/p_queue_test
 # 	./bin/graph_test
 
