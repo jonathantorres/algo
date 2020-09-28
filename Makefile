@@ -54,6 +54,8 @@ rb_tree_test: rb_tree_test.c rb_tree.o
 	$(CFLAGS) tests/rb_tree_test.c rb_tree.o -o bin/rb_tree_test
 rb_tree_map_test: rb_tree_map_test.c rb_tree_map.o
 	$(CFLAGS) tests/rb_tree_map_test.c rb_tree_map.o -o bin/rb_tree_map_test
+graph_test: graph_test.c graph.o queue.o dl_list.o
+	$(CFLAGS) tests/graph_test.c graph.o dl_list.o queue.o -o bin/graph_test
 p_queue_test: p_queue_test.c p_queue.o bs_tree.o
 	$(CFLAGS) tests/p_queue_test.c p_queue.o bs_tree.o -o bin/p_queue_test
 bubble_sort_test: bubble_sort_test.c bubble_sort.o array.o
@@ -70,10 +72,6 @@ heap_sort_test: heap_sort_test.c heap_sort.o array.o p_queue.o bs_tree.o
 	$(CFLAGS) tests/heap_sort_test.c heap_sort.o array.o p_queue.o bs_tree.o -o bin/heap_sort_test
 binary_search_test: binary_search_test.c binary_search.o array.o
 	$(CFLAGS) tests/binary_search_test.c binary_search.o array.o -o bin/binary_search_test
-
-# Graph
-graph_test: graph_test.c dl_list.o queue.o
-	$(CFLAGS) tests/graph_test.c dl_list.o queue.o -o bin/graph_test
 
 # Compiling objects
 sl_list.o: sl_list.c sl_list.h
@@ -104,6 +102,8 @@ rb_tree.o: rb_tree.c rb_tree.h
 	$(CFLAGS) -c src/rb_tree.c src/rb_tree.h
 rb_tree_map.o: rb_tree_map.c rb_tree_map.h
 	$(CFLAGS) -c src/rb_tree_map.c src/rb_tree_map.h
+graph.o: graph.c graph.h
+	$(CFLAGS) -c src/graph.c src/graph.h
 bubble_sort.o: bubble_sort.c bubble_sort.h
 	$(CFLAGS) -c src/bubble_sort.c src/bubble_sort.h
 insertion_sort.o: insertion_sort.c insertion_sort.h
