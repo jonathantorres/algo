@@ -47,6 +47,15 @@ void graph_add_edge(graph *_graph, int x, int y, bool directed)
     }
 }
 
+void print_queue(queue *q)
+{
+    printf("{");
+    QUEUE_FOREACH(q) {
+        printf("%d,", *(int*)cur->value);
+    }
+    printf("}\n");
+}
+
 void graph_bfs(graph *_graph, int start, graph_vertex_proc vrt_proc_cb, graph_edge_proc edg_proc_cb)
 {
     if (!_graph) {
@@ -61,8 +70,6 @@ void graph_bfs(graph *_graph, int start, graph_vertex_proc vrt_proc_cb, graph_ed
     bool processed[MAXV+1];
     bool discovered[MAXV+1];
     int parent[MAXV+1];
-    int cur_vertex;
-    int suc_vertex;
     edgenode *_edge_node;
 
     for (int i = 1; i <= _graph->nvertices; i++) {
@@ -71,31 +78,35 @@ void graph_bfs(graph *_graph, int start, graph_vertex_proc vrt_proc_cb, graph_ed
         parent[i] = -1;
     }
 
-    queue_enqueue(_queue, &start);
-    discovered[start] = true;
+    int *begin = malloc(sizeof(int));
+    *begin = start;
+    queue_enqueue(_queue, begin);
+    discovered[*begin] = true;
 
     while (queue_len(_queue) != 0) {
-        cur_vertex = *(int*)queue_dequeue(_queue);
+        int *cur_vertex = (int*)queue_dequeue(_queue);
         if (vrt_proc_cb) {
-            vrt_proc_cb(cur_vertex);
+            vrt_proc_cb(*cur_vertex);
         }
 
-        processed[cur_vertex] = true;
-        _edge_node = _graph->edges[cur_vertex];
+        processed[*cur_vertex] = true;
+        _edge_node = _graph->edges[*cur_vertex];
         while (_edge_node != NULL) {
-            suc_vertex = _edge_node->y;
-            if ((processed[suc_vertex] == false) || _graph->directed) {
+            int *suc_vertex = malloc(sizeof(int));
+            *suc_vertex = _edge_node->y;
+            if ((processed[*suc_vertex] == false) || _graph->directed) {
                 if (edg_proc_cb) {
-                    edg_proc_cb(cur_vertex, suc_vertex);
+                    edg_proc_cb(*cur_vertex, *suc_vertex);
                 }
             }
-            if (discovered[suc_vertex] == false) {
-                queue_enqueue(_queue, &suc_vertex);
-                discovered[suc_vertex] = true;
-                parent[suc_vertex] = cur_vertex;
+            if (discovered[*suc_vertex] == false) {
+                queue_enqueue(_queue, suc_vertex);
+                discovered[*suc_vertex] = true;
+                parent[*suc_vertex] = *cur_vertex;
             }
             _edge_node = _edge_node->next;
         }
+        free(cur_vertex);
     }
     queue_free(_queue, NULL);
 }
