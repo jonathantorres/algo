@@ -16,6 +16,7 @@ Various algorithms and data structures
 - Red Black Tree
 - Red Black Tree Map
 - Trie
+- Graph (Directed or Undirected)
 
 ## Algorithms
 - Bubble Sort
@@ -25,6 +26,8 @@ Various algorithms and data structures
 - Selection Sort
 - Heap Sort
 - Binary Search
+- Breadth First Search
+- Depth First Search
 
 ## Internet/Network
 - Daytime Client/Server
