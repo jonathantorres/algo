@@ -47,15 +47,6 @@ void graph_add_edge(graph *_graph, int x, int y, bool directed)
     }
 }
 
-void print_queue(queue *q)
-{
-    printf("{");
-    QUEUE_FOREACH(q) {
-        printf("%d,", *(int*)cur->value);
-    }
-    printf("}\n");
-}
-
 void graph_bfs(graph *_graph, int start, graph_vertex_proc vrt_proc_cb, graph_edge_proc edg_proc_cb)
 {
     if (!_graph) {
@@ -109,4 +100,33 @@ void graph_bfs(graph *_graph, int start, graph_vertex_proc vrt_proc_cb, graph_ed
         free(cur_vertex);
     }
     queue_free(_queue, NULL);
+}
+
+void graph_free(graph *_graph)
+{
+    if (!_graph) {
+        return;
+    }
+
+    edgenode *edge_n = NULL;
+    for (unsigned int i = 1; i <= MAXV; i++) {
+        edge_n = _graph->edges[i];
+        if (edge_n != NULL) {
+            edgenode *cur_edge = edge_n;
+            edgenode *prev_edge = NULL;
+            while (cur_edge->next != NULL) {
+                prev_edge = cur_edge;
+                cur_edge = cur_edge->next;
+                if (prev_edge) {
+                    free(prev_edge);
+                }
+            }
+            if (cur_edge) {
+                free(cur_edge);
+            }
+        }
+    }
+    if (_graph) {
+        free(_graph);
+    }
 }

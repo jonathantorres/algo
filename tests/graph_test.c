@@ -125,6 +125,7 @@ char *graph_new_test()
     graph_add_edge(d_graph, 4, 5, false);
     graph_add_edge(d_graph, 5, 6, false);
     _graph_print_stdout(d_graph);
+    graph_free(d_graph);
     return NULL;
 }
 
@@ -146,6 +147,7 @@ char *graph_bfs_test()
     graph_add_edge(d_graph, four, five, false);
     _graph_print_stdout(d_graph);
     graph_bfs(d_graph, one, _graph_process_vertex, _graph_process_edge);
+    graph_free(d_graph);
 
     return NULL;
 }
