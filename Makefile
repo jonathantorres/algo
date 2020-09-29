@@ -54,8 +54,8 @@ rb_tree_test: rb_tree_test.c rb_tree.o
 	$(CFLAGS) tests/rb_tree_test.c rb_tree.o -o bin/rb_tree_test
 rb_tree_map_test: rb_tree_map_test.c rb_tree_map.o
 	$(CFLAGS) tests/rb_tree_map_test.c rb_tree_map.o -o bin/rb_tree_map_test
-graph_test: graph_test.c graph.o queue.o dl_list.o
-	$(CFLAGS) tests/graph_test.c graph.o dl_list.o queue.o -o bin/graph_test
+graph_test: graph_test.c graph.o queue.o stack.o dl_list.o
+	$(CFLAGS) tests/graph_test.c graph.o dl_list.o queue.o stack.o -o bin/graph_test
 p_queue_test: p_queue_test.c p_queue.o bs_tree.o
 	$(CFLAGS) tests/p_queue_test.c p_queue.o bs_tree.o -o bin/p_queue_test
 bubble_sort_test: bubble_sort_test.c bubble_sort.o array.o

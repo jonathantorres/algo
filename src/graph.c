@@ -102,6 +102,71 @@ void graph_bfs(graph *_graph, int start, graph_vertex_proc vrt_proc_cb, graph_ed
     queue_free(_queue, NULL);
 }
 
+void graph_dfs(graph *_graph, int start, graph_vertex_proc vrt_proc_cb, graph_edge_proc edg_proc_cb)
+{
+    if (!_graph) {
+        return;
+    }
+
+    stack *_stack = stack_new();
+    if (!_stack) {
+        return;
+    }
+
+    int time = 0;
+    int entry_time[MAXV+1];
+    int exit_time[MAXV+1];
+    bool processed[MAXV+1];
+    bool discovered[MAXV+1];
+
+    for (int i = 1; i <= _graph->nvertices; i++) {
+        processed[i] = false;
+        discovered[i] = false;
+        entry_time[i] = 0;
+        exit_time[i] = 0;
+    }
+
+    edgenode *_edge_node = NULL;
+    int *begin = malloc(sizeof(int));
+    if (!begin) {
+        return;
+    }
+    *begin = start;
+    stack_push(_stack, begin);
+    discovered[*begin] = true;
+    time = time+1;
+    entry_time[*begin] = time;
+
+    while (stack_len(_stack) != 0) {
+        int *cur_vertex = (int*)stack_pop(_stack);
+        if (vrt_proc_cb) {
+            vrt_proc_cb(*cur_vertex);
+        }
+        _edge_node = _graph->edges[*cur_vertex];
+        while (_edge_node != NULL) {
+            int *suc_vertex = malloc(sizeof(int));
+            *suc_vertex = _edge_node->y;
+            if (discovered[*suc_vertex] == false) {
+                stack_push(_stack, suc_vertex);
+                discovered[*suc_vertex] = true;
+                time = time+1;
+                entry_time[*suc_vertex] = time;
+            }
+            if ((processed[*suc_vertex] == false) || _graph->directed) {
+                if (edg_proc_cb) {
+                    edg_proc_cb(*cur_vertex, *suc_vertex);
+                }
+            }
+            _edge_node = _edge_node->next;
+        }
+        time = time+1;
+        exit_time[*cur_vertex] = time;
+        processed[*cur_vertex] = true;
+        free(cur_vertex);
+    }
+    stack_free(_stack, NULL);
+}
+
 void graph_free(graph *_graph)
 {
     if (!_graph) {
