@@ -22,7 +22,7 @@ graph *graph_new(int nvertices, bool directed)
     return new_graph;
 }
 
-void graph_add_edge(graph *_graph, int x, int y, bool directed)
+void graph_add_edge(graph *_graph, int x, int y, int weight, bool directed)
 {
     if (!_graph) {
         return;
@@ -33,7 +33,7 @@ void graph_add_edge(graph *_graph, int x, int y, bool directed)
         return;
     }
 
-    _edge_node->weight = 0;
+    _edge_node->weight = weight;
     _edge_node->y = y;
     _edge_node->next = _graph->edges[x];
 
@@ -41,7 +41,7 @@ void graph_add_edge(graph *_graph, int x, int y, bool directed)
     _graph->degree[x]++;
 
     if (!directed) {
-        graph_add_edge(_graph, y, x, true);
+        graph_add_edge(_graph, y, x, weight, true);
     } else {
         _graph->nedges++;
     }
