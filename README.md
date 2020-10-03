@@ -28,6 +28,8 @@ Various algorithms and data structures
 - Binary Search
 - Breadth First Search
 - Depth First Search
+- Minimum Spanning Tree
+- Dijkstra's Shortest Path
 
 ## Internet/Network
 - Daytime Client/Server
