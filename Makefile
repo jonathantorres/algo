@@ -123,8 +123,8 @@ binary_search.o: binary_search.c binary_search.h
 .PHONY: test
 test: sl_list_test dl_list_test cl_list_test stack_test queue_test array_test \
 bubble_sort_test insertion_sort_test selection_sort_test merge_sort_test \
-quick_sort_test c_buffer_test h_table_test trie_test bs_tree_test \
-bs_tree_map_test rb_tree_map_test binary_search_test p_queue_test heap_sort_test graph_test
+quick_sort_test c_buffer_test h_table_test trie_test bs_tree_test bs_tree_map_test \
+rb_tree_test rb_tree_map_test binary_search_test p_queue_test heap_sort_test graph_test
 	./bin/sl_list_test
 	./bin/dl_list_test
 	./bin/cl_list_test
