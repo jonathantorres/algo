@@ -224,6 +224,63 @@ graph *graph_mst(graph *_graph, int start)
     return result;
 }
 
+graph *graph_dijkstra(graph *_graph, int start)
+{
+    if (!_graph) {
+        return NULL;
+    }
+
+    bool intree[MAXV+1];
+    int distance[MAXV+1];
+    int parent[MAXV+1];
+    int vertices[MAXV+1];
+    edgenode *_edge_node = NULL;
+
+    for (int i = 1; i <= _graph->nvertices; i++) {
+        intree[i] = false;
+        distance[i] = INT_MAX;
+        parent[i] = -1;
+        vertices[i] = -1;
+    }
+
+    distance[start] = 0;
+    int cur_vertex = start;
+
+    while (intree[cur_vertex] == false) {
+        intree[cur_vertex] = true;
+        _edge_node = _graph->edges[cur_vertex];
+        while (_edge_node != NULL) {
+            int nxt_vertex = _edge_node->y;
+            int weight = _edge_node->weight;
+            if (distance[nxt_vertex] > (distance[cur_vertex] + weight)) {
+                distance[nxt_vertex] = distance[cur_vertex] + weight;
+                parent[nxt_vertex] = cur_vertex;
+                vertices[nxt_vertex] = nxt_vertex;
+            }
+            _edge_node = _edge_node->next;
+        }
+        cur_vertex = 1;
+        int dist = INT_MAX;
+        for (int i = 1; i <= _graph->nvertices; i++) {
+            if ((intree[i] == false) && (dist > distance[i])) {
+                dist = distance[i];
+                cur_vertex = i;
+            }
+        }
+    }
+
+    // create the shortest path graph
+    graph *result = graph_new(_graph->nvertices, _graph->directed);
+    int *cur_distance = &distance[1]; // skip the first distance, since its 0
+    for (int i = 1; i <= _graph->nvertices; i++) {
+        if (parent[i] > -1 && vertices[i] > -1) {
+            cur_distance++;
+            graph_add_edge(result, parent[i], vertices[i], *cur_distance, _graph->directed);
+        }
+    }
+    return result;
+}
+
 void graph_free(graph *_graph)
 {
     if (!_graph) {

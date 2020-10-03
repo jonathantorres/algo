@@ -124,6 +124,31 @@ char *graph_mst_test()
     return NULL;
 }
 
+char *graph_dijkstra_test()
+{
+    int one = 1;
+    int two = 2;
+    int three = 3;
+    int four = 4;
+    int five = 5;
+    graph *d_graph = graph_new(5, false);
+    graph_add_edge(d_graph, one, two, 4, false);
+    graph_add_edge(d_graph, one, three, 4, false);
+    graph_add_edge(d_graph, one, four, 6, false);
+    graph_add_edge(d_graph, one, five, 6, false);
+    graph_add_edge(d_graph, two, three, 2, false);
+    graph_add_edge(d_graph, three, four, 8, false);
+    graph_add_edge(d_graph, four, five, 9, false);
+    _graph_print_stdout(d_graph);
+
+    graph *result = graph_dijkstra(d_graph, four);
+    _graph_print_stdout(result);
+    graph_free(d_graph);
+    graph_free(result);
+
+    return NULL;
+}
+
 int main()
 {
     start_tests("graph tests");
@@ -131,6 +156,7 @@ int main()
     run_test(graph_bfs_test);
     run_test(graph_dfs_test);
     run_test(graph_mst_test);
+    run_test(graph_dijkstra_test);
     end_tests();
     return 0;
 }

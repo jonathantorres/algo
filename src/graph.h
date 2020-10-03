@@ -31,6 +31,7 @@ void graph_add_edge(graph *_graph, int x, int y, int weight, bool directed);
 void graph_bfs(graph *_graph, int start, graph_vertex_proc vrt_proc_cb, graph_edge_proc edg_proc_cb);
 void graph_dfs(graph *_graph, int start, graph_vertex_proc vrt_proc_cb, graph_edge_proc edg_proc_cb);
 graph *graph_mst(graph *_graph, int start);
+graph *graph_dijkstra(graph *_graph, int start);
 void graph_free(graph *_graph);
 
 #endif
