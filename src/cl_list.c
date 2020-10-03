@@ -5,7 +5,6 @@ cl_list_node *_cl_list_create_node(void *value)
     cl_list_node *node = malloc(sizeof(cl_list_node));
 
     if (!node) {
-        fputs("Not enough memory.", stderr);
         return NULL;
     }
 
@@ -19,7 +18,6 @@ cl_list_node *_cl_list_create_node(void *value)
 void _cl_list_free_node(cl_list_node *node, cl_list_free_cb cb)
 {
     if (!node) {
-        fputs("A valid node must be provided.", stderr);
         return;
     }
     if (cb) {
@@ -39,7 +37,6 @@ cl_list *cl_list_new()
     cl_list *new_list = malloc(sizeof(cl_list));
 
     if (!new_list) {
-        fputs("Not enough memory.", stderr);
         return NULL;
     }
 
@@ -76,7 +73,6 @@ void cl_list_clear(cl_list *list, cl_list_free_cb cb)
 void cl_list_free(cl_list *list, cl_list_free_cb cb)
 {
     if (!list) {
-        fputs("Must provide a cl_list.", stderr);
         return;
     }
 
@@ -88,12 +84,10 @@ void cl_list_free(cl_list *list, cl_list_free_cb cb)
 int cl_list_len(cl_list *list)
 {
     if (!list) {
-        fputs("Must provide a cl_list.", stderr);
         return -1;
     }
 
     int len = 0;
-
     if (list->first != NULL) {
         cl_list_node *current_node = list->first;
         len++;
@@ -111,7 +105,6 @@ int cl_list_len(cl_list *list)
 void cl_list_push(cl_list *list, void *value)
 {
     if (!list) {
-        fputs("Must provide a cl_list.", stderr);
         return;
     }
 
@@ -140,7 +133,6 @@ void cl_list_push(cl_list *list, void *value)
 void cl_list_shift(cl_list *list, void *value)
 {
     if (!list) {
-        fputs("Must provide a cl_list.", stderr);
         return;
     }
 
@@ -161,7 +153,6 @@ void cl_list_shift(cl_list *list, void *value)
 void *cl_list_unshift(cl_list *list)
 {
     if (!list) {
-        fputs("Must provide a cl_list.", stderr);
         return NULL;
     }
 
@@ -195,7 +186,6 @@ void *cl_list_unshift(cl_list *list)
 void *cl_list_pop(cl_list *list)
 {
     if (!list) {
-        fputs("Must provide a cl_list.", stderr);
         return NULL;
     }
 
@@ -232,7 +222,6 @@ void *cl_list_pop(cl_list *list)
 void cl_list_remove(cl_list *list, void *value, cl_list_cmp cmp, cl_list_free_cb cb)
 {
     if (!list) {
-        fputs("Must provide a valid cl_list.", stderr);
         return;
     }
 
@@ -280,7 +269,6 @@ void cl_list_remove(cl_list *list, void *value, cl_list_cmp cmp, cl_list_free_cb
 bool cl_list_exists(cl_list *list, void *value, cl_list_cmp cmp)
 {
     if (!list) {
-        fputs("Must provide a valid cl_list.", stderr);
         return -1;
     }
 
@@ -297,7 +285,6 @@ bool cl_list_exists(cl_list *list, void *value, cl_list_cmp cmp)
     }
 
     bool found = false;
-
     // check the rest
     while (current_node != list->last) {
         current_node = current_node->next;

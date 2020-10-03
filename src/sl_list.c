@@ -5,7 +5,6 @@ sl_list_node *_sl_list_create_node(void *value)
     sl_list_node *node = malloc(sizeof(sl_list_node));
 
     if (!node) {
-        fputs("Not enough memory.", stderr);
         return NULL;
     }
 
@@ -18,7 +17,6 @@ sl_list_node *_sl_list_create_node(void *value)
 void _sl_list_free_node(sl_list_node *node, sl_list_free_cb cb)
 {
     if (!node) {
-        fputs("A valid node must be provided.", stderr);
         return;
     }
     if (cb) {
@@ -36,7 +34,6 @@ sl_list *sl_list_new()
     sl_list *new_list = malloc(sizeof(sl_list));
 
     if (!new_list) {
-        fputs("Not enough memory.", stderr);
         return NULL;
     }
 
@@ -71,7 +68,6 @@ void sl_list_clear(sl_list *list, sl_list_free_cb cb)
 void sl_list_free(sl_list *list, sl_list_free_cb cb)
 {
     if (!list) {
-        fputs("Must provide a sl_list.", stderr);
         return;
     }
 
@@ -83,7 +79,6 @@ void sl_list_free(sl_list *list, sl_list_free_cb cb)
 int sl_list_len(sl_list *list)
 {
     if (!list) {
-        fputs("Must provide a sl_list.", stderr);
         return -1;
     }
 
@@ -106,7 +101,6 @@ int sl_list_len(sl_list *list)
 void sl_list_push(sl_list *list, void *value)
 {
     if (!list) {
-        fputs("Must provide a sl_list.", stderr);
         return;
     }
 
@@ -131,7 +125,6 @@ void sl_list_push(sl_list *list, void *value)
 void sl_list_shift(sl_list *list, void *value)
 {
     if (!list) {
-        fputs("Must provide a sl_list.", stderr);
         return;
     }
 
@@ -151,7 +144,6 @@ void sl_list_shift(sl_list *list, void *value)
 void *sl_list_unshift(sl_list *list)
 {
     if (!list) {
-        fputs("Must provide a sl_list.", stderr);
         return NULL;
     }
 
@@ -182,7 +174,6 @@ void *sl_list_unshift(sl_list *list)
 void *sl_list_pop(sl_list *list)
 {
     if (!list) {
-        fputs("Must provide a sl_list.", stderr);
         return NULL;
     }
 
@@ -219,7 +210,6 @@ void *sl_list_pop(sl_list *list)
 void sl_list_remove(sl_list *list, void *value, sl_list_cmp cmp, sl_list_free_cb cb)
 {
     if (!list) {
-        fputs("Must provide a valid sl_list.", stderr);
         return;
     }
 
@@ -266,7 +256,6 @@ void sl_list_remove(sl_list *list, void *value, sl_list_cmp cmp, sl_list_free_cb
 bool sl_list_exists(sl_list *list, void *value, sl_list_cmp cmp)
 {
     if (!list) {
-        fputs("Must provide a valid sl_list.", stderr);
         return -1;
     }
 

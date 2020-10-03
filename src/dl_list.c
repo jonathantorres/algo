@@ -5,7 +5,6 @@ dl_list_node *_dl_list_create_node(void *value)
     dl_list_node *node = malloc(sizeof(dl_list_node));
 
     if (!node) {
-        fputs("Not enough memory.", stderr);
         return NULL;
     }
 
@@ -19,7 +18,6 @@ dl_list_node *_dl_list_create_node(void *value)
 void _dl_list_free_node(dl_list_node *node, dl_list_free_cb cb)
 {
     if (!node) {
-        fputs("A valid node must be provided.", stderr);
         return;
     }
     if (cb) {
@@ -39,7 +37,6 @@ dl_list *dl_list_new()
     dl_list *new_list = malloc(sizeof(dl_list));
 
     if (!new_list) {
-        fputs("Not enough memory.", stderr);
         return NULL;
     }
 
@@ -74,7 +71,6 @@ void dl_list_clear(dl_list *list, dl_list_free_cb cb)
 void dl_list_free(dl_list *list, dl_list_free_cb cb)
 {
     if (!list) {
-        fputs("Must provide a dl_list.", stderr);
         return;
     }
 
@@ -86,7 +82,6 @@ void dl_list_free(dl_list *list, dl_list_free_cb cb)
 int dl_list_len(dl_list *list)
 {
     if (!list) {
-        fputs("Must provide a dl_list.", stderr);
         return -1;
     }
 
@@ -109,7 +104,6 @@ int dl_list_len(dl_list *list)
 void dl_list_push(dl_list *list, void *value)
 {
     if (!list) {
-        fputs("Must provide a dl_list.", stderr);
         return;
     }
 
@@ -135,7 +129,6 @@ void dl_list_push(dl_list *list, void *value)
 void dl_list_shift(dl_list *list, void *value)
 {
     if (!list) {
-        fputs("Must provide a dl_list.", stderr);
         return;
     }
 
@@ -156,7 +149,6 @@ void dl_list_shift(dl_list *list, void *value)
 void *dl_list_unshift(dl_list *list)
 {
     if (!list) {
-        fputs("Must provide a dl_list.", stderr);
         return NULL;
     }
 
@@ -188,7 +180,6 @@ void *dl_list_unshift(dl_list *list)
 void *dl_list_pop(dl_list *list)
 {
     if (!list) {
-        fputs("Must provide a dl_list.", stderr);
         return NULL;
     }
 
@@ -223,7 +214,6 @@ void *dl_list_pop(dl_list *list)
 void dl_list_remove(dl_list *list, void *value, dl_list_cmp cmp, dl_list_free_cb cb)
 {
     if (!list) {
-        fputs("Must provide a valid dl_list.", stderr);
         return;
     }
 
@@ -271,7 +261,6 @@ void dl_list_remove(dl_list *list, void *value, dl_list_cmp cmp, dl_list_free_cb
 bool dl_list_exists(dl_list *list, void *value, dl_list_cmp cmp)
 {
     if (!list) {
-        fputs("Must provide a valid dl_list.", stderr);
         return -1;
     }
 

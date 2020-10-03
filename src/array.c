@@ -21,7 +21,6 @@ array *array_new(unsigned int capacity, size_t item_size)
     array *_array = malloc(sizeof(array));
 
     if (!_array) {
-        fputs("[array_create] Not enough memory.", stderr);
         return NULL;
     }
 
@@ -32,7 +31,6 @@ array *array_new(unsigned int capacity, size_t item_size)
     _array->contents = calloc(_array->capacity, _array->item_size);
 
     if (!_array->contents) {
-        fputs("[array_create] Not enough memory.", stderr);
         return NULL;
     }
 
@@ -43,7 +41,6 @@ array *array_new(unsigned int capacity, size_t item_size)
 void array_free(array *_array, array_free_cb cb)
 {
     if (!_array) {
-        fputs("[array_destroy] Must provide an array.", stderr);
         return;
     }
 
@@ -56,7 +53,6 @@ void array_free(array *_array, array_free_cb cb)
 void array_clear(array *_array, array_free_cb cb)
 {
     if (!_array) {
-        fputs("[array_clear] Must provide an array.", stderr);
         return;
     }
 
@@ -79,7 +75,6 @@ void array_expand(array *_array)
     void *contents = realloc(_array->contents, new_capacity * _array->item_size);
 
     if (!contents) {
-        fputs("[array_expand] Not enough memory.", stderr);
         return;
     }
 
@@ -91,7 +86,6 @@ void array_expand(array *_array)
 void array_push(array *_array, void *value)
 {
     if (!_array) {
-        fputs("[array_push] Must provide an array.", stderr);
         return;
     }
 
@@ -108,7 +102,6 @@ void array_push(array *_array, void *value)
 void *array_pop(array *_array)
 {
     if (!_array) {
-        fputs("[array_pop] Must provide an array.", stderr);
         return NULL;
     }
 
@@ -124,7 +117,6 @@ void *array_pop(array *_array)
 void array_set(array *_array, void *elem, unsigned int index)
 {
     if (!_array) {
-        fputs("[array_set] Must provide an array.", stderr);
         return;
     }
 
@@ -132,7 +124,6 @@ void array_set(array *_array, void *elem, unsigned int index)
     if (index >= _array->capacity) {
         return;
     }
-
     if (index >= _array->len) {
         _array->len = index + 1;
     }
@@ -144,7 +135,6 @@ void array_set(array *_array, void *elem, unsigned int index)
 void *array_get(array *_array, unsigned int index)
 {
     if (!_array) {
-        fputs("[array_get] Must provide an array.", stderr);
         return NULL;
     }
 
@@ -160,7 +150,6 @@ void *array_get(array *_array, unsigned int index)
 void *array_remove(array *_array, unsigned int index)
 {
     if (!_array) {
-        fputs("[array_remove] Must provide an array.", stderr);
         return NULL;
     }
 
@@ -186,7 +175,6 @@ void *array_remove(array *_array, unsigned int index)
 void array_shift(array *_array, void *value)
 {
     if (!_array) {
-        fputs("[array_shift] Must provide an array.", stderr);
         return;
     }
 
@@ -211,12 +199,10 @@ void array_shift(array *_array, void *value)
 void *array_unshift(array *_array)
 {
     if (!_array) {
-        fputs("[array_unshift] Must provide an array.", stderr);
         return NULL;
     }
 
     void *element = NULL;
-
     if (_array->len > 0) {
         element = _array_remove_element_at(_array, 0);
 
@@ -233,7 +219,6 @@ void *array_unshift(array *_array)
 void array_swap(array *_array, unsigned int a, unsigned int b)
 {
     if (!_array) {
-        fputs("[array_swap] Must provide an array.", stderr);
         return;
     }
     if (a == b) {

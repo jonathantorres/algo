@@ -8,7 +8,6 @@ stack *stack_new()
 void stack_push(stack *_stack, void *value)
 {
     if (!_stack) {
-        fputs("Must provide a valid stack.", stderr);
         return;
     }
 
@@ -18,7 +17,6 @@ void stack_push(stack *_stack, void *value)
 void *stack_pop(stack *_stack)
 {
     if (!_stack) {
-        fputs("Must provide a valid stack.", stderr);
         return NULL;
     }
 
@@ -28,12 +26,10 @@ void *stack_pop(stack *_stack)
 void *stack_peek(stack *_stack)
 {
     if (!_stack) {
-        fputs("Must provide a valid stack.", stderr);
         return NULL;
     }
 
     if (_stack->first == NULL) {
-        fputs("The stack is empty", stderr);
         return NULL;
     }
 
@@ -43,7 +39,6 @@ void *stack_peek(stack *_stack)
 void stack_free(stack *_stack, stack_free_cb cb)
 {
     if (!_stack) {
-        fputs("Must provide a valid stack.", stderr);
         return;
     }
 
@@ -53,7 +48,6 @@ void stack_free(stack *_stack, stack_free_cb cb)
 void stack_clear(stack *_stack, stack_free_cb cb)
 {
     if (!_stack) {
-        fputs("Must provide a valid stack.", stderr);
         return;
     }
 
@@ -63,7 +57,6 @@ void stack_clear(stack *_stack, stack_free_cb cb)
 int stack_len(stack *_stack)
 {
     if (!_stack) {
-        fputs("Must provide a valid stack.", stderr);
         return 0;
     }
 

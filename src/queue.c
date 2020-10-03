@@ -8,7 +8,6 @@ queue *queue_new()
 void queue_enqueue(queue *_queue, void *value)
 {
     if (!_queue) {
-        fputs("Must provide a valid queue.", stderr);
         return;
     }
 
@@ -18,7 +17,6 @@ void queue_enqueue(queue *_queue, void *value)
 void *queue_dequeue(queue *_queue)
 {
     if (!_queue) {
-        fputs("Must provide a valid queue.", stderr);
         return NULL;
     }
 
@@ -28,12 +26,10 @@ void *queue_dequeue(queue *_queue)
 void *queue_peek(queue *_queue)
 {
     if (!_queue) {
-        fputs("Must provide a valid queue.", stderr);
         return NULL;
     }
 
     if (_queue->first == NULL) {
-        fputs("The queue is empty", stderr);
         return NULL;
     }
 
@@ -43,7 +39,6 @@ void *queue_peek(queue *_queue)
 void queue_free(queue *_queue, queue_free_cb cb)
 {
     if (!_queue) {
-        fputs("Must provide a valid queue.", stderr);
         return;
     }
 
@@ -53,7 +48,6 @@ void queue_free(queue *_queue, queue_free_cb cb)
 void queue_clear(queue *_queue, queue_free_cb cb)
 {
     if (!_queue) {
-        fputs("Must provide a valid queue.", stderr);
         return;
     }
 
@@ -63,7 +57,6 @@ void queue_clear(queue *_queue, queue_free_cb cb)
 int queue_len(queue *_queue)
 {
     if (!_queue) {
-        fputs("Must provide a valid queue.", stderr);
         return 0;
     }
 
