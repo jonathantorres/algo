@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include <stdlib.h>
+#include <limits.h>
 #include "queue.h"
 #include "stack.h"
 
@@ -29,6 +30,7 @@ graph *graph_new(int nvertices, bool directed);
 void graph_add_edge(graph *_graph, int x, int y, int weight, bool directed);
 void graph_bfs(graph *_graph, int start, graph_vertex_proc vrt_proc_cb, graph_edge_proc edg_proc_cb);
 void graph_dfs(graph *_graph, int start, graph_vertex_proc vrt_proc_cb, graph_edge_proc edg_proc_cb);
+graph *graph_mst(graph *_graph, int start);
 void graph_free(graph *_graph);
 
 #endif
