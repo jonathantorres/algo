@@ -176,18 +176,28 @@ char *test_benchmark()
 
 char *test_int_keys()
 {
-    int first_key = 30;
-    int second_key = 40;
-    char *first_value = "Jonathan Torres";
-    char *second_value = "Jorge L Torres";
+    int key1 = 30;
+    int key2 = 40;
+    int key3 = 41;
+    char *val1 = "Jonathan Torres";
+    char *val2 = "Jorge L Torres";
+    char *val3 = "This is another thing";
+
     h_table *_h_table = h_table_new(h_table_int_compare_fn);
-    h_table_set(_h_table, &first_key, first_value);
-    h_table_set(_h_table, &second_key, second_value);
-    char *value = h_table_get(_h_table, &second_key);
+    h_table_set(_h_table, &key1, val1);
+    h_table_set(_h_table, &key2, val2);
+    h_table_set(_h_table, &key3, val3);
+    char *value = h_table_get(_h_table, &key2);
     assert(value != NULL, "Value for key '40' shouldn't be NULL");
-    assert(strcmp(value, second_value) == 0, "Value for key '40' should be 'Jorge L Torres'");
-    h_table_remove(_h_table, &first_key, NULL);
-    h_table_remove(_h_table, &second_key, NULL);
+    assert(strcmp(value, val2) == 0, "Value for key '40' should be 'Jorge L Torres'");
+    value = h_table_get(_h_table, &key3);
+    assert(value != NULL, "Value for key '41' shouldn't be NULL");
+    assert(strcmp(value, val3) == 0, "Value for key '41' should be 'This is another thing'");
+
+    h_table_remove(_h_table, &key1, NULL);
+    value = h_table_remove(_h_table, &key2, NULL);
+    assert(value != NULL, "Value for key '40' shouldn't be NULL");
+    assert(strcmp(value, val2) == 0, "Value for key '40' should be 'Jorge L Torres'");
     h_table_free(_h_table, NULL);
     return NULL;
 }
