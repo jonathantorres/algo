@@ -76,16 +76,10 @@ void h_table_free(h_table *_h_table, h_table_cb cb)
                         free(elem);
                     }
                 }
-                if (bucket->contents) {
-                    free(bucket->contents);
-                }
-                free(bucket);
+                array_free(bucket, NULL);
             }
         }
-        if (_h_table->buckets->contents) {
-            free(_h_table->buckets->contents);
-        }
-        free(_h_table->buckets);
+        array_free(_h_table->buckets, NULL);
     }
     free(_h_table);
 }
