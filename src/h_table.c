@@ -18,7 +18,6 @@ bool _h_table_bucket_index_is_valid(unsigned int bucket_index)
     if (bucket_index >= NUM_OF_BUCKETS) {
         return false;
     }
-
     return true;
 }
 
@@ -45,7 +44,6 @@ h_table *h_table_new(h_table_cmp cmp)
     h_table *_h_table = malloc(sizeof(h_table));
 
     if (!_h_table) {
-        fputs("[h_table_new] Not enough memory.", stderr);
         return NULL;
     }
 
@@ -59,7 +57,6 @@ h_table *h_table_new(h_table_cmp cmp)
 void h_table_free(h_table *_h_table, h_table_cb cb)
 {
     if (!_h_table) {
-        fputs("[h_table_free] Must provide a hash_table.", stderr);
         return;
     }
 
@@ -96,7 +93,6 @@ void h_table_free(h_table *_h_table, h_table_cb cb)
 void h_table_set(h_table *_h_table, char *key, void *value)
 {
     if (!_h_table) {
-        fputs("[h_table_set] Must provide a hash_table.", stderr);
         return;
     }
 
@@ -122,7 +118,6 @@ void h_table_set(h_table *_h_table, char *key, void *value)
 void *h_table_get(h_table *_h_table, char *key)
 {
     if (!_h_table) {
-        fputs("[h_table_get] Must provide a hash_table.", stderr);
         return NULL;
     }
 
@@ -145,7 +140,6 @@ void *h_table_get(h_table *_h_table, char *key)
 void *h_table_remove(h_table *_h_table, char *key, h_table_cb cb)
 {
     if (!_h_table) {
-        fputs("[h_table_remove] Must provide a hash_table.", stderr);
         return NULL;
     }
 
@@ -179,7 +173,6 @@ void *h_table_remove(h_table *_h_table, char *key, h_table_cb cb)
 void h_table_traverse(h_table *_h_table, h_table_cb cb)
 {
     if (!_h_table) {
-        fputs("[h_table_traverse] Must provide a hash_table.", stderr);
         return;
     }
 
