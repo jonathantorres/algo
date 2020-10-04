@@ -23,6 +23,18 @@ int h_table_compare_fn(void *a, void *b)
     return strcmp((char*)a, (char*)b);
 }
 
+int h_table_int_compare_fn(void *a, void *b)
+{
+    int val1 = *(int*)a;
+    int val2 = *(int*)b;
+    if (val1 > val2) {
+        return 1;
+    } else if (val1 < val2) {
+        return -1;
+    }
+    return 0;
+}
+
 void h_table_traverse_fn(void *key, void *value)
 {
     if (key) {
@@ -162,6 +174,24 @@ char *test_benchmark()
     return NULL;
 }
 
+char *test_int_keys()
+{
+    int first_key = 30;
+    int second_key = 40;
+    char *first_value = "Jonathan Torres";
+    char *second_value = "Jorge L Torres";
+    h_table *_h_table = h_table_new(h_table_int_compare_fn);
+    h_table_set(_h_table, &first_key, first_value);
+    h_table_set(_h_table, &second_key, second_value);
+    char *value = h_table_get(_h_table, &second_key);
+    assert(value != NULL, "Value for key '40' shouldn't be NULL");
+    assert(strcmp(value, second_value) == 0, "Value for key '40' should be 'Jorge L Torres'");
+    h_table_remove(_h_table, &first_key, NULL);
+    h_table_remove(_h_table, &second_key, NULL);
+    h_table_free(_h_table, NULL);
+    return NULL;
+}
+
 int main()
 {
     start_tests("hash table tests");
@@ -172,6 +202,7 @@ int main()
     run_test(test_remove);
     run_test(test_traverse);
     run_test(test_benchmark);
+    run_test(test_int_keys);
     end_tests();
 
     return 0;

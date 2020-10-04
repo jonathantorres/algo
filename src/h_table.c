@@ -21,7 +21,7 @@ bool _h_table_bucket_index_is_valid(unsigned int bucket_index)
     return true;
 }
 
-array *_h_table_find_bucket(h_table *_h_table, char *key, size_t *bucket_hash, bool create_new)
+array *_h_table_find_bucket(h_table *_h_table, void *key, size_t *bucket_hash, bool create_new)
 {
     *bucket_hash = _h_table_fnv1a_hash(key);
     unsigned int bucket_index = *bucket_hash % NUM_OF_BUCKETS;
@@ -70,9 +70,6 @@ void h_table_free(h_table *_h_table, h_table_cb cb)
                         if (cb) {
                             cb(elem->key, elem->value);
                         }
-                        if (elem->key) {
-                            free(elem->key);
-                        }
                         free(elem);
                     }
                 }
@@ -84,7 +81,7 @@ void h_table_free(h_table *_h_table, h_table_cb cb)
     free(_h_table);
 }
 
-void h_table_set(h_table *_h_table, char *key, void *value)
+void h_table_set(h_table *_h_table, void *key, void *value)
 {
     if (!_h_table) {
         return;
@@ -103,13 +100,13 @@ void h_table_set(h_table *_h_table, char *key, void *value)
         return;
     }
 
-    node->key = strdup(key);
+    node->key = key;
     node->value = value;
     node->hash = bucket_hash;
     array_push(bucket, node);
 }
 
-void *h_table_get(h_table *_h_table, char *key)
+void *h_table_get(h_table *_h_table, void *key)
 {
     if (!_h_table) {
         return NULL;
@@ -131,7 +128,7 @@ void *h_table_get(h_table *_h_table, char *key)
     return NULL;
 }
 
-void *h_table_remove(h_table *_h_table, char *key, h_table_cb cb)
+void *h_table_remove(h_table *_h_table, void *key, h_table_cb cb)
 {
     if (!_h_table) {
         return NULL;
@@ -155,7 +152,6 @@ void *h_table_remove(h_table *_h_table, char *key, h_table_cb cb)
             if (cb) {
                 cb(node->key, node->value);
             }
-            free(node->key);
             free(node);
             break;
         }
