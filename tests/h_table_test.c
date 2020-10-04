@@ -2,6 +2,22 @@
 #include "unittest.h"
 #include "h_table.h"
 
+int gen_random_number(int lower, int upper)
+{
+    return (rand() % (upper - lower + 1)) + lower;
+}
+
+char *alloc_rand_str()
+{
+    char *str = malloc(20);
+    memset(str, '\0', 20);
+    for (int i = 0; i < 19; i++) {
+        char c = gen_random_number(97, 122);
+        str[i] = c;
+    }
+    return str;
+}
+
 int h_table_compare_fn(void *a, void *b)
 {
     return strcmp((char*)a, (char*)b);
@@ -25,6 +41,16 @@ void h_table_free_fn(void *key, void *value)
     }
     if (value) {
         // nothing to free here
+    }
+}
+
+void h_table_free_cb_fn(void *key, void *value)
+{
+    if (key) {
+        free(key);
+    }
+    if (value) {
+        free(value);
     }
 }
 
@@ -123,6 +149,19 @@ char *test_traverse()
     return NULL;
 }
 
+char *test_benchmark()
+{
+    h_table *_h_table = h_table_new(h_table_compare_fn);
+
+    for (int i = 0; i < 1000; i++) {
+        char *key = alloc_rand_str();
+        char *val = alloc_rand_str();
+        h_table_set(_h_table, key, val);
+    }
+    h_table_free(_h_table, h_table_free_cb_fn);
+    return NULL;
+}
+
 int main()
 {
     start_tests("hash table tests");
@@ -132,6 +171,7 @@ int main()
     run_test(test_get);
     run_test(test_remove);
     run_test(test_traverse);
+    run_test(test_benchmark);
     end_tests();
 
     return 0;
