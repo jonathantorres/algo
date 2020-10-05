@@ -10,7 +10,6 @@ void *c_buffer_new(unsigned int len)
     c_buffer *buffer = malloc(sizeof(c_buffer));
 
     if (!buffer) {
-        fputs("Not enough memory.", stderr);
         return NULL;
     }
 
@@ -20,17 +19,14 @@ void *c_buffer_new(unsigned int len)
     buffer->buffer = malloc(buffer->len);
 
     if (!buffer->buffer) {
-        fputs("Not enough memory.", stderr);
         return NULL;
     }
-
     return buffer;
 }
 
 void c_buffer_clear(c_buffer *buffer)
 {
     if (!buffer) {
-        fputs("Must provide a valid c_buffer.", stderr);
         return;
     }
 
@@ -39,7 +35,6 @@ void c_buffer_clear(c_buffer *buffer)
         buffer->buffer = malloc(buffer->len);
 
         if (!buffer->buffer) {
-            fputs("Not enough memory.", stderr);
             return;
         }
         buffer->start = 0;
@@ -50,7 +45,6 @@ void c_buffer_clear(c_buffer *buffer)
 void c_buffer_free(c_buffer *buffer)
 {
     if (!buffer) {
-        fputs("Must provide a valid c_buffer.", stderr);
         return;
     }
 
@@ -63,7 +57,6 @@ void c_buffer_free(c_buffer *buffer)
 int c_buffer_write(c_buffer *buffer, char *data, unsigned int amount)
 {
     if (!buffer) {
-        fputs("Must provide a valid c_buffer.", stderr);
         return -1;
     }
 
@@ -90,7 +83,6 @@ int c_buffer_write(c_buffer *buffer, char *data, unsigned int amount)
 int c_buffer_read(c_buffer *buffer, char *target, unsigned int amount)
 {
     if (!buffer) {
-        fputs("Must provide a valid c_buffer.", stderr);
         return -1;
     }
 
