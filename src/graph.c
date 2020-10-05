@@ -1,5 +1,22 @@
 #include "graph.h"
 
+static void _build_path(int start, int end, int parents[], array *res)
+{
+    int *val = malloc(sizeof(int));
+    if (!val) {
+        return;
+    }
+
+    if ((start == end) || (end == -1)) {
+        *val = start;
+        array_push(res, val);
+    } else {
+        _build_path(start, parents[end], parents, res);
+        *val = end;
+        array_push(res, val);
+    }
+}
+
 graph *graph_new(int nvertices, bool directed)
 {
     graph *new_graph = malloc(sizeof(graph));
@@ -224,7 +241,7 @@ graph *graph_mst(graph *_graph, int start)
     return result;
 }
 
-graph *graph_dijkstra(graph *_graph, int start)
+array *graph_dijkstra(graph *_graph, int start, int end)
 {
     if (!_graph) {
         return NULL;
@@ -233,14 +250,12 @@ graph *graph_dijkstra(graph *_graph, int start)
     bool intree[MAXV+1];
     int distance[MAXV+1];
     int parent[MAXV+1];
-    int vertices[MAXV+1];
     edgenode *_edge_node = NULL;
 
     for (int i = 1; i <= _graph->nvertices; i++) {
         intree[i] = false;
         distance[i] = INT_MAX;
         parent[i] = -1;
-        vertices[i] = -1;
     }
 
     distance[start] = 0;
@@ -255,7 +270,6 @@ graph *graph_dijkstra(graph *_graph, int start)
             if (distance[nxt_vertex] > (distance[cur_vertex] + weight)) {
                 distance[nxt_vertex] = distance[cur_vertex] + weight;
                 parent[nxt_vertex] = cur_vertex;
-                vertices[nxt_vertex] = nxt_vertex;
             }
             _edge_node = _edge_node->next;
         }
@@ -269,16 +283,11 @@ graph *graph_dijkstra(graph *_graph, int start)
         }
     }
 
-    // create the shortest path graph
-    graph *result = graph_new(_graph->nvertices, _graph->directed);
-    int *cur_distance = &distance[1]; // skip the first distance, since its 0
-    for (int i = 1; i <= _graph->nvertices; i++) {
-        if (parent[i] > -1 && vertices[i] > -1) {
-            cur_distance++;
-            graph_add_edge(result, parent[i], vertices[i], *cur_distance, _graph->directed);
-        }
-    }
-    return result;
+    // create array with shortest path
+    array *res = array_new(_graph->nvertices+1, sizeof(int*));
+    _build_path(start, end, parent, res);
+
+    return res;
 }
 
 void graph_free(graph *_graph)

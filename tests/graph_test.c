@@ -124,6 +124,13 @@ char *graph_mst_test()
     return NULL;
 }
 
+void res_free_cb(void *val)
+{
+    if (val) {
+        free(val);
+    }
+}
+
 char *graph_dijkstra_test()
 {
     int one = 1;
@@ -139,12 +146,16 @@ char *graph_dijkstra_test()
     graph_add_edge(d_graph, two, three, 2, false);
     graph_add_edge(d_graph, three, four, 8, false);
     graph_add_edge(d_graph, four, five, 9, false);
-    _graph_print_stdout(d_graph);
+    // _graph_print_stdout(d_graph);
 
-    graph *result = graph_dijkstra(d_graph, four);
-    _graph_print_stdout(result);
+    array *res = graph_dijkstra(d_graph, five, three);
+    ARRAY_FOREACH(res) {
+        int *val = array_get(res, i);
+        // printf("%d->", *val);
+    }
+    // printf("\n");
     graph_free(d_graph);
-    graph_free(result);
+    array_free(res, res_free_cb);
 
     return NULL;
 }
