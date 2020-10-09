@@ -29,12 +29,32 @@ char *test_free()
     return NULL;
 }
 
+char *test_len()
+{
+    str *_str = str_new("Jonathan");
+    assert(_str->len == 8, "The len of the string should be 8");
+    str_free(_str);
+    return NULL;
+}
+
+char *test_get_string()
+{
+    str *_str = str_new("Jonathan");
+    char *string = str_get_string(_str);
+    assert(string != NULL, "The string should not be NULL");
+    assert(strlen(string) == (unsigned long)_str->len, "The lengths of str and the string should be equal");
+    str_free(_str);
+    return NULL;
+}
+
 int main(void)
 {
     start_tests("str tests");
     run_test(test_create_empty_string);
     run_test(test_create_string);
     run_test(test_free);
+    run_test(test_len);
+    run_test(test_get_string);
     end_tests();
     return 0;
 }

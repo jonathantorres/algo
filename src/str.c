@@ -58,3 +58,14 @@ int str_len(str *_str)
     }
     return _str->len;
 }
+
+char *str_get_string(str *_str)
+{
+    if (!_str) {
+        return NULL;
+    }
+    if (!_str->string) {
+        return NULL;
+    }
+    return _str->string;
+}
