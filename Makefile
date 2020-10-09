@@ -72,6 +72,8 @@ heap_sort_test: heap_sort_test.c heap_sort.o array.o p_queue.o bs_tree.o
 	$(CFLAGS) tests/heap_sort_test.c heap_sort.o array.o p_queue.o bs_tree.o -o bin/heap_sort_test
 binary_search_test: binary_search_test.c binary_search.o array.o
 	$(CFLAGS) tests/binary_search_test.c binary_search.o array.o -o bin/binary_search_test
+str_test: str_test.c str.o
+	$(CFLAGS) tests/str_test.c str.o -o bin/str_test
 
 # Compiling objects
 sl_list.o: sl_list.c sl_list.h
@@ -118,13 +120,15 @@ heap_sort.o: heap_sort.c heap_sort.h
 	$(CFLAGS) -c src/heap_sort.c src/heap_sort.h
 binary_search.o: binary_search.c binary_search.h
 	$(CFLAGS) -c src/binary_search.c src/binary_search.h
+str.o: str.c str.h
+	$(CFLAGS) -c src/str.c src/str.h
 
 # Run tests
 .PHONY: test
 test: sl_list_test dl_list_test cl_list_test stack_test queue_test array_test \
 bubble_sort_test insertion_sort_test selection_sort_test merge_sort_test \
 quick_sort_test c_buffer_test h_table_test trie_test bs_tree_test bs_tree_map_test \
-rb_tree_test rb_tree_map_test binary_search_test p_queue_test heap_sort_test graph_test
+rb_tree_test rb_tree_map_test binary_search_test p_queue_test heap_sort_test graph_test str_test
 	./bin/sl_list_test
 	./bin/dl_list_test
 	./bin/cl_list_test
@@ -146,6 +150,7 @@ rb_tree_test rb_tree_map_test binary_search_test p_queue_test heap_sort_test gra
 	./bin/rb_tree_test
 	./bin/rb_tree_map_test
 	./bin/p_queue_test
+	./bin/str_test
 # 	./bin/graph_test
 
 clean:
