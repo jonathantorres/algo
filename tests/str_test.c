@@ -47,6 +47,16 @@ char *test_get_string()
     return NULL;
 }
 
+char *test_str_concat()
+{
+    str *_str = str_new("Jonathan");
+    _str = str_concat(_str, " Torres");
+    assert(_str != NULL, "The string should not be NULL");
+    assert(_str->len == 15, "The len of the string should be 15");
+    assert(strcmp(_str->string, "Jonathan Torres") == 0, "The strings should be equal");
+    return NULL;
+}
+
 int main(void)
 {
     start_tests("str tests");
@@ -55,6 +65,7 @@ int main(void)
     run_test(test_free);
     run_test(test_len);
     run_test(test_get_string);
+    run_test(test_str_concat);
     end_tests();
     return 0;
 }

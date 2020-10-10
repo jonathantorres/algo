@@ -69,3 +69,36 @@ char *str_get_string(str *_str)
     }
     return _str->string;
 }
+
+str *str_concat(str *_str, char *chars)
+{
+    if (!_str || !chars) {
+        return _str;
+    }
+    unsigned long chars_len = strlen(chars);
+    if (chars_len == 0) {
+        return _str;
+    }
+
+    char *new_str = realloc(_str->string, chars_len+1);
+    if (!new_str) {
+        return _str;
+    }
+
+    char *new_str_p = new_str;
+    char *chars_p = chars;
+    for (; *new_str_p != '\0'; new_str_p++) {
+        // moving the pointer to the end of the current string
+    }
+    memset(new_str_p, 0, chars_len+1);
+    for (; *chars_p != '\0'; chars_p++) {
+        *new_str_p = *chars_p;
+        new_str_p++;
+    }
+    *new_str_p = '\0';
+
+    _str->string = new_str;
+    _str->len += chars_len;
+
+    return _str;
+}
