@@ -16,6 +16,32 @@ static char *_create_string(char *chars)
     return string;
 }
 
+static char *_concat_chars(char *cur_str, char *chars)
+{
+    unsigned long chars_len = strlen(chars);
+    if (chars_len == 0) {
+        return cur_str;
+    }
+
+    char *new_str = realloc(cur_str, chars_len+1);
+    if (!new_str) {
+        return cur_str;
+    }
+    char *new_str_p = new_str;
+    char *chars_p = chars;
+    for (; *new_str_p != '\0'; new_str_p++) {
+        // moving the pointer to the end of the current string
+    }
+    memset(new_str_p, 0, chars_len+1);
+    for (; *chars_p != '\0'; chars_p++) {
+        *new_str_p = *chars_p;
+        new_str_p++;
+    }
+    *new_str_p = '\0';
+
+    return new_str;
+}
+
 str *str_new(char *chars)
 {
     str *_str = malloc(sizeof(str));
@@ -76,9 +102,11 @@ str *str_concat_str(str *_str, str *chars)
         return _str;
     }
     unsigned long chars_len = strlen(chars->string);
-    if (chars_len == 0) {
-        return _str;
-    }
+
+    _str->string = _concat_chars(_str->string, chars->string);
+    _str->len += chars_len;
+
+    return _str;
 }
 
 str *str_concat(str *_str, char *chars)
@@ -87,28 +115,8 @@ str *str_concat(str *_str, char *chars)
         return _str;
     }
     unsigned long chars_len = strlen(chars);
-    if (chars_len == 0) {
-        return _str;
-    }
 
-    char *new_str = realloc(_str->string, chars_len+1);
-    if (!new_str) {
-        return _str;
-    }
-
-    char *new_str_p = new_str;
-    char *chars_p = chars;
-    for (; *new_str_p != '\0'; new_str_p++) {
-        // moving the pointer to the end of the current string
-    }
-    memset(new_str_p, 0, chars_len+1);
-    for (; *chars_p != '\0'; chars_p++) {
-        *new_str_p = *chars_p;
-        new_str_p++;
-    }
-    *new_str_p = '\0';
-
-    _str->string = new_str;
+    _str->string = _concat_chars(_str->string, chars);
     _str->len += chars_len;
 
     return _str;
