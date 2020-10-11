@@ -17,6 +17,7 @@ Various algorithms and data structures
 - Red Black Tree Map
 - Trie
 - Graph (Directed or Undirected)
+- Strings
 
 ## Algorithms
 - Bubble Sort
