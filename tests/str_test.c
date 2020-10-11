@@ -54,6 +54,7 @@ char *test_str_concat()
     assert(_str != NULL, "The string should not be NULL");
     assert(_str->len == 15, "The len of the string should be 15");
     assert(strcmp(_str->string, "Jonathan Torres") == 0, "The strings should be equal");
+    str_free(_str);
     return NULL;
 }
 
