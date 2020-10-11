@@ -70,6 +70,17 @@ char *str_get_string(str *_str)
     return _str->string;
 }
 
+str *str_concat_str(str *_str, str *chars)
+{
+    if (!_str || !chars) {
+        return _str;
+    }
+    unsigned long chars_len = strlen(chars->string);
+    if (chars_len == 0) {
+        return _str;
+    }
+}
+
 str *str_concat(str *_str, char *chars)
 {
     if (!_str || !chars) {
