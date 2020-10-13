@@ -153,3 +153,36 @@ bool str_contains_str(str *_str, str *substr)
     }
     return false;
 }
+
+bool str_has_prefix(str *_str, char *prefix)
+{
+    if (!_str || !prefix || !_str->string) {
+        return false;
+    }
+    if (strlen(prefix) == 0) {
+        return true;
+    }
+
+    char *pos = strstr(_str->string, prefix);
+    if (!pos) {
+        return false;
+    }
+    return (pos - _str->string) == 0;
+}
+
+bool str_has_prefix_str(str *_str, str *prefix)
+{
+    if (!_str || !prefix || !_str->string || !prefix->string) {
+        return false;
+    }
+    if (strlen(prefix->string) == 0) {
+        return true;
+    }
+
+    char *pos = strstr(_str->string, prefix->string);
+    if (!pos) {
+        return false;
+    }
+
+    return (pos - _str->string) == 0;
+}

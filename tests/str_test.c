@@ -97,6 +97,38 @@ char *test_contains_str()
     return NULL;
 }
 
+char *test_str_has_prefix()
+{
+    str *_str = str_new("Jonathan");
+    bool haspre = str_has_prefix(_str, "Jon");
+    assert(haspre == true, "Has prefix should be true");
+    haspre = str_has_prefix(_str, "lola");
+    assert(haspre == false, "The lola prefix should be false");
+    haspre = str_has_prefix(_str, "nath");
+    assert(haspre == false, "The nath prefix should be false");
+    str_free(_str);
+    return NULL;
+}
+
+char *test_str_has_prefix_str()
+{
+    str *_str1 = str_new("Jonathan");
+    str *_str2 = str_new("Jon");
+    str *_str3 = str_new("lola");
+    str *_str4 = str_new("nath");
+    bool haspre = str_has_prefix_str(_str1, _str2);
+    assert(haspre == true, "Has prefix should be true");
+    haspre = str_has_prefix_str(_str1, _str3);
+    assert(haspre == false, "The lola prefix should be false");
+    haspre = str_has_prefix_str(_str1, _str4);
+    assert(haspre == false, "The nath prefix should be false");
+    str_free(_str1);
+    str_free(_str2);
+    str_free(_str3);
+    str_free(_str4);
+    return NULL;
+}
+
 int main(void)
 {
     start_tests("str tests");
@@ -109,6 +141,8 @@ int main(void)
     run_test(test_concat_str);
     run_test(test_str_contains);
     run_test(test_contains_str);
+    run_test(test_str_has_prefix);
+    run_test(test_str_has_prefix_str);
     end_tests();
     return 0;
 }
