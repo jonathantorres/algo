@@ -151,7 +151,7 @@ rb_tree_test rb_tree_map_test binary_search_test p_queue_test heap_sort_test gra
 	./bin/rb_tree_map_test
 	./bin/p_queue_test
 	./bin/str_test
-# 	./bin/graph_test
+	./bin/graph_test
 
 clean:
 	rm -f ./*.o src/*.h.gch
