@@ -129,6 +129,44 @@ char *test_str_has_prefix_str()
     return NULL;
 }
 
+char *test_str_suffix()
+{
+    str *_str = str_new("Jonathan");
+    bool hassu = str_has_suffix(_str, "han");
+    assert(hassu == true, "The suffix han should be true");
+    hassu = str_has_suffix(_str, "than");
+    assert(hassu == true, "The suffix than should be true");
+    hassu = str_has_suffix(_str, "Jona");
+    assert(hassu == false, "The suffix Jona should be false");
+    hassu = str_has_suffix(_str, "lola");
+    assert(hassu == false, "The suffix lola should be false");
+    str_free(_str);
+    return NULL;
+}
+
+char *test_str_suffix_str()
+{
+    str *_str1 = str_new("Jonathan");
+    str *_str2 = str_new("han");
+    str *_str3 = str_new("than");
+    str *_str4 = str_new("Jona");
+    str *_str5 = str_new("lola");
+    bool hassu = str_has_suffix_str(_str1, _str2);
+    assert(hassu == true, "The suffix han should be true");
+    hassu = str_has_suffix_str(_str1, _str3);
+    assert(hassu == true, "The suffix than should be true");
+    hassu = str_has_suffix_str(_str1, _str4);
+    assert(hassu == false, "The suffix Jona should be false");
+    hassu = str_has_suffix_str(_str1, _str5);
+    assert(hassu == false, "The suffix lola should be false");
+    str_free(_str1);
+    str_free(_str2);
+    str_free(_str3);
+    str_free(_str4);
+    str_free(_str5);
+    return NULL;
+}
+
 int main(void)
 {
     start_tests("str tests");
@@ -143,6 +181,8 @@ int main(void)
     run_test(test_contains_str);
     run_test(test_str_has_prefix);
     run_test(test_str_has_prefix_str);
+    run_test(test_str_suffix);
+    run_test(test_str_suffix_str);
     end_tests();
     return 0;
 }

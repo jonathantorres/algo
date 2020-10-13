@@ -186,3 +186,41 @@ bool str_has_prefix_str(str *_str, str *prefix)
 
     return (pos - _str->string) == 0;
 }
+
+bool str_has_suffix(str *_str, char *suffix)
+{
+    if (!_str || !suffix || !_str->string) {
+        return false;
+    }
+    if (strlen(suffix) == 0) {
+        return true;
+    }
+    if (strlen(suffix) > strlen(_str->string)) {
+        return false;
+    }
+
+    char *str_p = (_str->string + strlen(_str->string)) - strlen(suffix);
+    if (strcmp(str_p, suffix) == 0) {
+        return true;
+    }
+    return false;
+}
+
+bool str_has_suffix_str(str *_str, str *suffix)
+{
+    if (!_str || !suffix || !_str->string || !suffix->string) {
+        return false;
+    }
+    if (strlen(suffix->string) == 0) {
+        return true;
+    }
+    if (strlen(suffix->string) > strlen(_str->string)) {
+        return false;
+    }
+
+    char *str_p = (_str->string + strlen(_str->string)) - strlen(suffix->string);
+    if (strcmp(str_p, suffix->string) == 0) {
+        return true;
+    }
+    return false;
+}
