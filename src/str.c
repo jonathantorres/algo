@@ -121,3 +121,35 @@ str *str_concat(str *_str, char *chars)
 
     return _str;
 }
+
+bool str_contains(str *_str, char *substr)
+{
+    if (!_str || !substr || !_str->string) {
+        return false;
+    }
+    if (strlen(substr) == 0) {
+        return true;
+    }
+
+    char *found = strstr(_str->string, substr);
+    if (found) {
+        return true;
+    }
+    return false;
+}
+
+bool str_contains_str(str *_str, str *substr)
+{
+    if (!_str || !substr || !_str->string || !substr->string) {
+        return false;
+    }
+    if (strlen(substr->string) == 0) {
+        return true;
+    }
+
+    char *found = strstr(_str->string, substr->string);
+    if (found) {
+        return true;
+    }
+    return false;
+}

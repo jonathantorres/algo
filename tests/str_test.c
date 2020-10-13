@@ -71,6 +71,32 @@ char *test_concat_str()
     return NULL;
 }
 
+char *test_str_contains()
+{
+    str *_str = str_new("Jonathan");
+    bool found = str_contains(_str, "ona");
+    assert(found == true, "Found should be true");
+    found = str_contains(_str, "ola");
+    assert(found == false, "Found should be false");
+    str_free(_str);
+    return NULL;
+}
+
+char *test_contains_str()
+{
+    str *_str1 = str_new("Jonathan");
+    str *_str2 = str_new("ona");
+    str *_str3 = str_new("ola");
+    bool found = str_contains_str(_str1, _str2);
+    assert(found == true, "Found should be true");
+    found = str_contains_str(_str1, _str3);
+    assert(found == false, "Found should be false");
+    str_free(_str1);
+    str_free(_str2);
+    str_free(_str3);
+    return NULL;
+}
+
 int main(void)
 {
     start_tests("str tests");
@@ -81,6 +107,8 @@ int main(void)
     run_test(test_get_string);
     run_test(test_str_concat);
     run_test(test_concat_str);
+    run_test(test_str_contains);
+    run_test(test_contains_str);
     end_tests();
     return 0;
 }
