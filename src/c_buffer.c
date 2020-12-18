@@ -86,7 +86,7 @@ int c_buffer_read(c_buffer *buffer, char *target, unsigned int amount)
         return -1;
     }
 
-    if (amount > _c_buffer_available_data(buffer)) {
+    if (c_buffer_is_empty(buffer)) {
         return -1;
     }
 
