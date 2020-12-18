@@ -104,3 +104,25 @@ int c_buffer_read(c_buffer *buffer, char *target, unsigned int amount)
 
     return amount;
 }
+
+unsigned int c_buffer_is_empty(c_buffer *buffer)
+{
+    if (!buffer) {
+        return 0;
+    }
+    if (_c_buffer_available_data(buffer) == 0 && buffer->start == buffer->end) {
+        return 1;
+    }
+    return 0;
+}
+
+unsigned int c_buffer_is_full(c_buffer *buffer)
+{
+    if (!buffer) {
+        return 0;
+    }
+    if (_c_buffer_available_data(buffer) == 0 && buffer->start != buffer->end) {
+        return 1;
+    }
+    return 0;
+}

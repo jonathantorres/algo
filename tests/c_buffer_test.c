@@ -71,6 +71,41 @@ char *test_read()
     return NULL;
 }
 
+char *test_buffer_is_empty()
+{
+    c_buffer *buf = c_buffer_new(10);
+    int rc = c_buffer_is_empty(buf);
+    assert(rc == 1, "The buffer should be empty");
+    c_buffer_write(buf, "John", sizeof("John"));
+    rc = c_buffer_is_empty(buf);
+    assert(rc == 0, "The buffer should not be empty");
+    char msg[10] = { '\0' };
+    int rc2 = c_buffer_read(buf, msg, 5);
+    assert(rc2 == 5, "Reading into msg failed!");
+    rc = c_buffer_is_empty(buf);
+    assert(rc == 1, "The buffer should be empty after reading all of the data");
+    return NULL;
+}
+
+char *test_buffer_is_full()
+{
+    c_buffer *buf = c_buffer_new(10);
+    int rc = c_buffer_is_full(buf);
+    assert(rc == 0, "The buffer should not be full, since there's nothing on it");
+    c_buffer_write(buf, "John", sizeof("John"));
+    rc = c_buffer_is_full(buf);
+    assert(rc == 0, "The buffer should not be full, after writing just some data");
+    c_buffer_write(buf, "Luis", sizeof("Luis"));
+    rc = c_buffer_is_full(buf);
+    assert(rc == 1, "The buffer should be full");
+    char msg[10] = { '\0' };
+    int rc2 = c_buffer_read(buf, msg, 5);
+    assert(rc2 == 5, "Reading into msg failed!");
+    rc = c_buffer_is_full(buf);
+    assert(rc == 0, "The buffer should be not be full now, since we read some of it's data");
+    return NULL;
+}
+
 int main()
 {
     start_tests("c_buffer tests");
@@ -79,6 +114,8 @@ int main()
     run_test(test_free);
     run_test(test_write);
     run_test(test_read);
+    run_test(test_buffer_is_empty);
+    run_test(test_buffer_is_full);
     end_tests();
 
     return 0;
