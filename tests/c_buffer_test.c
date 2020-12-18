@@ -28,7 +28,7 @@ char *test_clear()
     return NULL;
 }
 
-char *test_destroy()
+char *test_free()
 {
     c_buffer *buf = c_buffer_new(10);
     c_buffer_free(buf);
@@ -76,7 +76,7 @@ int main()
     start_tests("c_buffer tests");
     run_test(test_create);
     run_test(test_clear);
-    run_test(test_destroy);
+    run_test(test_free);
     run_test(test_write);
     run_test(test_read);
     end_tests();
