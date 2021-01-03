@@ -14,6 +14,8 @@ str *str_new(char* chars);
 void str_free(str *_str);
 int str_len(str *_str);
 char *str_get_string(str *_str);
+char *str_dup(char *_str);
+str *str_dup_str(str *_str);
 str *str_concat(str *_str, char *chars);
 str *str_concat_str(str *_str, str *chars);
 

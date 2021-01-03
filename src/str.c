@@ -122,6 +122,29 @@ str *str_concat(str *_str, char *chars)
     return _str;
 }
 
+char *str_dup(char *_str)
+{
+    if (!_str) {
+        return NULL;
+    }
+    size_t len = strlen(_str);
+    if (len == 0) {
+        return NULL;
+    }
+    return _create_string(_str);
+}
+
+str *str_dup_str(str *_str)
+{
+    if (!_str) {
+        return NULL;
+    }
+    if (_str->len == 0 || !_str->string) {
+        return NULL;
+    }
+    return str_new(_str->string);
+}
+
 bool str_contains(str *_str, char *substr)
 {
     if (!_str || !substr || !_str->string) {

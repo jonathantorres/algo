@@ -167,6 +167,27 @@ char *test_str_suffix_str()
     return NULL;
 }
 
+char *test_str_dup()
+{
+    char *me = "Jonathan Torres";
+    char *new = str_dup(me);
+    assert(new != NULL, "The new string should not be NULL");
+    assert(strcmp(new, me) == 0, "The new string should be equal to the old one");
+    free(new);
+    return NULL;
+}
+
+char *test_str_dup_str()
+{
+    str *me = str_new("Jonathan Torres");
+    str *new = str_dup_str(me);
+    assert(new != NULL, "The new string should not be NULL");
+    assert(strcmp(new->string, me->string) == 0, "The new string should be equal to the old one");
+    str_free(me);
+    str_free(new);
+    return NULL;
+}
+
 int main(void)
 {
     start_tests("str tests");
@@ -183,6 +204,8 @@ int main(void)
     run_test(test_str_has_prefix_str);
     run_test(test_str_suffix);
     run_test(test_str_suffix_str);
+    run_test(test_str_dup);
+    run_test(test_str_dup_str);
     end_tests();
     return 0;
 }
