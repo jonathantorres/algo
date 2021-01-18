@@ -2,6 +2,12 @@
 #include "str.h"
 #include "unittest.h"
 
+void array_of_strs_cb(void *_str)
+{
+    str *s = (str*)_str;
+    str_free(s);
+}
+
 char *test_create_empty_string()
 {
     str *_str = str_new("");
@@ -97,6 +103,17 @@ char *test_contains_str()
     return NULL;
 }
 
+char *test_str_contains_char()
+{
+    str *_str = str_new("Jonathan");
+    bool found = str_contains_char(_str, 'J');
+    assert(found == true, "The character 'J' is in 'Jonathan'");
+    found = str_contains_char(_str, 'i');
+    assert(found == false, "The character 'i' is not in 'Jonathan'");
+    str_free(_str);
+    return NULL;
+}
+
 char *test_str_has_prefix()
 {
     str *_str = str_new("Jonathan");
@@ -188,6 +205,112 @@ char *test_str_dup_str()
     return NULL;
 }
 
+char *test_str_split_by_char()
+{
+    str *s = str_new("one,two,three");
+    array *res = str_split_by_char(s, ',');
+    str *cur_s = NULL;
+    assert(res->len == 3, "The length of the resulting array should be 3");
+    cur_s = array_get(res, 0);
+    assert(cur_s != NULL, "The string returned at index 0 should not be NULL");
+    assert(strcmp("one", cur_s->string) == 0, "The string at index 0 is not equal to \"one\"");
+
+    cur_s = array_get(res, 1);
+    assert(cur_s != NULL, "The string returned at index 1 should not be NULL");
+    assert(strcmp("two", cur_s->string) == 0, "The string at index 1 is not equal to \"two\"");
+
+    cur_s = array_get(res, 2);
+    assert(cur_s != NULL, "The string returned at index 2 should not be NULL");
+    assert(strcmp("three", cur_s->string) == 0, "The string at index 2 is not equal to \"three\"");
+
+    str_free(s);
+    array_free(res, array_of_strs_cb);
+    return NULL;
+}
+
+char *test_str_split_by_char_with_equals()
+{
+    str *s = str_new("name = localhost");
+    array *res = str_split_by_char(s, '=');
+    str *cur_s = NULL;
+    assert(res->len == 2, "The length of the resulting array should be 2");
+    cur_s = array_get(res, 0);
+    assert(cur_s != NULL, "The string returned at index 0 should not be NULL");
+    assert(strcmp("name ", cur_s->string) == 0, "The string at index 0 is not equal to \"name \"");
+
+    cur_s = array_get(res, 1);
+    assert(cur_s != NULL, "The string returned at index 1 should not be NULL");
+    assert(strcmp(" localhost", cur_s->string) == 0, "The string at index 1 is not equal to \" localhost\"");
+
+    str_free(s);
+    array_free(res, array_of_strs_cb);
+    return NULL;
+}
+
+char *test_str_trim()
+{
+    str *s1 = str_new("   Jonathan");
+    str *s2 = str_new("  Jonathan   ");
+    str *s3 = str_new("Jonathan   ");
+    str_trim(s1);
+    str_trim(s2);
+    str_trim(s3);
+    assert(strcmp(s1->string, "Jonathan") == 0, "The resulting string from (s1) does not have the expected value");
+    assert(strcmp(s2->string, "Jonathan") == 0, "The resulting string from (s2) does not have the expected value");
+    assert(strcmp(s3->string, "Jonathan") == 0, "The resulting string from (s3) does not have the expected value");
+
+    str_free(s1);
+    str_free(s2);
+    str_free(s3);
+    return NULL;
+}
+
+char *test_str_equals()
+{
+    str *s1 = str_new("one");
+    str *s2 = str_new("");
+
+    bool res;
+    res = str_equals(s1, "one");
+    assert(res == true, "The string in s1 should be equal to 'one'");
+    res = str_equals(s1, "two");
+    assert(res == false, "The string in s1 should not be equal to 'two'");
+    res = str_equals(s2, "one");
+    assert(res == false, "The string in s2 should not be equal to 'one'");
+    res = str_equals(s2, "");
+    assert(res == true, "The strings should be equal since they are empty");
+
+    str_free(s1);
+    str_free(s2);
+    return NULL;
+}
+
+char *test_str_equals_str()
+{
+    str *s1 = str_new("one");
+    str *s2 = str_new("");
+    str *s3 = str_new("one");
+    str *s4 = str_new("two");
+    str *s5 = str_new("");
+
+    bool res;
+    res = str_equals_str(s1, s3);
+    assert(res == true, "The string in s1 should be equal to the one in s3");
+    res = str_equals_str(s1, s4);
+    assert(res == false, "The string in s1 should not be equal to the one in s4");
+    res = str_equals_str(s2, s1);
+    assert(res == false, "The string in s2 should not be equal to the one in s1");
+    res = str_equals_str(s2, s5);
+    assert(res == true, "The strings should be equal since they are empty");
+
+    str_free(s1);
+    str_free(s2);
+    str_free(s3);
+    str_free(s4);
+    str_free(s5);
+    return NULL;
+}
+
 int main(void)
 {
     start_tests("str tests");
@@ -200,12 +323,18 @@ int main(void)
     run_test(test_concat_str);
     run_test(test_str_contains);
     run_test(test_contains_str);
+    run_test(test_str_contains_char);
     run_test(test_str_has_prefix);
     run_test(test_str_has_prefix_str);
     run_test(test_str_suffix);
     run_test(test_str_suffix_str);
     run_test(test_str_dup);
     run_test(test_str_dup_str);
+    run_test(test_str_split_by_char);
+    run_test(test_str_split_by_char_with_equals);
+    run_test(test_str_trim);
+    run_test(test_str_equals);
+    run_test(test_str_equals_str);
     end_tests();
     return 0;
 }

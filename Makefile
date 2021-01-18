@@ -72,8 +72,8 @@ heap_sort_test: heap_sort_test.c heap_sort.o array.o p_queue.o bs_tree.o
 	$(CFLAGS) tests/heap_sort_test.c heap_sort.o array.o p_queue.o bs_tree.o -o bin/heap_sort_test
 binary_search_test: binary_search_test.c binary_search.o array.o
 	$(CFLAGS) tests/binary_search_test.c binary_search.o array.o -o bin/binary_search_test
-str_test: str_test.c str.o
-	$(CFLAGS) tests/str_test.c str.o -o bin/str_test
+str_test: str_test.c str.o array.o
+	$(CFLAGS) tests/str_test.c str.o array.o -o bin/str_test
 
 # Compiling objects
 sl_list.o: sl_list.c sl_list.h
