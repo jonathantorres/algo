@@ -131,11 +131,21 @@ array *str_split_by_char(str *_str, char delim)
             delim_count++;
         }
     }
+
+    // No delimiters, just return the array with 1 element with the string in it
+    array *splits = NULL;
     if (delim_count == 0) {
-        return NULL;
+        splits = array_new(1, sizeof(str*));
+        if (!splits) {
+            return NULL;
+        }
+
+        str *new_str = str_new(_str->string);
+        array_push(splits, new_str);
+        return splits;
     }
 
-    array *splits = array_new(delim_count, sizeof(str*));
+    splits = array_new(delim_count, sizeof(str*));
     if (!splits) {
         return NULL;
     }

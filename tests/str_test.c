@@ -247,6 +247,22 @@ char *test_str_split_by_char_with_equals()
     return NULL;
 }
 
+char *test_str_split_by_char_no_delim()
+{
+    str *s = str_new("one");
+    array *res = str_split_by_char(s, ',');
+    str *cur_s = NULL;
+    assert(res != NULL, "The returned array cannot be NULL");
+    assert(res->len == 1, "The length of the resulting array should be 1");
+    cur_s = array_get(res, 0);
+    assert(cur_s != NULL, "The string returned at index 0 should not be NULL");
+    assert(strcmp("one", cur_s->string) == 0, "The string at index 0 is not equal to \"one\"");
+
+    str_free(s);
+    array_free(res, array_of_strs_cb);
+    return NULL;
+}
+
 char *test_str_trim()
 {
     str *s1 = str_new("   Jonathan");
@@ -332,6 +348,7 @@ int main(void)
     run_test(test_str_dup_str);
     run_test(test_str_split_by_char);
     run_test(test_str_split_by_char_with_equals);
+    run_test(test_str_split_by_char_no_delim);
     run_test(test_str_trim);
     run_test(test_str_equals);
     run_test(test_str_equals_str);
