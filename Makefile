@@ -74,6 +74,24 @@ binary_search_test: binary_search_test.c binary_search.o array.o
 	$(CFLAGS) tests/binary_search_test.c binary_search.o array.o -o bin/binary_search_test
 str_test: str_test.c str.o array.o
 	$(CFLAGS) tests/str_test.c str.o array.o -o bin/str_test
+b2n: arch/b2n.c
+	$(CFLAGS) src/arch/b2n.c -o bin/b2n
+n2b: arch/n2b.c
+	$(CFLAGS) src/arch/n2b.c -o bin/n2b
+h2n: arch/h2n.c
+	$(CFLAGS) src/arch/h2n.c -o bin/h2n
+h2b: arch/h2b.c
+	$(CFLAGS) src/arch/h2b.c -o bin/h2b
+binadd: arch/binadd.c
+	$(CFLAGS) src/arch/binadd.c -o bin/binadd
+isodd: isodd.c
+	$(CFLAGS) src/arch/isodd.c -o bin/isodd
+div16: arch/div16.c
+	$(CFLAGS) src/arch/div16.c -o bin/div16
+bitcmp: arch/bitcmp.c
+	$(CFLAGS) src/arch/bitcmp.c -o bin/bitcmp
+endiancheck: endiancheck.c
+	$(CFLAGS) src/arch/endiancheck.c -o bin/endiancheck
 
 # Compiling objects
 sl_list.o: sl_list.c sl_list.h

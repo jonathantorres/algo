@@ -38,6 +38,16 @@ Various algorithms and data structures
 - Http Server
 - Show IP Address
 
+## Computer Architecture
+- Binary to Number
+- Binary Addition
+- Bit Comparison
+- Bit Tests
+- Number to Binary
+- Hexadecimal to Binary
+- Hexadecimal to Number
+- Big and Little Endian
+
 ## Other
 - Hangman Game
 
