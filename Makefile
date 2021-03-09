@@ -28,6 +28,8 @@ http_server_nonblock: net/http_server_nonblock.c
 	$(CFLAGS) src/net/http_server_nonblock.c -o bin/http_server_nonblock
 http_server_image: net/http_server_image.c
 	$(CFLAGS) src/net/http_server_image.c -o bin/http_server_image
+multi_http_server: net/multi_http_server.c
+	$(CFLAGS) src/net/multi_http_server.c -o bin/multi_http_server
 sl_list_test: sl_list_test.c sl_list.o
 	$(CFLAGS) tests/sl_list_test.c sl_list.o -o bin/sl_list_test
 dl_list_test: dl_list_test.c dl_list.o

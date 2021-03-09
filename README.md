@@ -36,6 +36,7 @@ Various algorithms and data structures
 - Daytime Client/Server
 - Stream Client/Server
 - Http Server
+- Multi-Threaded Http Server
 - Show IP Address
 
 ## Computer Architecture
