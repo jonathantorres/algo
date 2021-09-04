@@ -1,8 +1,11 @@
 CFLAGS = gcc -g -std=gnu11 -Wall -Wextra
 
-all: main
+all: inet_pton_loose
 
-main: main.c inet_pton_loose.o
-	$(CFLAGS) main.c inet_pton_loose.o -o main
-inet_pton_loose.o: inet_pton_loose.c inet_pton_loose.h
-	$(CFLAGS) -c inet_pton_loose.c inet_pton_loose.h
+inet_pton_loose: inet_pton_loose.c
+	$(CFLAGS) inet_pton_loose.c -o ./bin/inet_pton_loose
+
+clean:
+	rm -f ./*.o ./*.h.gch
+	rm -fr ./bin
+	mkdir ./bin && touch ./bin/.gitkeep
