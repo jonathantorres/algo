@@ -36,8 +36,6 @@ int main(void)
         exit(1);
     }
     
-    time_t t = time(NULL);
-    char *date_str = ctime(&t);
     unsigned long cli_siz = sizeof(cli_addr);
     socklen_t *cli_addr_siz = (socklen_t *) &cli_siz;
 
@@ -47,6 +45,8 @@ int main(void)
             continue;
         }
 
+        time_t t = time(NULL);
+        char *date_str = ctime(&t);
         if (write(clifd, date_str, strlen(date_str)) < 0) {
             perror("write error");
             close(clifd);
