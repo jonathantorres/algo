@@ -20,6 +20,9 @@ date_cli: date_cli.c
 echo_serv: echo_serv.c
 	$(CFLAGS) echo_serv.c -o ./bin/echo_serv
 
+echo_cli: echo_cli.c
+	$(CFLAGS) echo_cli.c -o ./bin/echo_cli
+
 clean:
 	rm -f ./*.o ./*.h.gch
 	rm -fr ./bin
