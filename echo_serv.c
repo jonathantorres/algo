@@ -7,6 +7,7 @@
 #include <arpa/inet.h>
 #include <netinet/ip.h>
 #include <stdbool.h>
+#include <ctype.h>
 
 #define MAXBUF 1024
 
@@ -53,6 +54,13 @@ int main(void)
     return 0;
 }
 
+void capitalize(char *buff)
+{
+    for (int i = 0; i < (int)strlen(buff); i++) {
+        buff[i] = toupper(buff[i]);
+    }
+}
+
 void serve_client(int cli_fd)
 {
     char recv_buf[MAXBUF];
@@ -75,6 +83,7 @@ void serve_client(int cli_fd)
         }
 
         recv_buf[r] = '\0';
+        capitalize(recv_buf);
         r = write(cli_fd, recv_buf, MAXBUF);
 
         if (r < 0) {

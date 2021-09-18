@@ -9,6 +9,7 @@
 #include <stdbool.h>
 
 #define MAXLINE 1024
+#define MAXBUF 1024
 
 int main(void)
 {
@@ -33,6 +34,8 @@ int main(void)
     }
 
     char line[MAXLINE];
+    char recv_buf[MAXBUF];
+    int r;
     memset(line, 0, MAXLINE);
 
     while (true) {
@@ -41,7 +44,24 @@ int main(void)
             break;
         }
 
-        fprintf(stdout, "%s", line);
+        if (write(serv_fd, line, sizeof(line)) < 0) {
+            perror("write() error");
+            break;
+        }
+
+        r = read(serv_fd, &recv_buf, MAXBUF);
+
+        if (r < 0) {
+            perror("read() error");
+            break;
+        }
+        if (r == 0) {
+            break;
+        }
+
+        recv_buf[r] = '\0';
+
+        fprintf(stdout, "%s", recv_buf);
     }
     
     return 0;
