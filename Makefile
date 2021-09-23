@@ -23,6 +23,9 @@ echo_serv: echo_serv.c
 echo_cli: echo_cli.c
 	$(CFLAGS) echo_cli.c -o ./bin/echo_cli
 
+echo_cli_select: echo_cli_select.c
+	$(CFLAGS) echo_cli_select.c -o ./bin/echo_cli_select
+
 clean:
 	rm -f ./*.o ./*.h.gch
 	rm -fr ./bin
