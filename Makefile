@@ -26,6 +26,9 @@ echo_cli: echo_cli.c
 echo_cli_select: echo_cli_select.c
 	$(CFLAGS) echo_cli_select.c -o ./bin/echo_cli_select
 
+echo_cli_poll: echo_cli_poll.c
+	$(CFLAGS) echo_cli_poll.c -o ./bin/echo_cli_poll
+
 clean:
 	rm -f ./*.o ./*.h.gch
 	rm -fr ./bin
