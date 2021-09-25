@@ -29,6 +29,15 @@ echo_cli_select: echo_cli_select.c
 echo_cli_poll: echo_cli_poll.c
 	$(CFLAGS) echo_cli_poll.c -o ./bin/echo_cli_poll
 
+echo_cli_linger: echo_cli_linger.c
+	$(CFLAGS) echo_cli_linger.c -o ./bin/echo_cli_linger
+
+send_recv_buff_sizes: send_recv_buff_sizes.c
+	$(CFLAGS) send_recv_buff_sizes.c -o ./bin/send_recv_buff_sizes
+
+date_cli_recv_buff: date_cli_recv_buff.c
+	$(CFLAGS) date_cli_recv_buff.c -o ./bin/date_cli_recv_buff
+
 clean:
 	rm -f ./*.o ./*.h.gch
 	rm -fr ./bin
