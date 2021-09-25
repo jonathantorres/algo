@@ -79,7 +79,7 @@ int main(void)
         }
 
         // connection is ready
-        if (fds[0].revents & POLLIN) {
+        if (fds[0].revents & (POLLIN | POLLERR)) {
             r = read(serv_fd, &recv_buf, MAXBUF);
 
             if (r < 0) {
