@@ -20,8 +20,14 @@ date_cli: date_cli.c
 echo_serv: echo_serv.c
 	$(CFLAGS) echo_serv.c -o ./bin/echo_serv
 
+echo_serv_udp: echo_serv_udp.c
+	$(CFLAGS) echo_serv_udp.c -o ./bin/echo_serv_udp
+
 echo_cli: echo_cli.c
 	$(CFLAGS) echo_cli.c -o ./bin/echo_cli
+
+echo_cli_udp: echo_cli_udp.c
+	$(CFLAGS) echo_cli_udp.c -o ./bin/echo_cli_udp
 
 echo_cli_select: echo_cli_select.c
 	$(CFLAGS) echo_cli_select.c -o ./bin/echo_cli_select
