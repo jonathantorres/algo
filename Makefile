@@ -44,6 +44,12 @@ send_recv_buff_sizes: send_recv_buff_sizes.c
 date_cli_recv_buff: date_cli_recv_buff.c
 	$(CFLAGS) date_cli_recv_buff.c -o ./bin/date_cli_recv_buff
 
+get_host_names: get_host_names.c
+	$(CFLAGS) get_host_names.c -o ./bin/get_host_names
+
+get_host_names_addr: get_host_names_addr.c
+	$(CFLAGS) get_host_names_addr.c -o ./bin/get_host_names_addr
+
 clean:
 	rm -f ./*.o ./*.h.gch
 	rm -fr ./bin
