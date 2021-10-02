@@ -34,7 +34,7 @@ int main(int argc, char **argv)
                     }
                     printf("\taddress: %s\n", str);
 
-                    if ((hptr = gethostbyaddr(ptr, hptr->h_length, hptr->h_addrtype)) == NULL) {
+                    if ((hptr = gethostbyaddr(*pptr, hptr->h_length, hptr->h_addrtype)) == NULL) {
                         herror("gethostbyaddr() error");
                         continue;
                     }
