@@ -56,6 +56,12 @@ local_ip_addrs: local_ip_addrs.c
 echo_cli_udp_dns: echo_cli_udp_dns.c
 	$(CFLAGS) echo_cli_udp_dns.c -o ./bin/echo_cli_udp_dns
 
+ipv4_bind: ipv4_bind.c
+	$(CFLAGS) ipv4_bind.c -o ./bin/ipv4_bind
+
+ipv6_bind: ipv6_bind.c
+	$(CFLAGS) ipv6_bind.c -o ./bin/ipv6_bind
+
 clean:
 	rm -f ./*.o ./*.h.gch
 	rm -fr ./bin
