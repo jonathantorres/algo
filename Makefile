@@ -50,6 +50,12 @@ get_host_names: get_host_names.c
 get_host_names_addr: get_host_names_addr.c
 	$(CFLAGS) get_host_names_addr.c -o ./bin/get_host_names_addr
 
+local_ip_addrs: local_ip_addrs.c
+	$(CFLAGS) local_ip_addrs.c -o ./bin/local_ip_addrs
+
+echo_cli_udp_dns: echo_cli_udp_dns.c
+	$(CFLAGS) echo_cli_udp_dns.c -o ./bin/echo_cli_udp_dns
+
 clean:
 	rm -f ./*.o ./*.h.gch
 	rm -fr ./bin
