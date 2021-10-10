@@ -62,6 +62,9 @@ ipv4_bind: ipv4_bind.c
 ipv6_bind: ipv6_bind.c
 	$(CFLAGS) ipv6_bind.c -o ./bin/ipv6_bind
 
+gai: gai.c
+	$(CFLAGS) gai.c -o ./bin/gai
+
 clean:
 	rm -f ./*.o ./*.h.gch
 	rm -fr ./bin
