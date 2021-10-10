@@ -65,6 +65,9 @@ ipv6_bind: ipv6_bind.c
 gai: gai.c
 	$(CFLAGS) gai.c -o ./bin/gai
 
+getnameinfo_timeo: getnameinfo_timeo.c
+	$(CFLAGS) getnameinfo_timeo.c -o ./bin/getnameinfo_timeo
+
 clean:
 	rm -f ./*.o ./*.h.gch
 	rm -fr ./bin
