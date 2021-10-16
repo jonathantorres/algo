@@ -38,6 +38,9 @@ echo_cli_poll: echo_cli_poll.c
 echo_cli_linger: echo_cli_linger.c
 	$(CFLAGS) echo_cli_linger.c -o ./bin/echo_cli_linger
 
+echo_cli_connect_timeo: echo_cli_connect_timeo.c
+	$(CFLAGS) echo_cli_connect_timeo.c -o ./bin/echo_cli_connect_timeo
+
 send_recv_buff_sizes: send_recv_buff_sizes.c
 	$(CFLAGS) send_recv_buff_sizes.c -o ./bin/send_recv_buff_sizes
 
