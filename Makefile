@@ -17,11 +17,17 @@ date_serv: date_serv.c
 date_cli: date_cli.c
 	$(CFLAGS) date_cli.c -o ./bin/date_cli
 
+date_cli_read_peek: date_cli_read_peek.c
+	$(CFLAGS) date_cli_read_peek.c -o ./bin/date_cli_read_peek
+
 echo_serv: echo_serv.c
 	$(CFLAGS) echo_serv.c -o ./bin/echo_serv
 
 echo_serv_udp: echo_serv_udp.c
 	$(CFLAGS) echo_serv_udp.c -o ./bin/echo_serv_udp
+
+echo_serv_stdio: echo_serv_stdio.c
+	$(CFLAGS) echo_serv_stdio.c -o ./bin/echo_serv_stdio
 
 echo_cli: echo_cli.c
 	$(CFLAGS) echo_cli.c -o ./bin/echo_cli
