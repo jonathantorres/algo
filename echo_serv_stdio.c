@@ -56,7 +56,7 @@ int main(void)
 
 void capitalize(char *buff)
 {
-    if (buff == NULL) {
+    if (!buff) {
         return;
     }
     for (int i = 0; i < (int)strlen(buff); i++) {
@@ -67,7 +67,6 @@ void capitalize(char *buff)
 void serve_client(int cli_fd)
 {
     char recv_buf[MAXBUF];
-    int n = 0;
     memset(recv_buf, 0, MAXBUF);
     FILE *fpin, *fpout;
 
@@ -82,14 +81,13 @@ void serve_client(int cli_fd)
     }
 
     while (true) {
-        char *recvp = NULL;
-        if ((recvp = fgets(recv_buf, MAXBUF, fpin)) == NULL) {
-            perror("fgets()");
+        if (fgets(recv_buf, MAXBUF, fpin) == NULL) {
+            fprintf(stderr, "fgets() returned NULL\n");
             break;
         }
-        capitalize(recvp);
+        capitalize(recv_buf);
 
-        if ((n = fputs(recvp, fpout)) == EOF) {
+        if (fputs(recv_buf, fpout) == EOF) {
             perror("fputs()");
             break;
         }
