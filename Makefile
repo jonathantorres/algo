@@ -1,82 +1,37 @@
 CFLAGS = gcc -g -std=gnu11 -Wall -Wextra
+PROGS = inet_pton_loose               \
+        daytime_client_getsockname    \
+        broken_pipe                   \
+        date_serv                     \
+        date_cli                      \
+        date_cli_read_peek            \
+        echo_serv                     \
+        echo_serv_udp                 \
+        echo_serv_stdio               \
+        echo_cli                      \
+        echo_cli_udp                  \
+        echo_cli_select               \
+        echo_cli_poll                 \
+        echo_cli_linger               \
+        echo_cli_connect_timeo        \
+        send_recv_buff_sizes          \
+        date_cli_recv_buff            \
+        get_host_names                \
+        get_host_names_addr           \
+        local_ip_addrs                \
+        echo_cli_udp_dns              \
+        ipv4_bind                     \
+        ipv6_bind                     \
+        gai                           \
+        getnameinfo_timeo
 
-all: inet_pton_loose
+.PHONY: all
+all: $(PROGS)
 
-inet_pton_loose: inet_pton_loose.c
-	$(CFLAGS) inet_pton_loose.c -o ./bin/inet_pton_loose
+$(PROGS):%: %.c
+	$(CFLAGS) $< -o ./bin/$@
 
-daytime_client_getsockname: daytime_client_getsockname.c
-	$(CFLAGS) daytime_client_getsockname.c -o ./bin/daytime_client_getsockname
-
-broken_pipe: broken_pipe.c
-	$(CFLAGS) broken_pipe.c -o ./bin/broken_pipe
-
-date_serv: date_serv.c
-	$(CFLAGS) date_serv.c -o ./bin/date_serv
-
-date_cli: date_cli.c
-	$(CFLAGS) date_cli.c -o ./bin/date_cli
-
-date_cli_read_peek: date_cli_read_peek.c
-	$(CFLAGS) date_cli_read_peek.c -o ./bin/date_cli_read_peek
-
-echo_serv: echo_serv.c
-	$(CFLAGS) echo_serv.c -o ./bin/echo_serv
-
-echo_serv_udp: echo_serv_udp.c
-	$(CFLAGS) echo_serv_udp.c -o ./bin/echo_serv_udp
-
-echo_serv_stdio: echo_serv_stdio.c
-	$(CFLAGS) echo_serv_stdio.c -o ./bin/echo_serv_stdio
-
-echo_cli: echo_cli.c
-	$(CFLAGS) echo_cli.c -o ./bin/echo_cli
-
-echo_cli_udp: echo_cli_udp.c
-	$(CFLAGS) echo_cli_udp.c -o ./bin/echo_cli_udp
-
-echo_cli_select: echo_cli_select.c
-	$(CFLAGS) echo_cli_select.c -o ./bin/echo_cli_select
-
-echo_cli_poll: echo_cli_poll.c
-	$(CFLAGS) echo_cli_poll.c -o ./bin/echo_cli_poll
-
-echo_cli_linger: echo_cli_linger.c
-	$(CFLAGS) echo_cli_linger.c -o ./bin/echo_cli_linger
-
-echo_cli_connect_timeo: echo_cli_connect_timeo.c
-	$(CFLAGS) echo_cli_connect_timeo.c -o ./bin/echo_cli_connect_timeo
-
-send_recv_buff_sizes: send_recv_buff_sizes.c
-	$(CFLAGS) send_recv_buff_sizes.c -o ./bin/send_recv_buff_sizes
-
-date_cli_recv_buff: date_cli_recv_buff.c
-	$(CFLAGS) date_cli_recv_buff.c -o ./bin/date_cli_recv_buff
-
-get_host_names: get_host_names.c
-	$(CFLAGS) get_host_names.c -o ./bin/get_host_names
-
-get_host_names_addr: get_host_names_addr.c
-	$(CFLAGS) get_host_names_addr.c -o ./bin/get_host_names_addr
-
-local_ip_addrs: local_ip_addrs.c
-	$(CFLAGS) local_ip_addrs.c -o ./bin/local_ip_addrs
-
-echo_cli_udp_dns: echo_cli_udp_dns.c
-	$(CFLAGS) echo_cli_udp_dns.c -o ./bin/echo_cli_udp_dns
-
-ipv4_bind: ipv4_bind.c
-	$(CFLAGS) ipv4_bind.c -o ./bin/ipv4_bind
-
-ipv6_bind: ipv6_bind.c
-	$(CFLAGS) ipv6_bind.c -o ./bin/ipv6_bind
-
-gai: gai.c
-	$(CFLAGS) gai.c -o ./bin/gai
-
-getnameinfo_timeo: getnameinfo_timeo.c
-	$(CFLAGS) getnameinfo_timeo.c -o ./bin/getnameinfo_timeo
-
+.PHONY: clean
 clean:
 	rm -f ./*.o ./*.h.gch
 	rm -fr ./bin
