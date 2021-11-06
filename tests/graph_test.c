@@ -150,7 +150,7 @@ char *graph_dijkstra_test()
 
     array *res = graph_dijkstra(d_graph, five, three);
     ARRAY_FOREACH(res) {
-        int *val = array_get(res, i);
+        // int *val = array_get(res, i);
         // printf("%d->", *val);
     }
     // printf("\n");
