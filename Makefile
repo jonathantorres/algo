@@ -27,7 +27,10 @@ PROGS = inet_pton_loose               \
         ipv4_bind                     \
         ipv6_bind                     \
         gai                           \
-        getnameinfo_timeo
+        getnameinfo_timeo             \
+        access                        \
+        sleep                         \
+        system
 
 .PHONY: all
 all: $(PROGS)
