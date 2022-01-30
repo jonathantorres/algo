@@ -20,6 +20,10 @@ PROGS = inet_pton_loose               \
         get_host_names_addr           \
         local_ip_addrs                \
         echo_cli_udp_dns              \
+        http_server                   \
+        http_server_image             \
+        http_server_nonblock          \
+        http_server_multi             \
         ipv4_bind                     \
         ipv6_bind                     \
         gai                           \
