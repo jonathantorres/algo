@@ -1,3 +1,8 @@
+// Program that holds a file lock on the file "seqno"
+// and then increments the current seqno and writes it
+// back into the file, run this programs as two separate
+// processes: "./bin/file_lock & ./bin/file_lock &"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
