@@ -31,7 +31,8 @@ PROGS = inet_pton_loose               \
         access                        \
         sleep                         \
         system                        \
-        file_lock
+        file_lock                     \
+        pipe
 
 .PHONY: all
 all: $(PROGS)
