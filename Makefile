@@ -30,7 +30,8 @@ PROGS = inet_pton_loose               \
         getnameinfo_timeo             \
         access                        \
         sleep                         \
-        system
+        system                        \
+        file_lock
 
 .PHONY: all
 all: $(PROGS)
