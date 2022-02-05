@@ -3,7 +3,7 @@
 // the server reads the filename from the pipe, opens and reads the file
 // and then sends the file contents through the pipe to the client
 // the client reads the file contents from the pipe and writes the
-// file contents to standard input
+// file contents to standard output
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
