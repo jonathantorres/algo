@@ -1,3 +1,7 @@
+// two processes sending data to each other using a message queue
+// this client reads a filename from standard input
+// and sends it to the message queue, then it reads the file contents
+// from the message queue and writes these contents to standard output
 #include "msg_queue.h"
 
 void client(int ipcreadfd, int ipcwritefd);

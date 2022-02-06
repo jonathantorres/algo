@@ -1,3 +1,7 @@
+// two processes sending data to each other using a message queue
+// this server reads the filename from the message queue (IPC descriptor)
+// opens and reads the file and then sends the file contents to the message queue
+
 #include "msg_queue.h"
 
 void server(int ipcreadfd, int ipcwritefd);
