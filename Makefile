@@ -32,6 +32,8 @@ PROGS = inet_pton_loose               \
         sleep                         \
         system                        \
         file_lock                     \
+        msg_queue_srv                 \
+        msg_queue_cli                 \
         pipe
 
 .PHONY: all
