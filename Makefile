@@ -34,6 +34,8 @@ PROGS = inet_pton_loose               \
         file_lock                     \
         msg_queue_srv                 \
         msg_queue_cli                 \
+        shared_mem_srv                \
+        shared_mem_cli                \
         pipe
 
 .PHONY: all
