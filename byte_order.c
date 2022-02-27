@@ -1,3 +1,5 @@
+// Check to see if the machine uses Big Endian or Little Endian
+// byte ordering, just compile and run this program
 #include <stdio.h>
 
 int main(void)
