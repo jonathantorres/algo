@@ -1,42 +1,42 @@
 CFLAGS = gcc -g -std=gnu11 -Wall -Wextra
-PROGS = inet_pton_loose               \
-        daytime_client_getsockname    \
+PROGS = access                        \
         broken_pipe                   \
-        date_serv                     \
         date_cli                      \
         date_cli_read_peek            \
-        echo_serv                     \
-        echo_serv_udp                 \
-        echo_serv_stdio               \
-        echo_cli                      \
-        echo_cli_udp                  \
-        echo_cli_select               \
-        echo_cli_poll                 \
-        echo_cli_linger               \
-        echo_cli_connect_timeo        \
-        send_recv_buff_sizes          \
         date_cli_recv_buff            \
+        date_serv                     \
+        daytime_client_getsockname    \
+        echo_cli                      \
+        echo_cli_connect_timeo        \
+        echo_cli_linger               \
+        echo_cli_poll                 \
+        echo_cli_select               \
+        echo_cli_udp                  \
+        echo_cli_udp_dns              \
+        echo_serv                     \
+        echo_serv_stdio               \
+        echo_serv_udp                 \
+        file_lock                     \
+        gai                           \
         get_host_names                \
         get_host_names_addr           \
-        local_ip_addrs                \
-        echo_cli_udp_dns              \
+        getnameinfo_timeo             \
         http_server                   \
         http_server_image             \
-        http_server_nonblock          \
         http_server_multi             \
+        http_server_nonblock          \
         ipv4_bind                     \
         ipv6_bind                     \
-        gai                           \
-        getnameinfo_timeo             \
-        access                        \
-        sleep                         \
-        system                        \
-        file_lock                     \
+        inet_pton_loose               \
+        local_ip_addrs                \
         msg_queue_srv                 \
         msg_queue_cli                 \
+        pipe                          \
+        send_recv_buff_sizes          \
+        sleep                         \
         shared_mem_srv                \
         shared_mem_cli                \
-        pipe
+        system
 
 .PHONY: all
 all: $(PROGS)
