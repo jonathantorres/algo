@@ -1,6 +1,7 @@
 CFLAGS = gcc -g -std=gnu11 -Wall -Wextra
 PROGS = access                        \
         broken_pipe                   \
+        byte_order                    \
         date_cli                      \
         date_cli_read_peek            \
         date_cli_recv_buff            \
