@@ -1,6 +1,6 @@
-#include <arpa/inet.h>
 #include <stdio.h>
 #include <string.h>
+#include <arpa/inet.h>
 
 int inet_pton_loose(int family, const char *strptr, void *addrptr);
 
@@ -18,6 +18,7 @@ int main(void)
 int inet_pton_loose(int family, const char *strptr, void *addrptr)
 {
     int rc = inet_pton(family, strptr, addrptr);
+
     if (rc == 0) {
         rc = inet_aton(strptr, addrptr);
 
