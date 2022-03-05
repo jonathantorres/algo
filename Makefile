@@ -5,8 +5,8 @@ PROGS = access                        \
         date_cli                      \
         date_cli_read_peek            \
         date_cli_recv_buff            \
+        date_cli_getsockname          \
         date_serv                     \
-        daytime_client_getsockname    \
         echo_cli                      \
         echo_cli_connect_timeo        \
         echo_cli_linger               \
