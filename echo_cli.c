@@ -56,6 +56,7 @@ int main(void)
             break;
         }
         if (r == 0) {
+            fprintf(stderr, "read() returned 0\n");
             break;
         }
 
@@ -63,6 +64,6 @@ int main(void)
 
         fprintf(stdout, "%s", recv_buf);
     }
-    
+
     return 0;
 }
