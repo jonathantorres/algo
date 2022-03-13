@@ -40,7 +40,7 @@ int main(void)
         exit(1);
     }
 
-    if (listen(srv_fd, 10) < 0) {
+    if (listen(serv_fd, 10) < 0) {
         perror("listen() error");
         exit(1);
     }
