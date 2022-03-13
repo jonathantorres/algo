@@ -11,6 +11,12 @@
 #define MAXLINE 1024
 #define MAXBUF 1024
 
+// a very simple echo client
+// it connects to the echo server
+// reads a line from standard input and 
+// prints the line returned from the server
+// back to standard output
+
 int main(void)
 {
     int serv_fd;

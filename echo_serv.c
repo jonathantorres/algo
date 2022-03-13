@@ -11,6 +11,10 @@
 
 #define MAXBUF 1024
 
+// a very simple echo server
+// it servers one client at a time
+// no forking involved
+
 void serve_client(int cli_fd);
 
 int main(void)
@@ -36,7 +40,7 @@ int main(void)
         exit(1);
     }
 
-    if (listen(serv_fd, 10) < 0) {
+    if (listen(srv_fd, 10) < 0) {
         perror("listen() error");
         exit(1);
     }

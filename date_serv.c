@@ -35,7 +35,7 @@ int main(void)
         perror("listen error");
         exit(1);
     }
-    
+
     unsigned long cli_siz = sizeof(cli_addr);
     socklen_t *cli_addr_siz = (socklen_t *) &cli_siz;
 
