@@ -9,6 +9,7 @@ PROGS = access                        \
         date_serv                     \
         date_serv_print_cli           \
         echo_cli                      \
+        echo_cli_chargen              \
         echo_cli_connect_timeo        \
         echo_cli_linger               \
         echo_cli_poll                 \
