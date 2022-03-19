@@ -9,6 +9,10 @@
 #include <string.h>
 #include <stdbool.h>
 
+// A simple echo client that uses poll() to
+// handle the file descriptor that deals with user input
+// and the socket file descriptor
+
 #define MAXLINE 1024
 #define MAXBUF 1024
 #define FDS_LEN 2
@@ -26,7 +30,7 @@ int main(void)
     memset(&serv_addr, 0, sizeof(serv_addr));
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_port = htons(9090);
-    serv_addr.sin_addr.s_addr = INADDR_ANY;
+    serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
     socklen_t serv_addr_siz = sizeof(serv_addr);
 
@@ -98,7 +102,7 @@ int main(void)
             fprintf(stdout, "%s", recv_buf);
         }
     }
-    
+
     return 0;
 }
 
