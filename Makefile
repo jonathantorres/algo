@@ -17,6 +17,7 @@ PROGS = access                        \
         echo_cli_select               \
         echo_cli_sigpipe              \
         echo_cli_udp                  \
+        echo_cli_udp_connect          \
         echo_cli_udp_dns              \
         echo_serv                     \
         echo_serv_stdio               \
