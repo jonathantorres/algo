@@ -8,6 +8,11 @@
 #include <arpa/inet.h>
 #include <stdbool.h>
 
+// This is a simple udp echo client
+// it reads a line of text from standard input
+// and it sends it to the udp server, then
+// it waits for the datagram response from the client
+
 #define BUF_SIZE 2048
 
 int main(void)
@@ -32,27 +37,28 @@ int main(void)
     }
 
     while (true) {
-        if (fgets(buf, sizeof(buf), stdin) == NULL) {
+        if (fgets(buf, BUF_SIZE, stdin) == NULL) {
             fprintf(stderr, "we are done\n");
             break;
         }
+        n = strlen(buf);
 
-        n = sendto(cli_fd, buf, sizeof(buf), 0, (struct sockaddr*)&serv_addr, sizeof(serv_addr));
+        n = sendto(cli_fd, buf, n, 0, (struct sockaddr*)&serv_addr, sizeof(serv_addr));
         if (n < 0) {
             perror("sendto() error");
             continue;
         }
 
-        memset(buf, 0, sizeof(buf));
+        memset(buf, 0, BUF_SIZE);
 
-        n = recvfrom(cli_fd, buf, sizeof(buf), 0, NULL, NULL);
+        n = recvfrom(cli_fd, buf, BUF_SIZE, 0, NULL, NULL);
         if (n < 0) {
             perror("recvfrom() error");
             continue;
         }
 
         fprintf(stdout, "%s", buf);
-        memset(buf, 0, sizeof(buf));
+        memset(buf, 0, BUF_SIZE);
     }
     return 0;
 }

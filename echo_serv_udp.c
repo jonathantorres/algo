@@ -8,6 +8,11 @@
 #include <stdbool.h>
 #include <ctype.h>
 
+// a very simple echo server with udp
+// waits for a message from a client
+// and then it capitalizes the message
+// and sends it back to the client
+
 #define BUF_SIZE 2048
 
 void capitalize(char *buff);
@@ -20,7 +25,7 @@ int main(void)
     memset(&serv_addr, 0, sizeof(serv_addr));
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_port = htons(9090);
-    serv_addr.sin_addr.s_addr = INADDR_ANY;
+    serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
     if ((serv_fd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
         perror("socket() error");
@@ -41,14 +46,14 @@ int main(void)
 
     while (true) {
         memset(&buf, 0, sizeof(buf));
-        n = recvfrom(serv_fd, buf, sizeof(buf), 0, (struct sockaddr*)&cli_addr, &cli_addr_siz);
+        n = recvfrom(serv_fd, buf, BUF_SIZE, 0, (struct sockaddr*)&cli_addr, &cli_addr_siz);
         if (n < 0) {
             perror("recvfrom() error");
             continue;
         }
         capitalize(buf);
 
-        n = sendto(serv_fd, buf, sizeof(buf), 0, (struct sockaddr*)&cli_addr, cli_addr_siz);
+        n = sendto(serv_fd, buf, n, 0, (struct sockaddr*)&cli_addr, cli_addr_siz);
         if (n < 0) {
             perror("sendto() error");
             continue;
