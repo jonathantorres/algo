@@ -21,6 +21,7 @@ PROGS = access                        \
         echo_cli_udp_dns              \
         echo_serv                     \
         echo_serv_stdio               \
+        echo_serv_tcp_udp             \
         echo_serv_udp                 \
         file_lock                     \
         gai                           \
