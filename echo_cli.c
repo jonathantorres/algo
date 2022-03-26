@@ -13,7 +13,7 @@
 
 // a very simple echo client
 // it connects to the echo server
-// reads a line from standard input and 
+// reads a line from standard input and
 // prints the line returned from the server
 // back to standard output
 
