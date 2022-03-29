@@ -35,6 +35,9 @@ int main(int argc, char **argv)
                     printf("\taddress: %s\n", str);
                 }
                 break;
+            default:
+                puts("unknown address type");
+                break;
         }
     }
 

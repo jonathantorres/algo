@@ -35,12 +35,16 @@ int main(int argc, char **argv)
                     printf("\taddress: %s\n", str);
 
                     if ((hptr = gethostbyaddr(*pptr, hptr->h_length, hptr->h_addrtype)) == NULL) {
-                        herror("gethostbyaddr() error");
-                        continue;
+                        puts("gethostbyaddr failed");
+                    } else if (hptr->h_name != NULL) {
+                        printf("\tname: %s\n", hptr->h_name);
+                    } else {
+                        puts("no hostname returned by gethostbyaddr");
                     }
-
-                    printf("\taddress host: %s\n", hptr->h_name);
                 }
+                break;
+            default:
+                puts("unknown address type");
                 break;
         }
     }
