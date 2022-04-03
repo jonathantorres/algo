@@ -9,16 +9,19 @@
 #include <string.h>
 #include <stdlib.h>
 
+// An implementation of getnameinfo with a timeout
+// it uses an alarm signal to detect the expiration of the timeout
+
 #define HOST_LEN 512
 
 int getnameinfo_timeo(const struct sockaddr *addr, socklen_t addrlen,
-        char *host, socklen_t hostlen, 
+        char *host, socklen_t hostlen,
         char *serv, socklen_t servlen, int flags, int timeo);
 
 int main(void)
 {
     struct sockaddr_in addr;
-    socklen_t addrlen, hostlen, servlen; 
+    socklen_t addrlen, hostlen, servlen;
     char host[HOST_LEN];
     char serv[HOST_LEN];
     int rc;
@@ -62,7 +65,7 @@ void handler(int signum)
 }
 
 int getnameinfo_timeo(const struct sockaddr *addr, socklen_t addrlen,
-        char *host, socklen_t hostlen, 
+        char *host, socklen_t hostlen,
         char *serv, socklen_t servlen, int flags, int timeo)
 {
     if (timeo > 0) {
