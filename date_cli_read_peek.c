@@ -1,11 +1,14 @@
+#include <errno.h>
+#include <netinet/in.h>
 #include <stdio.h>
 #include <sys/socket.h>
 #include <sys/ioctl.h>
-#include <netinet/in.h>
-#include <errno.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
+// datetime client that peeks at the incoming data first
+// it checks how much data is on the receive buffer and then prints it
 
 #define BUFSIZE 1024
 
