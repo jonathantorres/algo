@@ -1,5 +1,6 @@
 CFLAGS = gcc -g -std=gnu11 -Wall -Wextra
-PROGS = read_write
+PROGS = read_write                  \
+        prompt
 
 .PHONY: all
 all: $(PROGS)
