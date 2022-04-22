@@ -2,7 +2,10 @@ CFLAGS = gcc -g -std=gnu11 -Wall -Wextra
 PROGS = read_write                  \
         prompt                      \
         prompt_signal               \
-        dup2
+        dup2                        \
+        file_type                   \
+        umask                       \
+        file_traversal
 
 .PHONY: all
 all: $(PROGS)
