@@ -5,7 +5,9 @@ PROGS = read_write                  \
         dup2                        \
         file_type                   \
         umask                       \
-        file_traversal
+        file_traversal              \
+        setbuf                      \
+        iocopy
 
 .PHONY: all
 all: $(PROGS)
