@@ -7,7 +7,10 @@ PROGS = read_write                  \
         umask                       \
         file_traversal              \
         setbuf                      \
-        iocopy
+        iocopy                      \
+        pass                        \
+        uname                       \
+        date
 
 .PHONY: all
 all: $(PROGS)
