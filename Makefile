@@ -10,7 +10,9 @@ PROGS = read_write                  \
         iocopy                      \
         pass                        \
         uname                       \
-        date
+        date                        \
+        f1                          \
+        atexit
 
 .PHONY: all
 all: $(PROGS)
