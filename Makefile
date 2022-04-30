@@ -12,7 +12,8 @@ PROGS = read_write                  \
         uname                       \
         date                        \
         f1                          \
-        atexit
+        atexit                      \
+        zombie
 
 .PHONY: all
 all: $(PROGS)
