@@ -12,15 +12,81 @@ ALGO_PROGS := sl_list dl_list cl_list stack queue      \
 ALGO_OBJS := $(addsuffix .o,$(ALGO_PROGS))
 ALGO_TESTS := $(addsuffix _test,$(ALGO_PROGS))
 
-NET_PROGS := daytime_server daytime_client stream_server      \
-             stream_client http_server http_server_nonblock   \
-             http_server_image multi_http_server
+NET_PROGS := daytime_server                 \
+             daytime_client                 \
+             stream_server                  \
+             stream_client                  \
+             http_server                    \
+             http_server_nonblock           \
+             http_server_image              \
+             multi_http_server              \
+             access                         \
+             atexit                         \
+             broken_pipe                    \
+             byte_order                     \
+             conn_recv_buff_mss             \
+             date                           \
+             date_cli                       \
+             date_cli_read_peek             \
+             date_cli_recv_buff             \
+             date_cli_getsockname           \
+             date_serv                      \
+             date_serv_print_cli            \
+             dup2                           \
+             echo_cli                       \
+             echo_cli_chargen               \
+             echo_cli_connect_timeo         \
+             echo_cli_linger                \
+             echo_cli_poll                  \
+             echo_cli_select                \
+             echo_cli_sigpipe               \
+             echo_cli_udp                   \
+             echo_cli_udp_connect           \
+             echo_cli_udp_dns               \
+             echo_serv                      \
+             echo_serv_stdio                \
+             echo_serv_tcp_udp              \
+             echo_serv_udp                  \
+             f1                             \
+             file_lock                      \
+             file_traversal                 \
+             file_type                      \
+             gai                            \
+             get_host_names                 \
+             get_host_names_addr            \
+             getnameinfo_timeo              \
+             http_server                    \
+             http_server_image              \
+             http_server_multi              \
+             http_server_nonblock           \
+             iocopy                         \
+             ipv4_bind                      \
+             ipv6_bind                      \
+             inet_pton_loose                \
+             local_ip_addrs                 \
+             mmap                           \
+             msg_queue_srv                  \
+             msg_queue_cli                  \
+             pass                           \
+             pipe                           \
+             prompt                         \
+             prompt_signal                  \
+             read_write                     \
+             send_recv_buff_sizes           \
+             setbuf                         \
+             shared_mem_srv                 \
+             shared_mem_cli                 \
+             sleep                          \
+             system                         \
+             umask                          \
+             uname                          \
+             zombie
 
 ARCH_PROGS := b2n n2b h2n h2b binadd           \
               isodd div16 bitcmp endiancheck
 
 .PHONY: all
-all: test hangman stream_server stream_client http_server
+all: test
 
 # compiling algo objects
 $(ALGO_OBJS):%.o: %.c %.h
@@ -51,5 +117,6 @@ test: $(ALGO_TESTS)
 .PHONY: clean
 clean:
 	rm -f ./*.o src/*.h.gch
-	rm -fr ./bin
-	mkdir ./bin && touch ./bin/.gitkeep
+	# rm -fr ./bin
+	# mkdir ./bin && touch ./bin/.gitkeep
+

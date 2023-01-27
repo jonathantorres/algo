@@ -35,9 +35,10 @@ Various algorithms and data structures
 ## Internet/Network
 - Daytime Client/Server
 - Stream Client/Server
-- Http Server
-- Multi-Threaded Http Server
+- HTTP Server
+- Multi-Threaded HTTP Server
 - Show IP Address
+- and other networking related programs
 
 ## Computer Architecture
 - Binary to Number
@@ -51,6 +52,11 @@ Various algorithms and data structures
 
 ## Other
 - Hangman Game
+
+### Compiling and running
+To compile and run a program, use `make {program_name}`. There is a make command for every C program that has a `main()` function. For example, you can run `make date_cli` to run the datetime client in `src/net/date_cli.c`.
+
+Use `make clean` to remove all the binary files from the `bin` folder.
 
 ## Running Tests
 ```bash
