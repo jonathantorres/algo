@@ -16,9 +16,6 @@ NET_PROGS := daytime_server                 \
              daytime_client                 \
              stream_server                  \
              stream_client                  \
-             http_server                    \
-             http_server_nonblock           \
-             http_server_image              \
              multi_http_server              \
              access                         \
              atexit                         \
@@ -117,6 +114,6 @@ test: $(ALGO_TESTS)
 .PHONY: clean
 clean:
 	rm -f ./*.o src/*.h.gch
-	# rm -fr ./bin
-	# mkdir ./bin && touch ./bin/.gitkeep
+	rm -fr ./bin
+	mkdir ./bin && touch ./bin/.gitkeep
 
