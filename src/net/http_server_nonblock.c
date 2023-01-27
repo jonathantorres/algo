@@ -1,15 +1,17 @@
-#include<netinet/in.h>
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#include<sys/socket.h>
-#include<sys/stat.h>
-#include<sys/types.h>
-#include<sys/select.h>
-#include<sys/time.h>
-#include<unistd.h>
-#include<fcntl.h>
-#include<errno.h>
+// A simple HTTP server with a nonblocking socket, sends a 200 OK response
+
+#include <netinet/in.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/select.h>
+#include <sys/time.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <errno.h>
 
 int main() {
     int server_fd, client_fd;

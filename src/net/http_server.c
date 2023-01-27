@@ -1,11 +1,13 @@
-#include<netinet/in.h>
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#include<sys/socket.h>
-#include<sys/stat.h>
-#include<sys/types.h>
-#include<unistd.h>
+// A simple HTTP server, sends a 200 OK response
+
+#include <netinet/in.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 int main() {
     int server_fd, client_fd;
@@ -64,7 +66,6 @@ int main() {
         printf("str len: %ld\n", strlen(buffer));
         printf("%s\n", buffer);
 
-        //send(client_fd, "hello world\n", 12, 0);
         send(client_fd, "HTTP/1.1 200 OK\n", 16, 0);
         send(client_fd, "Content-length: 46\n", 19, 0);
         send(client_fd, "Content-Type: text/html\n\n", 25, 0);
