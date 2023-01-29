@@ -15,8 +15,8 @@ type Graph struct {
 	Directed    bool
 	numVertices int
 	numEdges    int
-	edges       map[int]EdgeNode
-	degree      []int
+	edges       map[int]*EdgeNode
+	degree      []int // it only counts the outdegrees of a vertex
 
 	vertexStates []int
 	bfsParent    []int // tree of discovery
@@ -28,13 +28,13 @@ type Graph struct {
 func New(directed bool) *Graph {
 	return &Graph{
 		Directed: directed,
-		edges:    make(map[int]EdgeNode),
+		edges:    make(map[int]*EdgeNode),
 		degree:   make([]int, 10),
 	}
 }
 
 func (g *Graph) AddEdge(from, to int, weight int, directed bool) {
-	edgeNode := EdgeNode{
+	edgeNode := &EdgeNode{
 		n:      to,
 		weight: weight,
 	}
@@ -42,15 +42,17 @@ func (g *Graph) AddEdge(from, to int, weight int, directed bool) {
 	edge, ok := g.edges[from]
 	if ok {
 		// add EdgeNode to adjacency list
-		curEdge := &edge
+		curEdge := edge
 
-		for {
-			if curEdge.next == nil {
-				break
+		if curEdge == nil {
+			edge = edgeNode
+		} else {
+			for curEdge.next != nil {
+				curEdge = curEdge.next
 			}
-			curEdge = curEdge.next
+			curEdge.next = edgeNode
 		}
-		curEdge.next = &edgeNode
+
 		g.edges[from] = edge
 	} else {
 		// new entry
@@ -115,7 +117,7 @@ func (g *Graph) BFS(start int, processVertex func(int), processEdge func(int, in
 		}
 
 		edge := g.edges[vertex]
-		currentEdge := &edge
+		currentEdge := edge
 
 		for currentEdge != nil {
 			n := currentEdge.n
@@ -163,7 +165,7 @@ func (g *Graph) DFS(start int, processVertexEarly func(int), processVertexLate f
 		g.dfsEntry[v] = time
 		time++
 		edge := g.edges[v]
-		currentEdge := &edge
+		currentEdge := edge
 
 		for currentEdge != nil {
 			n := currentEdge.n
@@ -221,7 +223,7 @@ func (g *Graph) DFSIter(start int, processVertex func(int), processEdge func(int
 			}
 
 			edge := g.edges[vertex]
-			currentEdge := &edge
+			currentEdge := edge
 
 			for currentEdge != nil {
 				n := currentEdge.n
@@ -258,13 +260,9 @@ func (g *Graph) String() string {
 	var buf bytes.Buffer
 	for v, edge := range g.edges {
 		buf.WriteString(fmt.Sprintf("%d: ", v))
-		curEdge := &edge
+		curEdge := edge
 
-		for {
-			if curEdge == nil {
-				break
-			}
-
+		for curEdge != nil {
 			buf.WriteString(fmt.Sprintf("%d(%d)->", curEdge.n, curEdge.weight))
 			curEdge = curEdge.next
 		}
