@@ -255,6 +255,35 @@ func (g *Graph) DFSIter(start int, processVertex func(int), processEdge func(int
 	}
 }
 
+const (
+	unclassified = iota
+	treeEdge
+	backEdge
+	crossEdge
+	forwardEdge
+)
+
+func (g *Graph) classifyEdge(x, y int) int {
+	// fmt.Printf("classifyEdge: %d->%d\n", x, y)
+	if g.dfsParent[y] == x {
+		return treeEdge
+	}
+
+	if g.vertexStates[y] == discovered && g.vertexStates[x] != processed {
+		return backEdge
+	}
+
+	if g.vertexStates[y] == processed && (g.dfsEntry[y] > g.dfsEntry[x]) {
+		return forwardEdge
+	}
+
+	if g.vertexStates[y] == processed && (g.dfsEntry[y] < g.dfsEntry[x]) {
+		return crossEdge
+	}
+
+	return unclassified
+}
+
 func (g *Graph) BFSParent() []int {
 	return g.bfsParent
 }

@@ -51,6 +51,18 @@ func main() {
 	fmt.Printf("has cycle: %v\n", g.HasCycle())
 	fmt.Printf("has cycle: %v\n", g2.HasCycle())
 
+	// test for topological sort
+	g3 := graphs.New(true)
+	g3.AddEdge(0, 1, 0, g3.Directed)
+	g3.AddEdge(1, 2, 0, g3.Directed)
+	g3.AddEdge(1, 3, 0, g3.Directed)
+	g3.AddEdge(1, 4, 0, g3.Directed)
+	g3.AddEdge(2, 4, 0, g3.Directed)
+	g3.AddEdge(3, 4, 0, g3.Directed)
+	g3.AddEdge(4, 5, 0, g3.Directed)
+	g3.AddEdge(5, 6, 0, g3.Directed)
+	fmt.Printf("topo sort: %v\n", g3.TopoSort())
+
 	// tests for the queue
 	// q := graphs.NewQueue()
 	// q.Enqueue(1)
