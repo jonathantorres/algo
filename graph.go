@@ -277,6 +277,8 @@ func (g *Graph) String() string {
 	}
 
 	buf.WriteString(fmt.Sprintf("degrees: %v\n", g.degree))
+	buf.WriteString(fmt.Sprintf("num edges: %d\n", g.numEdges))
+	buf.WriteString(fmt.Sprintf("num vertices: %d\n", g.numVertices))
 
 	return buf.String()
 }
