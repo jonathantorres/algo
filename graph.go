@@ -71,6 +71,13 @@ func (g *Graph) AddEdge(from, to int, weight int, directed bool) {
 
 	if directed {
 		g.numEdges++
+
+		if to > from {
+			if _, ok := g.edges[to]; !ok {
+				g.numVertices++
+				g.edges[to] = nil
+			}
+		}
 	} else {
 		g.AddEdge(to, from, weight, true)
 	}
