@@ -22,6 +22,20 @@ func main() {
 	fmt.Println()
 	runDfs(g)
 
+	// test for bipartite graph
+	colors, bipartite := g.TwoColoring()
+	fmt.Printf("%v\n", colors)
+	fmt.Printf("%v\n", bipartite)
+
+	// test for bipartite graph
+	g2 := graphs.New(false)
+	g2.AddEdge(0, 1, 0, g2.Directed)
+	g2.AddEdge(2, 3, 0, g2.Directed)
+	g2.AddEdge(4, 5, 0, g2.Directed)
+	colors, bipartite = g2.TwoColoring()
+	fmt.Printf("%v\n", colors)
+	fmt.Printf("%v\n", bipartite)
+
 	// tests for the queue
 	// q := graphs.NewQueue()
 	// q.Enqueue(1)

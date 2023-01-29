@@ -8,6 +8,7 @@ A graph library that implements a few graph algorithms:
 - Topological Sorting (DAG)
 - Connected Components
 - Two-Coloring
+- Bipartite Graph
 - Finding Cycles
 - Articulated Vertices
 - Minimum Spanning Tree (Prim's Algorithm)
