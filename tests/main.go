@@ -94,7 +94,7 @@ func runBfs(g *graphs.Graph) {
 
 func runDfs(g *graphs.Graph) {
 	g.InitDFS()
-	g.DFS(0, processVertex, processEdge)
+	g.DFS(0, processVertex, nil, processEdge)
 	tree := g.DFSParent()
 	for i, v := range tree {
 		fmt.Printf("%d:%d ", i, v)

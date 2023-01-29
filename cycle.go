@@ -11,7 +11,7 @@ func (g *Graph) HasCycle() bool {
 	}
 
 	g.InitDFS()
-	g.DFS(0, nil, processEdge)
+	g.DFS(0, nil, nil, processEdge)
 
 	return cycle
 }

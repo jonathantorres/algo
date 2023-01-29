@@ -149,15 +149,15 @@ func (g *Graph) InitDFS() {
 	}
 }
 
-func (g *Graph) DFS(start int, processVertex func(int), processEdge func(int, int)) {
+func (g *Graph) DFS(start int, processVertexEarly func(int), processVertexLate func(int), processEdge func(int, int)) {
 	// make sure to run InitDFS() first
 	time := 1
 	var dfs func(int)
 	dfs = func(v int) {
 		g.vertexStates[v] = discovered
 
-		if processVertex != nil {
-			processVertex(v)
+		if processVertexEarly != nil {
+			processVertexEarly(v)
 		}
 
 		g.dfsEntry[v] = time
@@ -177,6 +177,10 @@ func (g *Graph) DFS(start int, processVertex func(int), processEdge func(int, in
 				dfs(n)
 			}
 			currentEdge = currentEdge.next
+		}
+
+		if processVertexLate != nil {
+			processVertexLate(v)
 		}
 
 		g.vertexStates[v] = processed
