@@ -47,6 +47,10 @@ func main() {
 	fmt.Printf("%v\n", colors)
 	fmt.Printf("%v\n", bipartite)
 
+	// test for cycle
+	fmt.Printf("has cycle: %v\n", g.HasCycle())
+	fmt.Printf("has cycle: %v\n", g2.HasCycle())
+
 	// tests for the queue
 	// q := graphs.NewQueue()
 	// q.Enqueue(1)
@@ -89,6 +93,7 @@ func runBfs(g *graphs.Graph) {
 }
 
 func runDfs(g *graphs.Graph) {
+	g.InitDFS()
 	g.DFS(0, processVertex, processEdge)
 	tree := g.DFSParent()
 	for i, v := range tree {

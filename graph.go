@@ -135,7 +135,7 @@ func (g *Graph) BFS(start int, processVertex func(int), processEdge func(int, in
 	}
 }
 
-func (g *Graph) DFS(start int, processVertex func(int), processEdge func(int, int)) {
+func (g *Graph) InitDFS() {
 	g.dfsParent = make([]int, g.numVertices)
 	g.vertexStates = make([]int, g.numVertices)
 	g.dfsEntry = make([]int, g.numVertices)
@@ -147,7 +147,10 @@ func (g *Graph) DFS(start int, processVertex func(int), processEdge func(int, in
 		g.dfsExit[v] = -1
 		g.dfsParent[v] = -1
 	}
+}
 
+func (g *Graph) DFS(start int, processVertex func(int), processEdge func(int, int)) {
+	// make sure to run InitDFS() first
 	time := 1
 	var dfs func(int)
 	dfs = func(v int) {
