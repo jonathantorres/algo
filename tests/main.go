@@ -22,6 +22,17 @@ func main() {
 	fmt.Println()
 	runDfs(g)
 
+	// test for connected components
+	fmt.Printf("connected components: %d\n", g.ConnectedComponents())
+
+	// test for connected components
+	comp := graphs.New(false)
+	comp.AddEdge(0, 1, 0, comp.Directed)
+	comp.AddEdge(0, 2, 0, comp.Directed)
+	comp.AddEdge(1, 2, 0, comp.Directed)
+	comp.AddEdge(3, 4, 0, comp.Directed)
+	fmt.Printf("connected components: %d\n", comp.ConnectedComponents())
+
 	// test for bipartite graph
 	colors, bipartite := g.TwoColoring()
 	fmt.Printf("%v\n", colors)
