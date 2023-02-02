@@ -84,6 +84,24 @@ func main() {
 	// fmt.Printf("%d\n", v)
 	// fmt.Printf("%v\n", s.Empty())
 	// fmt.Printf("%d\n", s.Len())
+
+	// test for Prim's algorithm
+	g4 := graphs.New(false)
+	g4.AddEdge(0, 1, 5, g4.Directed)
+	g4.AddEdge(0, 2, 12, g4.Directed)
+	g4.AddEdge(0, 3, 7, g4.Directed)
+	g4.AddEdge(1, 3, 9, g4.Directed)
+	g4.AddEdge(1, 4, 7, g4.Directed)
+	g4.AddEdge(2, 3, 4, g4.Directed)
+	g4.AddEdge(2, 5, 7, g4.Directed)
+	g4.AddEdge(3, 4, 4, g4.Directed)
+	g4.AddEdge(3, 5, 3, g4.Directed)
+	g4.AddEdge(4, 5, 2, g4.Directed)
+	g4.AddEdge(4, 6, 5, g4.Directed)
+	g4.AddEdge(5, 6, 2, g4.Directed)
+	fmt.Printf("\nminimum spanning tree\n")
+	fmt.Printf("%s\n", g4)
+	fmt.Printf("%s\n", g4.Prim(0))
 }
 
 func processVertex(v int) {
