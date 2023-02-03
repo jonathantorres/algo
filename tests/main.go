@@ -74,6 +74,20 @@ func main() {
 	// fmt.Printf("%d\n", q.Len())
 	// fmt.Printf("%d\n", v)
 
+	// tests for the priority queue
+	// q := graphs.NewPriorityQueue()
+	// for i := 0; i < 5; i++ {
+	// 	item := graphs.PQItem{
+	// 		Priority: i,
+	// 		Value:    "foo",
+	// 	}
+	// 	q.Push(&item)
+	// }
+	// for !q.Empty() {
+	// 	i := q.Pop()
+	// 	fmt.Printf("p: %d, v: %s\n", i.Priority, i.Value)
+	// }
+
 	// tests for the stack
 	// s := graphs.NewStack()
 	// s.Push(1)
@@ -102,6 +116,24 @@ func main() {
 	fmt.Printf("\nminimum spanning tree\n")
 	fmt.Printf("%s\n", g4)
 	fmt.Printf("%s\n", g4.Prim(0))
+
+	// test for Kruskal's algorithm
+	g5 := graphs.New(false)
+	g5.AddEdge(0, 1, 5, g5.Directed)
+	g5.AddEdge(0, 2, 12, g5.Directed)
+	g5.AddEdge(0, 3, 7, g5.Directed)
+	g5.AddEdge(1, 3, 9, g5.Directed)
+	g5.AddEdge(1, 4, 7, g5.Directed)
+	g5.AddEdge(2, 3, 4, g5.Directed)
+	g5.AddEdge(2, 5, 7, g5.Directed)
+	g5.AddEdge(3, 4, 4, g5.Directed)
+	g5.AddEdge(3, 5, 3, g5.Directed)
+	g5.AddEdge(4, 5, 2, g5.Directed)
+	g5.AddEdge(4, 6, 5, g5.Directed)
+	g5.AddEdge(5, 6, 2, g5.Directed)
+	fmt.Printf("\nminimum spanning tree (Kruskal)\n")
+	fmt.Printf("%s\n", g5)
+	fmt.Printf("%s\n", g5.Kruskal())
 }
 
 func processVertex(v int) {
