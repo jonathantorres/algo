@@ -134,6 +134,24 @@ func main() {
 	fmt.Printf("\nminimum spanning tree (Kruskal)\n")
 	fmt.Printf("%s\n", g5)
 	fmt.Printf("%s\n", g5.Kruskal())
+
+	// test for Dijkstra's algorithm
+	g6 := graphs.New(false)
+	g6.AddEdge(0, 1, 5, g6.Directed)
+	g6.AddEdge(0, 2, 12, g6.Directed)
+	g6.AddEdge(0, 3, 7, g6.Directed)
+	g6.AddEdge(1, 3, 9, g6.Directed)
+	g6.AddEdge(1, 4, 7, g6.Directed)
+	g6.AddEdge(2, 3, 4, g6.Directed)
+	g6.AddEdge(2, 5, 7, g6.Directed)
+	g6.AddEdge(3, 4, 4, g6.Directed)
+	g6.AddEdge(3, 5, 3, g6.Directed)
+	g6.AddEdge(4, 5, 2, g6.Directed)
+	g6.AddEdge(4, 6, 5, g6.Directed)
+	g6.AddEdge(5, 6, 2, g6.Directed)
+	fmt.Printf("\nshortest path\n")
+	fmt.Printf("%s\n", g6)
+	fmt.Printf("%s\n", g6.Dijkstra(0))
 }
 
 func processVertex(v int) {
