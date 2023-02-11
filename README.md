@@ -16,7 +16,9 @@ Various algorithms and data structures
 - Red Black Tree
 - Red Black Tree Map
 - Trie
-- Graph (Directed or Undirected)
+- Directed/Undirected Graphs
+- Weighted/Unweighted Graphs
+- Directed Acyclic Graphs (DAG)
 - Strings
 
 ## Algorithms
@@ -29,8 +31,15 @@ Various algorithms and data structures
 - Binary Search
 - Breadth First Search
 - Depth First Search
-- Minimum Spanning Tree
+- Topological Sorting (DAG)
+- Minimum Spanning Tree (Prim's Algorithm)
+- Minimum Spanning Tree (Kruskal's Union-Find Algorithm)
 - Dijkstra's Shortest Path
+- Connected Components
+- Two-Coloring
+- Bipartite Graph
+- Finding Cycles
+- Union-Find
 
 ## Internet/Network
 - Daytime Client/Server
