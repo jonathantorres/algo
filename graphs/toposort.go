@@ -14,7 +14,7 @@ func (g *Graph) TopoSort() []int {
 		class := g.classifyEdge(x, y)
 
 		if class == backEdge {
-			panic(fmt.Sprintf("WARNING: found back edge (cycle) on %d->%d\n", x, y))
+			panic(fmt.Sprintf("ERROR: found back edge (cycle) on %d->%d\n", x, y))
 		}
 	}
 

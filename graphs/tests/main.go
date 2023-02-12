@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/jonathantorres/graphs"
+	"github.com/jonathantorres/algo/graphs"
 )
 
 // TODO: create unit tests for these
