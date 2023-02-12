@@ -40,6 +40,8 @@ Various algorithms and data structures
 - Bipartite Graph
 - Finding Cycles
 - Union-Find
+- Backtracking (Subsets)
+- Backtracking (Permutations)
 
 ## Internet/Network
 - Daytime Client/Server
