@@ -1,16 +1,32 @@
-VPATH = src tests
-CFLAGS := gcc -g -std=gnu11 -Wall -Wextra -Isrc
-CPPFLAGS := g++ -std=c++11 -Wall -Wextra -Isrc
+VPATH = algos arch ds graphs net sorting trees tests
+CFLAGS := gcc -g -std=c11 -Wall -Wextra -Wpedantic -Ialgos -Ids -Igraphs -Isorting -Itrees
+CPPFLAGS := g++ -std=c++11 -Wall -Wextra -Wpedantic
 
-ALGO_PROGS := sl_list dl_list cl_list stack queue      \
-              array c_buffer h_table trie p_queue      \
-              bs_tree bs_tree_map rb_tree rb_tree_map  \
-              graph bubble_sort insertion_sort         \
-              selection_sort merge_sort quick_sort     \
-              heap_sort binary_search str
-
+ALGO_PROGS := binary_search
 ALGO_OBJS := $(addsuffix .o,$(ALGO_PROGS))
 ALGO_TESTS := $(addsuffix _test,$(ALGO_PROGS))
+
+ARCH_PROGS := b2n n2b h2n h2b binadd           \
+              isodd div16 bitcmp endiancheck
+ARCH_OBJS := $(addsuffix .o,$(ALGO_PROGS))
+
+DS_PROGS := array c_buffer cl_list dl_list h_table    \
+			p_queue queue sl_list stack str
+DS_OBJS := $(addsuffix .o,$(DS_PROGS))
+DS_TESTS := $(addsuffix _test,$(DS_PROGS))
+
+GRAPH_PROGS := graph
+GRAPH_OBJS := $(addsuffix .o,$(GRAPH_PROGS))
+GRAPH_TESTS := $(addsuffix _test,$(GRAPH_PROGS))
+
+SORT_PROGS := bubble_sort heap_sort insertion_sort merge_sort  \
+			  quick_sort selection_sort
+SORT_OBJS := $(addsuffix .o,$(SORT_PROGS))
+SORT_TESTS := $(addsuffix _test,$(SORT_PROGS))
+
+TREES_PROGS := bs_tree bs_tree_map rb_tree rb_tree_map trie
+TREES_OBJS := $(addsuffix .o,$(TREES_PROGS))
+TREES_TESTS := $(addsuffix _test,$(TREES_PROGS))
 
 NET_PROGS := daytime_server                 \
              daytime_client                 \
@@ -79,24 +95,53 @@ NET_PROGS := daytime_server                 \
              uname                          \
              zombie
 
-ARCH_PROGS := b2n n2b h2n h2b binadd           \
-              isodd div16 bitcmp endiancheck
-
 .PHONY: all
-all: test
+all: algo-tests ds-tests graphs-tests sorting-tests trees-tests
 
 # compiling algo objects
 $(ALGO_OBJS):%.o: %.c %.h
 	$(CFLAGS) -c $^
 
+# compiling ds objects
+$(DS_OBJS):%.o: %.c %.h
+	$(CFLAGS) -c $^
+
+# compiling graphs objects
+$(GRAPH_OBJS):%.o: %.c %.h
+	$(CFLAGS) -c $^
+
+# compiling sorting objects
+$(SORT_OBJS):%.o: %.c %.h
+	$(CFLAGS) -c $^
+
+# compiling tree objects
+$(TREES_OBJS):%.o: %.c %.h
+	$(CFLAGS) -c $^
+
 # compiling algo tests
-$(ALGO_TESTS):%: %.c $(ALGO_OBJS)
+$(ALGO_TESTS):%: %.c $(ALGO_OBJS) array.o
+	$(CFLAGS) $^ -o bin/$@
+
+# compiling ds tests
+$(DS_TESTS):%: %.c $(DS_OBJS) bs_tree.o
+	$(CFLAGS) $^ -o bin/$@
+
+# compiling graph tests
+$(GRAPH_TESTS):%: %.c $(GRAPH_OBJS) array.o stack.o queue.o dl_list.o
+	$(CFLAGS) $^ -o bin/$@
+
+# compiling sorting tests
+$(SORT_TESTS):%: %.c $(SORT_OBJS) array.o p_queue.o bs_tree.o
+	$(CFLAGS) $^ -o bin/$@
+
+# compiling tree tests
+$(TREES_TESTS):%: %.c $(TREES_OBJS) array.o
 	$(CFLAGS) $^ -o bin/$@
 
 # hangman program
-hangman: hangman/hangman.c array.o
+hangman: other/hangman/hangman.c array.o
 	$(CFLAGS) $^ -o bin/$@
-	cp src/hangman/words.txt bin/words.txt
+	cp other/hangman/words.txt bin/words.txt
 
 # network programs
 $(NET_PROGS):%: net/%.c
@@ -107,13 +152,24 @@ $(ARCH_PROGS):%: arch/%.c
 	$(CFLAGS) $^ -o bin/$@
 
 # Run tests
-.PHONY: test
-test: $(ALGO_TESTS)
+algo-tests: $(ALGO_TESTS)
+	for t in $^; do ./bin/$$t; done
+
+ds-tests: $(DS_TESTS)
+	for t in $^; do ./bin/$$t; done
+
+graphs-tests: $(GRAPH_TESTS)
+	for t in $^; do ./bin/$$t; done
+
+sorting-tests: $(SORT_TESTS)
+	for t in $^; do ./bin/$$t; done
+
+trees-tests: $(TREES_TESTS)
 	for t in $^; do ./bin/$$t; done
 
 .PHONY: clean
 clean:
-	rm -f ./*.o src/*.h.gch
+	rm -f ./*.o ./*.h.gch ./*/*.h.gch
 	rm -fr ./bin
 	mkdir ./bin && touch ./bin/.gitkeep
 
