@@ -205,18 +205,22 @@ char *test_len()
 
 char *test_heap_alloc_items()
 {
+    char *z    = "zero";
+    char *o    = "one";
+    char *t    = "two";
+    char *zero = malloc(strlen(z));
+    char *one  = malloc(strlen(o));
+    char *two  = malloc(strlen(t));
+
+    assert(zero != NULL, "Not enough memory to allocate the zero string");
+    assert(one != NULL, "Not enough memory to allocate the one string");
+    assert(two != NULL, "Not enough memory to allocate the two string");
+
     sl_list *list = sl_list_new();
-    char *zero = strdup("zero");
-    char *one = strdup("one");
-    char *two = strdup("two");
     sl_list_push(list, zero);
     sl_list_push(list, one);
     sl_list_push(list, two);
     sl_list_free(list, sl_list_free_func);
-
-    // free(zero);
-    // free(one);
-    // free(two);
 
     return NULL;
 }
