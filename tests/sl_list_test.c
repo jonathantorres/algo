@@ -1,5 +1,5 @@
-#include "unittest.h"
 #include "sl_list.h"
+#include "unittest.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -13,18 +13,19 @@ void sl_list_print(sl_list *list)
     }
 
     printf("{");
-    SL_LIST_FOREACH(list) {
-        printf("%s,", (char*)cur->value);
+    SL_LIST_FOREACH (list) {
+        printf("%s,", (char *)cur->value);
     }
     printf("}\n");
 }
 
 int cmp_func(void *a, void *b)
 {
-    return strcmp((char*) a, (char*) b);
+    return strcmp((char *)a, (char *)b);
 }
 
-void sl_list_free_func(void *value) {
+void sl_list_free_func(void *value)
+{
     if (value) {
         free(value);
     }
@@ -47,10 +48,10 @@ char *test_push()
 {
     sl_list *list = sl_list_new();
 
-    char *john = "John";
-    char *luis = "Luis";
+    char *john  = "John";
+    char *luis  = "Luis";
     char *chris = "Chris";
-    char *mar = "Marjorie";
+    char *mar   = "Marjorie";
 
     sl_list_push(list, john);
     sl_list_push(list, luis);
@@ -107,10 +108,10 @@ char *test_shift()
 char *test_unshift()
 {
     sl_list *list = sl_list_new();
-    char *zero = "zero";
-    char *one = "one";
-    char *two = "two";
-    char *three = "three";
+    char *zero    = "zero";
+    char *one     = "one";
+    char *two     = "two";
+    char *three   = "three";
 
     sl_list_push(list, zero);
     sl_list_push(list, one);
@@ -118,7 +119,7 @@ char *test_unshift()
     sl_list_push(list, three);
 
     assert(sl_list_len(list) == 4, "List len must be 4");
-    char *value = (char*) sl_list_unshift(list);
+    char *value = (char *)sl_list_unshift(list);
     assert(sl_list_len(list) == 3, "List len must be 3");
     assert(strcmp(zero, value) == 0, "List should be equal");
 
@@ -130,10 +131,10 @@ char *test_unshift()
 char *test_pop()
 {
     sl_list *list = sl_list_new();
-    char *zero = "zero";
-    char *one = "one";
-    char *two = "two";
-    char *three = "three";
+    char *zero    = "zero";
+    char *one     = "one";
+    char *two     = "two";
+    char *three   = "three";
 
     sl_list_push(list, zero);
     sl_list_push(list, one);
@@ -141,7 +142,7 @@ char *test_pop()
     sl_list_push(list, three);
 
     assert(sl_list_len(list) == 4, "List len must be 4");
-    char *value = (char*) sl_list_pop(list);
+    char *value = (char *)sl_list_pop(list);
     assert(sl_list_len(list) == 3, "List len must be 3");
     assert(strcmp(three, value) == 0, "List should be equal");
 
